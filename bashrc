@@ -13,9 +13,6 @@
 # Aliases 
 [ -f ~/.bash/aliases.sh ] && . ~/.bash/aliases.sh
 
-# dircolors
-eval `dircolors -b ~/.bash/dircoloursrc` # ls Colors
-
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -27,3 +24,6 @@ shopt -s checkwinsize
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 [ -f ~/.bash/git-bash-completion.sh ] && . ~/.bash/git-bash-completion.sh
 [ -f ~/.bash/git-prompt.sh ] && . ~/.bash/git-prompt.sh 
+
+# dircolors
+eval `dircolors -b ~/.bash/dircoloursrc` # ls Colors
