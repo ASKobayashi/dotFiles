@@ -1,7 +1,7 @@
 # Aaron Kobayashi's .bashrc
 # Stored in dreamhost.  To clone with git:
-# cd ~
 # git clone ssh://askobayashi@ASKobayashi.com/~/git/shellFiles.git
+# Then run the linkdotfiles script
 ###################################################################
 
 # Global Defs
