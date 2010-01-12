@@ -1,0 +1,12 @@
+startup_message off
+
+#launch 2 windows
+split
+
+# start Thin
+screen -t Thin thin start
+focus
+
+screen -t Dev_Log tail -f log/development.log
+focus up
+resize 5
