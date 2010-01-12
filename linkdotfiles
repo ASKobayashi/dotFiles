@@ -61,6 +61,9 @@ for file in $FILES; do
     echo "Linking  $srcFile => $destFile"
     if [ -f $srcFile ]; then
       ln $srcFile $destFile
+      if [[ $file == "authorized_keys" ]]; then
+        chmod 644 $destFile
+      fi
     elif [ -d $srcFile ]; then
       ln -s $srcFile $destFile
     else
