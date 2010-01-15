@@ -10,7 +10,7 @@ alias askobayashi='ssh askobayashi@ASKobayashi.com'
 alias challengepreview='ssh challengeappask@preview.challengeapp.com'
 alias chap='pushd ~/Desktop/Current\ Work/Challenge/Challenge-Rails'
 alias railsLog='screen -c ~/.screenrc.rails'
-alias shelby='ssh -p 58346 dynamo@4.71.122.214'
+alias shelby='ssh -p 58346 ASKobayashi@4.71.122.214'
 
 # Standard Navigation and File Manipulation
 alias cd..='cd ..'
