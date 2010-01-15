@@ -1,13 +1,5 @@
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2008 Jul 02
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+" Aaron Kobayashi's vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -15,20 +7,16 @@ if v:progname =~? "evim"
 endif
 
 " Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-set nobackup		" Keep no backups
+set nobackup		  " Keep no backups
 set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
+set ruler		      " show the cursor position all the time
+set showcmd		    " display incomplete commands
+set incsearch		  " do incremental searching
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -53,9 +41,6 @@ endif
 if has("autocmd")
 
   " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
   filetype plugin indent on
 
   " Put these in an autocmd group, so that we can delete them easily.
@@ -66,26 +51,20 @@ if has("autocmd")
   autocmd FileType text setlocal textwidth=78
 
   " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
   autocmd BufReadPost *
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
-
   augroup END
 
 else
 
   set autoindent		" always set autoindenting on
 
-endif " has("autocmd")
+endif
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
@@ -122,57 +101,51 @@ let Tlist_Exit_OnlyWindow = 1
 
 " let tlist_php_settings = 'php;c:class;d:constant;f:function;v:variable'
 
-
+"If 1 second goes by and nothing is typed the swap file will be written to disk 
 set updatetime=1000
-
-" Configure tab completion
-"let g:SuperTabDefaultCompletionType = "context"
-"set completeopt=longest,menuone
-"inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
-"inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " Tabs
 set ts=2
 set sw=2
 set et
 
-" set guifont=Monaco:h10
+" Visual Block Indents
+:vnoremap > >gv
+:vnoremap < <gv
+
+" Fonts
 set guifont=Monaco:h12
 set guioptions=egmrLt
 set enc=utf-8
 hi LineNr guifg=#cccccc
 hi LineNr guibg=#272727
 
+" Special Events
 au BufRead,BufNewFile *.ctp set filetype=php
-"au BufRead,BufNewFile *.js set autoindent
+au BufRead,BufNewFile *.js set autoindent
 
+" Turn off folds
 set nofen
+
+" Cursorline
 set cursorline
 au WinEnter * setlocal cursorline
 au WinLeave * setlocal nocursorline
 
-map <leader>e :execute 'NERDTreeToggle ' . escape(getcwd(),'\ ')<CR>
 ",V (CAPITAL V) reloads vimrc
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
-"map <leader>t :FuzzyFinderFile<CR>
+" File Sytem Navigation (Nerd tree, Fuzzy Finder)
+map <leader>e :execute 'NERDTreeToggle ' . escape(getcwd(),'\ ')<CR>
+let NERDTreeShowBookmarks=1 
+
 nnoremap <leader>f :FuzzyFinderFile <C-r>=fnamemodify(escape(getcwd(), '\ '), ':p')<CR><CR> 
 map <leader>b :FuzzyFinderBuffer<CR>
 map <leader>t :Tlist<CR>
 map <leader>w :set lines=101<CR>:set columns=362<CR>
 map <leader>W :set lines=75<CR>:set columns=300<CR>
 
+" Indicate the line is too long
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.*/
-
-" NERDTree
-let NERDTreeShowBookmarks=1 
-
-" Tab settings
-:vnoremap > >gv
-:vnoremap < <gv
-
 
