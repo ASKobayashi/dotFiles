@@ -11,12 +11,12 @@ export PATH=\
 /usr/pkg/bin:\
 /usr/sbin:\
 $PATH
-export HISTCONTROL=ignoreboth # don't put duplicate lines in the history and 
+
+export HISTCONTROL=ignoreboth # don't put duplicate lines in the history and
                               # ignore same sucessive entries.
 
 # Development
 export SVN_EDITOR="vim"
-
 
 # Code Building Paths
 export LD_LIBRARY_PATH=\
@@ -36,3 +36,7 @@ export MANPATH=\
 ~/opt/man:\
 /usr/share/man:\
 $MANPATH
+
+# Local exports if they exist Overides
+[ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh
+

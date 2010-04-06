@@ -1,11 +1,11 @@
 [user]
-  email = Aaron.Kobayashi@gmail.com
   name = Aaron Kobayashi
+  email = Aaron.Kobayashi@gmail.com
 [alias]
+  co = checkout
   ci = commit
   di = diff --color-words
   st = status
-  co = checkout
 [color]
   diff = auto
   status = auto
@@ -16,6 +16,7 @@
 
 [core]
   pager = less -FRSX
+  editor = vim
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 
