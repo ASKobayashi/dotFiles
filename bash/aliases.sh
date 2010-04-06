@@ -3,6 +3,7 @@
 
 # Standard Navigation and File Manipulation
 alias cd..='cd ..'
+alias ..='cd ..'
 alias cp='cp -i'
 alias mv='mv -i'
 alias su='su -'
@@ -15,7 +16,8 @@ alias vi='vim'
 # Development Aliases
 alias gitx='gitx -c'
 alias gs='git status'
-alias gl='git log'
+alias gl='git pull'
+alias gp='git push'
 
 # Custom ls functionality
 alias ls='~/.bash/ls.sh'
