@@ -1,11 +1,6 @@
 " Aaron Kobayashi's vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
 " Use Vim settings, rather then Vi settings (much better!).
 set nocompatible
 
@@ -21,10 +16,6 @@ set incsearch		  " do incremental searching
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
-
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
   set mouse=a
@@ -32,7 +23,7 @@ endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
   set hlsearch
 endif
@@ -69,9 +60,8 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
-set vb t_vb=
+
 set number
-set go-=T
 
 if has("gui_running")
   set transp=0
@@ -85,7 +75,7 @@ set background=dark
 colorscheme vividchalk
 
 " Configure Tlist
-let Tlist_Ctags_Cmd='/opt/local/bin/ctags'
+let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 let Tlist_Use_Right_Window=1
 let Tlist_Enable_Fold_Column=1
 let Tlist_Show_One_File=1 " especially with this one let 
@@ -105,13 +95,14 @@ let Tlist_Exit_OnlyWindow = 1
 set updatetime=1000
 
 " Tabs
-set ts=2
-set sw=2
-set et
+set ts=2 sw=2 et
 
 " Visual Block Indents
 :vnoremap > >gv
 :vnoremap < <gv
+
+" Turn off folds
+set nofen
 
 " Fonts
 set guifont=Monaco:h12
@@ -120,19 +111,16 @@ set enc=utf-8
 hi LineNr guifg=#cccccc
 hi LineNr guibg=#272727
 
-" Special Events
-au BufRead,BufNewFile *.ctp set filetype=php
-au BufRead,BufNewFile *.js set autoindent
-
-" Turn off folds
-set nofen
-
 " Cursorline
 set cursorline
 au WinEnter * setlocal cursorline
 au WinLeave * setlocal nocursorline
 
-",V (CAPITAL V) reloads vimrc
+" Case only matters with mixed case expressions
+set ignorecase
+set smartcase
+
+" Reload vimrc
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " File Sytem Navigation (Nerd tree, Fuzzy Finder)
@@ -149,3 +137,24 @@ map <leader>W :set lines=75<CR>:set columns=300<CR>
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.*/
 
+" Use Ack instead of Grep when available
+if executable("ack")
+  set grepprg=ack\ -H\ --nogroup\ --nocolor
+endif
+
+" Rails.vim shortcuts
+map <Leader>m :Rmodel 
+map <Leader>c :Rcontroller 
+map <Leader>v :Rview 
+map <Leader>u :Runittest 
+map <Leader>f :Rfunctionaltest 
+map <Leader>vm :RVmodel 
+map <Leader>vc :RVcontroller 
+map <Leader>vv :RVview 
+map <Leader>vu :RVunittest 
+map <Leader>vf :RVfunctionaltest 
+map <Leader>vm :RSmodel 
+map <Leader>sc :RScontroller 
+map <Leader>sv :RSview 
+map <Leader>su :RSunittest 
+map <Leader>sf :RSfunctionaltest 
