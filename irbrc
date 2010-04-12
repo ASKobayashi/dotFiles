@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'pp'
+require 'ap'
 require 'irb/completion'
 
 IRB.conf[:PROMPT_MODE] = :SIMPLE
