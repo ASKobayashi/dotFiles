@@ -5,18 +5,21 @@ task :install do
   replace_all = false
   Dir['*'].each do |file|
     next if %w[Rakefile README LICENSE].include? file
+    
+    # Handle authorized_keys special case
+    dir = (%w[authorized_keys].include? file) ? "ssh/" : "" 
 
     if File.exist?(File.join(ENV['HOME'], ".#{file}"))
       if replace_all
         replace_file(file)
       else
-        print "overwrite ~/.#{file}? [ynaq] "
+        print "overwrite ~/.#{dir+file}? [ynaq] "
         case $stdin.gets.chomp
         when 'a'
           replace_all = true
-          replace_file(file)
+          replace_file(file, dir)
         when 'y'
-          replace_file(file)
+          replace_file(file, dir)
         when 'q'
           exit
         else
@@ -24,17 +27,17 @@ task :install do
         end
       end
     else
-      link_file(file)
+      link_file(file, dir)
     end
   end
 end
 
-def replace_file(file)
-  system %Q{rm "$HOME/.#{file}"}
+def replace_file(file, dir="")
+  system %Q{rm "$HOME/.#{dir+file}"}
   link_file(file)
 end
 
-def link_file(file)
-  puts "linking ~/.#{file}"
-  system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file}"}
+def link_file(file, dir="")
+  puts "linking ~/.#{dir+file}"
+  system %Q{ln -s "$PWD/#{file}" "$HOME/.#{dir+file}"}
 end
