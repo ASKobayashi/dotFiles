@@ -5,6 +5,7 @@
 export PATH=\
 /opt/local/bin:\
 ~/opt/bin:\
+~/.bash/path_scripts:\
 /bin:\
 /usr/bin:\
 /usr/local/bin:\

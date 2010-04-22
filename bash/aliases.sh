@@ -24,6 +24,9 @@ alias ls='~/.bash/ls.sh'
 alias ll='ls -lA'
 alias la='ls -Ax'
 
+# Use the gnu versions of utilities where available
+command -v gdircolors >/dev/null && alias dircolors='gdircolors'
+
 # Local aliases if they exist (Private aliases here)
 [ -f ~/.bash/aliases.local.sh ] && . ~/.bash/aliases.local.sh
 
