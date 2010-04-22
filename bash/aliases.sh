@@ -26,6 +26,7 @@ alias la='ls -Ax'
 
 # Use the gnu versions of utilities where available
 command -v gdircolors >/dev/null && alias dircolors='gdircolors'
+command -v grm >/dev/null && alias rm='grm'
 
 # Local aliases if they exist (Private aliases here)
 [ -f ~/.bash/aliases.local.sh ] && . ~/.bash/aliases.local.sh
