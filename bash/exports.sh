@@ -9,6 +9,7 @@ export PATH=\
 /bin:\
 /usr/bin:\
 /usr/local/bin:\
+/usr/local/sbin:\
 /usr/pkg/bin:\
 /usr/sbin:\
 $PATH
