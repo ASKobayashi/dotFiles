@@ -3,15 +3,15 @@
 
 # Standard Bash stuff
 export PATH=\
-/opt/local/bin:\
 ~/opt/bin:\
 ~/.bash/path_scripts:\
-/bin:\
-/usr/bin:\
 /usr/local/bin:\
 /usr/local/sbin:\
+/opt/local/bin:\
+/usr/bin:\
 /usr/pkg/bin:\
 /usr/sbin:\
+/bin:\
 $PATH
 
 export HISTCONTROL=ignoreboth # don't put duplicate lines in the history and
