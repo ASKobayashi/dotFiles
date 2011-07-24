@@ -1,0 +1,58 @@
+*bundle-log.txt*                   Bundle Install Log
+
+
+Logs bundle install activity. Also see the list of installed |bundles|.
+
+Sun Jul 24 13:51:15 CDT 2011 by vim-update-bundles 0.8
+ Add |vundle|                   0.8-97-g1394988    https://github.com/gmarik/vundle
+ Add |nerdtree|                 4.1.0-42-g2dd198c  https://github.com/scrooloose/nerdtree
+ Add |nerdcommenter|            2.2.2-55-gb28e7be  https://github.com/scrooloose/nerdcommenter
+ Add |vim-surround|             v1.90-5-gd9e6bfd   https://github.com/tpope/vim-surround
+ Add |tagbar|                   v2.1-15-g3b389ae   https://github.com/majutsushi/tagbar
+ Add |bufexplorer.zip|          7.2.8              https://github.com/vim-scripts/bufexplorer.zip
+ Add |command-t|                1.2.1-6-g3c0dc0a   git://git.wincent.com/command-t.git
+ Add |vim-closebuffer|          0.2-1-g1baa81b     https://github.com/bronson/vim-closebuffer
+ Add |vim-ruby|                 vim7.3-32-g07d0b51 https://github.com/vim-ruby/vim-ruby
+ Add |vim-rails|                v4.3-20-gb470a38   https://github.com/tpope/vim-rails
+ Add |vim-rake|                 24b6fd08bcc96      https://github.com/tpope/vim-rake
+ Add |a.vim|                    2.18               https://github.com/vim-scripts/a.vim
+ Add |snipmate.vim|             f5a75d075d3c0      https://github.com/msanders/snipmate.vim
+ Add |snipmate-snippets|        15cb6bf4fad5b      https://github.com/scrooloose/snipmate-snippets
+ Add |IndexedSearch|            070503             https://github.com/vim-scripts/IndexedSearch
+ Add |vim-runtest|              54c3335bc5fa3      https://github.com/bronson/vim-runtest
+ Add |vim-ruby-block-conv|      0.1                https://github.com/bronson/vim-ruby-block-conv
+ Add |vim-textobj-user|         0.3.10             https://github.com/kana/vim-textobj-user
+ Add |vim-textobj-rubyblock|    0.0.2-1-gc6b186d   https://github.com/nelstrom/vim-textobj-rubyblock
+ Add |Parameter-Text-Objects|   0.2a               https://github.com/vim-scripts/Parameter-Text-Objects
+ Add |vim-indent-object|        1.1.2-1-g78fffa6   https://github.com/michaeljsmith/vim-indent-object
+ Add |tabular|                  b7b4d8791a500      https://github.com/godlygeek/tabular
+ Add |vim-endwise|              v1.0-4-g86e1d4a    https://github.com/tpope/vim-endwise
+ Add |vim-repeat|               v1.0               https://github.com/tpope/vim-repeat
+ Add |vim-fugitive|             v1.2-12-g4453370   https://github.com/tpope/vim-fugitive
+ Add |supertab|                 1.5-8-g80ec653     https://github.com/ervandew/supertab
+ Add |vim-visual-star-search|   0.2-1-g15abfaa     https://github.com/bronson/vim-visual-star-search
+ Add |vim-trailing-whitespace|  1.0-2-g6bfea00     https://github.com/bronson/vim-trailing-whitespace
+ Add |vim-toggle-wrap|          0.1                https://github.com/bronson/vim-toggle-wrap
+ Add |YAIFA|                    efa1e15e3ba85      https://github.com/Raimondi/YAIFA
+ Add |AutoTag|                  1.11               https://github.com/vim-scripts/AutoTag
+ Add |hammer.vim|               8f30078ba4001      https://github.com/bronson/hammer.vim
+ Add |vim-javascript|           6362ba99c825a      https://github.com/pangloss/vim-javascript
+ Add |jQuery|                   0.5.2              https://github.com/vim-scripts/jQuery
+ Add |vim-shoulda|              3129eb926fdd2      https://github.com/tsaleh/vim-shoulda
+ Add |vim-git|                  v5.0-6-gca001e5    https://github.com/tpope/vim-git
+ Add |vim-cucumber|             2ef3e5a4876a4      https://github.com/tpope/vim-cucumber
+ Add |vim-haml|                 vim7.2-57-gde3e72a https://github.com/tpope/vim-haml
+ Add |vim-markdown|             v1.2.2-2-g8c9ce12  https://github.com/gmarik/vim-markdown
+ Add |textile.vim|              0.2-11-g5d25629    https://github.com/timcharper/textile.vim
+ Add |vim-coffee-script|        f4d2fbfc6bf18      https://github.com/kchmck/vim-coffee-script
+ Add |puppet-vim|               1f3b151b2d4ee      https://github.com/ajf/puppet-vim
+ Add |vim-scala|                e3746cd5703be      https://github.com/bdd/vim-scala
+ Add |vim-slim|                 f770045eac740      https://github.com/bbommarito/vim-slim
+ Add |vim-vividchalk|           v2.0               https://github.com/tpope/vim-vividchalk
+ Add |vim-irblack|              59622caff32a7      https://github.com/wgibbs/vim-irblack
+ Add |vim-colors-solarized|     528a59f26d122      https://github.com/altercation/vim-colors-solarized
+   47 bundles added
+
+Sun Jul 24 15:43:50 CDT 2011 by vim-update-bundles 0.8
+   no updates
+

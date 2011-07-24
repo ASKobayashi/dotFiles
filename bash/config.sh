@@ -14,7 +14,7 @@ shopt -s checkwinsize
 
 
 # dircolors
-command -v dircolors >/dev/null && eval `dircolors -b ~/.bash/dircoloursrc` # ls Colors
+ command -v dircolors >/dev/null && eval `dircolors -b ~/.bash/dircoloursrc` # ls Colors
 
 # Switch to a gem directory, trying to match your name the best
 function cdgem {

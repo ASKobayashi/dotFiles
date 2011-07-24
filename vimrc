@@ -1,160 +1,275 @@
-" Aaron Kobayashi's vimrc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimsy's .vimrc
+"
+" Don't use abbreviations!  Spelling things out makes grepping easy.
+" After installing this .vimrc, run vim-update-bundles to install the
+" plugins: https://github.com/bronson/vim-update-bundles
 
-" Use Vim settings, rather then Vi settings (much better!).
 set nocompatible
+filetype on   " work around stupid osx bug
+filetype off
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+" set up Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+" Tell Vim to ignore BundleCommand until vundle supports it
+com! -nargs=? BundleCommand
 
-set nobackup		  " Keep no backups
-set history=50		" keep 50 lines of command line history
-set ruler		      " show the cursor position all the time
-set showcmd		    " display incomplete commands
-set incsearch		  " do incremental searching
 
-" Don't use Ex mode, use Q for formatting
-map Q gq
+filetype indent plugin on
+syntax on
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
-  set hlsearch
-endif
+set showcmd           " show incomplete cmds down the bottom
+set showmode          " show current mode down the bottom
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
+set incsearch         " find the next match as we type the search
+set hlsearch          " hilight searches by default
+set nowrap            " by default, dont wrap lines (see <leader>w)
+set showmatch         " briefly jump to matching }] when typing
+set nostartofline     " don't jump to start of line as a side effect (i.e. <<)
 
-  " Enable file type detection.
-  filetype plugin indent on
+set scrolloff=3       " lines to keep visible before and after cursor
+set sidescrolloff=7   " columns to keep visible before and after cursor
+set sidescroll=1      " continuous horizontal scroll rather than jumpy
 
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
+set laststatus=2      " always display status line even if only one window is visible.
+set updatetime=1000   " reduce updatetime so current tag in taglist is highlighted faster
+set autoread          " suppress warnings when git,etc. changes files on disk.
+set autowrite         " write buffers before invoking :make, :grep etc.
+set nrformats=alpha,hex " C-A/C-X works on dec, hex, and chars (not octal so no leading 0 ambiguity)
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+set wildmode=list:longest   "make cmdline tab completion similar to bash
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 
-  " When editing a file, always jump to the last known cursor position.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-  augroup END
+set backspace=indent,eol,start "allow backspacing over everything in insert mode
+set history=1000               "store lots of :cmdline history
 
-else
+set hidden          " allow buffers to go into the background without needing to save
 
-  set autoindent		" always set autoindenting on
+let g:is_posix = 1  " vim's default is archaic bourne shell, bring it up to the 90s.
 
-endif
+set visualbell      " don't beep constantly, it's annoying.
+set t_vb=           " and don't flash the screen either (terminal anyway...
+set guioptions-=T   " hide gvim's toolbar by default
+" set guifont=Inconsolata\ Medium\ 10
+" set guifont=* to bring up a font selector, set guifont? to see result
 
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
-endif
 
+" color schemes
+colorscheme torte
+
+" line number config
 set number
+highlight LineNr guifg=grey
+highlight LineNr ctermfg=grey
 
-if has("gui_running")
-  set transp=0
-  set lines=75
-  set columns=300
-  "set autochdir
-endif
+" search for a tags file recursively from cwd to /
+set tags=.tags,tags;/
 
-" Configure Color Scheme
-set background=dark
-colorscheme vividchalk
+" Store swapfiles in a single directory.
+set directory=~/.vim/swap,~/tmp,/var/tmp/,tmp
 
-" Configure Tlist
-let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
-let Tlist_Use_Right_Window=1
-let Tlist_Enable_Fold_Column=1
-let Tlist_Show_One_File=1 " especially with this one let 
-let Tlist_Compact_Format=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Close_On_Select=0
-let Tlist_GainFocus_On_ToggleOpen=0
-let Tlist_Use_SingleClick=1
-let Tlist_Show_Menu=1
-let Tlist_Auto_Open=0
-let Tlist_Display_Prototype = 0
-let Tlist_Exit_OnlyWindow = 1
+" indenting, languages
+set expandtab         " use spaces instead of tabstops
+set smarttab          " use shiftwidth when hitting tab instead of sts (?)
+set autoindent        " try to put the right amount of space at the beginning of a new line
+set shiftwidth=2
+set softtabstop=2
 
-" let tlist_php_settings = 'php;c:class;d:constant;f:function;v:variable'
+" autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2
+" include ! and ? in Ruby method names so you can hit ^] on a.empty?
+autocmd FileType ruby setlocal iskeyword+=!,?
 
-"If 1 second goes by and nothing is typed the swap file will be written to disk 
-set updatetime=1000
+" TODO? Turn on jquery syntax highlighting in jquery files
+" autocmd BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
-" Tabs
-set ts=2 sw=2 et
+" TODO?  save: marks from '10 files, "100 lines in each register
+"  :20 lines of command history, % the bufer list, and put it all in ~/.viminfo
+" set viminfo='10,\"100,:20,%,n~/.viminfo
 
-" Visual Block Indents
-:vnoremap > >gv
-:vnoremap < <gv
+" wish I could make mapleader be space but vim waits for a second
+" every time you hit the space key.
+" <Plug>DiscretionaryEnd
+" let mapleader=" "
 
-" Turn off folds
-set nofen
 
-" Fonts
-set guifont=Monaco:h12
-set guioptions=egmrLt
-set enc=utf-8
-hi LineNr guifg=#cccccc
-hi LineNr guibg=#272727
+" fixes
 
-" Cursorline
-set cursorline
-au WinEnter * setlocal cursorline
-au WinLeave * setlocal nocursorline
+" Make the escape key bigger, keyboards move it all over.
+map <F1> <Esc>
+imap <F1> <Esc>
 
-" Case only matters with mixed case expressions
-set ignorecase
-set smartcase
+" <C-L> redraws the screen and also turns off highlighting the current search
+" NO, it conflicts with moving to different windows.
+" nnoremap <C-L> :nohlsearch<CR><C-L>
 
-" Reload vimrc
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+" add a keybinding to toggle paste mode
+nnoremap <leader>p :set paste!<CR>:set paste?<CR>
 
-" File Sytem Navigation (Nerd tree, Fuzzy Finder)
-map <leader>e :execute 'NERDTreeToggle ' . escape(getcwd(),'\ ')<CR>
-let NERDTreeShowBookmarks=1 
+" make ' jump to saved line & column rather than just line.
+" http://items.sjbach.com/319/configuring-vim-right
+nnoremap ' `
+nnoremap ` '
 
-nnoremap <leader>f :FuzzyFinderFile <C-r>=fnamemodify(escape(getcwd(), '\ '), ':p')<CR><CR> 
-map <leader>b :FuzzyFinderBuffer<CR>
-map <leader>t :Tlist<CR>
-map <leader>w :set lines=101<CR>:set columns=362<CR>
-map <leader>W :set lines=75<CR>:set columns=300<CR>
+" make Y yank to the end of the line (like C and D).  Use yy to yank the entire line.
+" Upside: feels more natural.  Downside: not stock vi/vim.
+nmap Y y$
 
-" Indicate the line is too long
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.*/
+" Make the quickfix window wrap no matter the setting of nowrap
+au BufWinEnter * if &buftype == 'quickfix' | setl wrap | endif
+" 'q' inside quickfix window closes it (like nerdtree, bufexplorer, etc)
+au BufWinEnter * if &buftype == 'quickfix' | map q :cclose<CR> | endif
 
-" Use Ack instead of Grep when available
-if executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor
-endif
+" Make Alt-Arrows switch between windows (like C-W h, etc)
+" nmap <silent> <A-Up> :wincmd k<CR>
+" nmap <silent> <A-Down> :wincmd j<CR>
+" nmap <silent> <A-Left> :wincmd h<CR>
+" nmap <silent> <A-Right> :wincmd l<CR>
 
-" Rails.vim shortcuts
-map <Leader>m :Rmodel 
-map <Leader>c :Rcontroller 
-map <Leader>v :Rview 
-map <Leader>u :Runittest 
-map <Leader>f :Rfunctionaltest 
-map <Leader>vm :RVmodel 
-map <Leader>vc :RVcontroller 
-map <Leader>vv :RVview 
-map <Leader>vu :RVunittest 
-map <Leader>vf :RVfunctionaltest 
-map <Leader>vm :RSmodel 
-map <Leader>sc :RScontroller 
-map <Leader>sv :RSview 
-map <Leader>su :RSunittest 
-map <Leader>sf :RSfunctionaltest 
+" Make Control-direction switch between windows (like C-W h, etc)
+nmap <silent> <C-k> :wincmd k<CR>
+nmap <silent> <C-j> :wincmd j<CR>
+nmap <silent> <C-h> :wincmd h<CR>
+nmap <silent> <C-l> :wincmd l<CR>
+
+" quicker to navigate the quickfix window, just control-n, control-p
+nmap <silent> <C-n> :cn<CR>
+nmap <silent> <C-p> :cp<CR>
+
+
+" highlight rspec keywords properly
+" modified from tpope and technicalpickles: https://gist.github.com/64635
+autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let
+highlight def link rubyRspec Function
+
+
+" Plugins:
+
+runtime macros/matchit.vim  " enable vim's built-in matchit script (make % bounce between tags, begin/end, etc)
+
+Bundle 'https://github.com/gmarik/vundle'
+
+Bundle 'https://github.com/scrooloose/nerdtree'
+nmap <leader>d :NERDTreeToggle<cr>
+nmap <leader>D :NERDTreeFind<cr>
+
+Bundle 'https://github.com/scrooloose/nerdcommenter'
+" Use Control-/ to toggle comments
+map <C-/> <plug>NERDCommenterToggle<CR>
+" And Command-/ works on the Mac
+map <D-/> <plug>NERDCommenterToggle<CR>
+" And C-/ produces C-_ on most terminals
+map <C-_> <plug>NERDCommenterToggle<CR>
+
+Bundle 'https://github.com/tpope/vim-surround'
+" tell surround not to break the visual s keystroke (:help vs)
+xmap S <Plug>Vsurround
+
+Bundle 'https://github.com/majutsushi/tagbar'
+nmap <leader>l :TagbarToggle<cr>
+
+Bundle 'https://github.com/vim-scripts/bufexplorer.zip'
+nmap <leader>b :BufExplorer<cr>
+
+Bundle 'git://git.wincent.com/command-t.git'
+" ensure we compile with the system ruby if rvm is installed
+BundleCommand 'if which rvm >/dev/null 2>&1; then rvm system exec rake make; else rake make; fi'
+nmap <silent> <C-Space> :CommandT<CR>
+nmap <silent> <C-@> :CommandT<CR>
+" let g:CommandTCancelMap = ['<C-c>', '<Esc>', '<C-Space>', '<C-@>']
+" let g:CommandTSelectPrevMap = ['<C-p>', '<C-k>', '<Up>', '<ESC>OA']
+" let g:CommandTSelectNextMap = ['<C-n>', '<C-j>', '<Down>', '<ESC>OB']
+let g:CommandTMatchWindowAtTop = 1
+
+Bundle 'https://github.com/bronson/vim-closebuffer'
+Bundle 'https://github.com/vim-ruby/vim-ruby'
+Bundle 'https://github.com/tpope/vim-rails'
+Bundle 'https://github.com/tpope/vim-rake'
+Bundle 'https://github.com/vim-scripts/a.vim'
+Bundle 'https://github.com/msanders/snipmate.vim'
+Bundle 'https://github.com/scrooloose/snipmate-snippets'
+Bundle 'https://github.com/vim-scripts/IndexedSearch'
+Bundle 'https://github.com/bronson/vim-runtest'
+"
+"    text objects    :he text-objects
+" TODO: rewrite ruby-block-conv to use textobj-rubyblock
+Bundle 'https://github.com/bronson/vim-ruby-block-conv'
+Bundle 'https://github.com/kana/vim-textobj-user'
+" Ruby text objects: ar, ir
+Bundle 'https://github.com/nelstrom/vim-textobj-rubyblock'
+" Paramter text objects (between parens and commas): aP, iP
+Bundle 'https://github.com/vim-scripts/Parameter-Text-Objects'
+" indent text objects: ai, ii, (include line below) aI, iI
+"   ai,ii work best for Python, aI,II work best for Ruby/C/Perl
+Bundle 'https://github.com/michaeljsmith/vim-indent-object'
+
+Bundle 'https://github.com/godlygeek/tabular'
+
+Bundle 'https://github.com/tpope/vim-endwise'
+Bundle 'https://github.com/tpope/vim-repeat'
+
+Bundle 'https://github.com/tpope/vim-fugitive'
+" TODO: this prompt seems to cause huge delays with big repos on MacOS X
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+Bundle 'https://github.com/ervandew/supertab'
+
+Bundle 'https://github.com/bronson/vim-visual-star-search'
+Bundle 'https://github.com/bronson/vim-trailing-whitespace'
+Bundle 'https://github.com/bronson/vim-toggle-wrap'
+
+Bundle 'https://github.com/Raimondi/YAIFA'
+" verbosity=1 allows you to check YAIFA's results by running :messages
+let g:yaifa_verbosity = 0
+
+Bundle 'https://github.com/vim-scripts/AutoTag'
+Bundle 'https://github.com/bronson/hammer.vim'
+let g:HammerQuiet = 1 " otherwise hammer complains about missing github-markup gem
+
+
+" The Ruby debugger is fairly painful, enable only when you need it
+"" The Ruby debugger only works in mvim!  It won't work in a terminal.
+" Bundle 'https://github.com/astashov/vim-ruby-debugger'
+"" let g:ruby_debugger_debug_mode = 1
+"let g:ruby_debugger_progname = 'mvim'   " TODO: how to autodetect this?
+"" Use Eclipse-like keystrokes: F5=step, F6=next, F7=return
+"" If on a Mac you must hit Fn-F5 or switch "Use all F1..." in Keyboard control panel.
+"" Also, the Mac seems to eat most Control-Fkeys so use Shift-Fkey as a synonym.
+"noremap <F5>    :call g:RubyDebugger.step()<CR>
+"noremap C-<F5>  :call g:RubyDebugger.continue()<CR>
+"noremap S-<F5>  :call g:RubyDebugger.continue()<CR>
+"noremap <F6>    :call g:RubyDebugger.next()<CR>
+"noremap C-<F6>  :call g:RubyDebugger.continue()<CR>
+"noremap S-<F6>  :call g:RubyDebugger.continue()<CR>
+"noremap <F7>    :call g:RubyDebugger.finish()<CR>
+"noremap C-<F7>  :call g:RubyDebugger.exit()<CR>
+"noremap S-<F7>  :call g:RubyDebugger.exit()<CR>
+
+
+" Syntax Files:
+Bundle 'https://github.com/pangloss/vim-javascript'
+Bundle 'https://github.com/vim-scripts/jQuery'
+Bundle 'https://github.com/tsaleh/vim-shoulda'
+Bundle 'https://github.com/tpope/vim-git'
+Bundle 'https://github.com/tpope/vim-cucumber'
+Bundle 'https://github.com/tpope/vim-haml'
+" TODO: should move back to hallison or plasticboy markdown when they pick up new changes
+Bundle 'https://github.com/gmarik/vim-markdown'
+Bundle 'https://github.com/timcharper/textile.vim'
+Bundle 'https://github.com/kchmck/vim-coffee-script'
+Bundle 'https://github.com/ajf/puppet-vim'
+Bundle 'https://github.com/bdd/vim-scala'
+Bundle 'https://github.com/bbommarito/vim-slim'
+
+" Color Schemes:
+Bundle 'https://github.com/tpope/vim-vividchalk'
+Bundle 'https://github.com/wgibbs/vim-irblack'
+Bundle 'https://github.com/altercation/vim-colors-solarized'
+
+" TODO: Bundle: https://github.com/hallettj/jslint.vim
+" TODO: Bundle: https://github.com/ecomba/vim-ruby-refactoring
+" TODO: Bundle: https://github.com/scrooloose/syntastic
+" TODO: Bundle: https://github.com/int3/vim-extradite
+" TODO: Bundle: https://github.com/rson/vim-conque
+" TODO: the only decent gdb frontend looks to be pyclewn?
