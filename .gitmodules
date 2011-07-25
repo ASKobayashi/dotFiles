@@ -10,3 +10,6 @@
 [submodule "vim/bundle/textile"]
 	path = vim/bundle/textile
 	url = git://github.com/timcharper/textile.vim.git
+[submodule "vim/bundle/vundle"]
+	path = vim/bundle/vundle
+	url = https://github.com/gmarik/vundle.git

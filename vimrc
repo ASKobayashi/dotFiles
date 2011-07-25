@@ -24,6 +24,7 @@ set showmode          " show current mode down the bottom
 
 set incsearch         " find the next match as we type the search
 set hlsearch          " hilight searches by default
+set smartcase         " search in smart ways
 set nowrap            " by default, dont wrap lines (see <leader>w)
 set showmatch         " briefly jump to matching }] when typing
 set nostartofline     " don't jump to start of line as a side effect (i.e. <<)
@@ -137,12 +138,17 @@ nmap <silent> <C-l> :wincmd l<CR>
 nmap <silent> <C-n> :cn<CR>
 nmap <silent> <C-p> :cp<CR>
 
+" run the current file if it's ruby
+nmap <silent> <C-r> :w <CR> :!ruby %<CR>
+nmap <silent> <D-r> :w <CR> :!ruby % <CR>
 
 " highlight rspec keywords properly
 " modified from tpope and technicalpickles: https://gist.github.com/64635
 autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context let
 highlight def link rubyRspec Function
 
+" Automatically strip trailing white spaces.
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Plugins:
 
@@ -151,6 +157,7 @@ runtime macros/matchit.vim  " enable vim's built-in matchit script (make % bounc
 Bundle 'https://github.com/gmarik/vundle'
 
 Bundle 'https://github.com/scrooloose/nerdtree'
+nmap <D-d> :NERDTreeToggle<cr>
 nmap <leader>d :NERDTreeToggle<cr>
 nmap <leader>D :NERDTreeFind<cr>
 
