@@ -139,8 +139,7 @@ nmap <silent> <C-n> :cn<CR>
 nmap <silent> <C-p> :cp<CR>
 
 " run the current file if it's ruby
-nmap <silent> <C-r> :w <CR> :!ruby %<CR>
-nmap <silent> <D-r> :w <CR> :!ruby % <CR>
+nmap <D-r> <Esc> :w <CR> :!ruby % <CR>
 
 " highlight rspec keywords properly
 " modified from tpope and technicalpickles: https://gist.github.com/64635
