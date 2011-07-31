@@ -13,6 +13,9 @@
 # Bash custom auto completion
 [ -f ~/.bash/git-prompt.sh ] && . ~/.bash/git-prompt.sh
 
-# RVM
-[ -f ~/.rvm/scripts/rvm ] && . ~/.rvm/scripts/rvm
+# Ruby/RVM
+if [ -f ~/.rvm/scripts/rvm ]; then
+  . ~/.rvm/scripts/rvm
+  gemdoc=`gem environment gemdir`/doc
+fi
 
