@@ -6,7 +6,7 @@
     end
 end
 
-Wirble::History::DEFAULTS[:history_uniq] = 'reverse'
+IRB.conf[:SAVE_HISTORY] = 50
 Wirble.init
 Wirble.colorize
 
