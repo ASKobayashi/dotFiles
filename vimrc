@@ -113,55 +113,6 @@ autocmd BufWritePre * :%s/\s\+$//e
 " =============================================================
 runtime macros/matchit.vim  " enable vim's built-in matchit script (make % bounce between tags, begin/end, etc)
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" Tell Vim to ignore BundleCommand until vundle supports it
-com! -nargs=? BundleCommand
-Bundle 'https://github.com/gmarik/vundle'
-
-Bundle 'https://github.com/scrooloose/nerdtree'
-nmap <D-d> :NERDTreeToggle<cr>
-nmap <leader>d :NERDTreeToggle<cr>
-nmap <leader>D :NERDTreeFind<cr>
-
-Bundle 'https://github.com/scrooloose/nerdcommenter'
-" Use Control-/ to toggle comments
-map <C-/> <plug>NERDCommenterToggle<CR>
-" And Command-/ works on the Mac
-map <D-/> <plug>NERDCommenterToggle<CR>
-" And C-/ produces C-_ on most terminals
-map <C-_> <plug>NERDCommenterToggle<CR>
-
-Bundle 'https://github.com/tpope/vim-surround'
-" Press cs"' inside "Hello world!" to change it to 'Hello world!'
-
-Bundle 'https://github.com/godlygeek/tabular'
-" Running :Tab /= aligns everything to the = sign
-
-Bundle 'https://github.com/majutsushi/tagbar'
-nmap <leader>l :TagbarToggle<cr>
-
-Bundle 'git://git.wincent.com/command-t.git'
-let g:CommandTMaxHeight=20
-
-Bundle 'https://github.com/scrooloose/syntastic/'
-
-Bundle 'https://github.com/ervandew/supertab'
-
-Bundle 'https://github.com/vim-scripts/AutoTag'
-
-
-" Syntax Files:
-Bundle 'https://github.com/tpope/vim-git'
-Bundle 'https://github.com/tpope/vim-haml'
-Bundle 'https://github.com/gmarik/vim-markdown'
-Bundle 'svg.vim'
-Bundle 'xml.vim'
-
-
-" Color Schemes:
-Bundle 'https://github.com/tpope/vim-vividchalk'
-colorscheme torte
 
 " AUTO COMMANDS
 " ==========================================================================================
@@ -195,11 +146,23 @@ if has("autocmd")
   au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 endif
 
-
-
-
 " Keymapping
 " =============================================================
+
+" Cmd h and l for first and last of line
+nmap <C-h> ^
+nmap <C-l> $
+
+" Cmd j and k for next and previous screen scroll
+nmap <C-j> <kPageDown>
+nmap <C-k> <kPageUp>
+
+" Make Control-direction switch between windows (like C-W h, etc)
+" If it's not working look in .gvimrc for details
+nmap <silent> <D-k> :wincmd k<CR>
+nmap <silent> <D-j> :wincmd j<CR>
+nmap <silent> <D-h> :wincmd h<CR>
+nmap <silent> <D-l> :wincmd l<CR>
 
 " make Y yank to the end of the line (like C and D).  Use yy to yank the entire line.
 nmap Y y$
@@ -212,15 +175,16 @@ nnoremap ` '
 " Normal mode: <Leader>e
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-
 " Opens a tab edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>t
 map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
+" quicker to navigate the errror window, just control-n, control-p
+nmap <silent> <C-n> :lnext<CR>
+nmap <silent> <C-p> :lprevious<CR>
 
-" Inserts the path of the currently edited file into a command
-" Command mode: Ctrl+P
-cmap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
+" open the vimrc file in a new tab.
+nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-y> :call <SID>SynStack()<CR>
@@ -231,18 +195,90 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" Make Control-direction switch between windows (like C-W h, etc)
-nmap <silent> <C-k> :wincmd k<CR>
-nmap <silent> <C-j> :wincmd j<CR>
-nmap <silent> <C-h> :wincmd h<CR>
-nmap <silent> <C-l> :wincmd l<CR>
+" Setting up Vundle - script credit: http://www.erikzaadi.com/
+   let iCanHazVundle=1
+   let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+   if !filereadable(vundle_readme)
+      echo "Installing Vundle.."
+      echo ""
+      silent !mkdir -p ~/.vim/bundle
+      silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+      let iCanHazVundle=0
+   endif
 
-" quicker to navigate the quickfix window, just control-n, control-p
-nmap <silent> <C-n> :cn<CR>
-nmap <silent> <C-p> :cp<CR>
+   set rtp+=~/.vim/bundle/vundle/
+   call vundle#rc()
+   Bundle 'gmarik/vundle'
 
-" open the vimrc file in a new tab.
-nmap <leader>v :tabedit $MYVIMRC<CR>
+   "Add your bundles here
+   Bundle 'https://github.com/scrooloose/nerdtree'
+   nmap <D-d> :NERDTreeToggle<cr>
+   nmap <leader>D :NERDTreeFind<cr>
 
-" run the current file if it's ruby
-nmap <D-r> <Esc> :w <CR> :!ruby % <CR>
+   Bundle 'https://github.com/scrooloose/nerdcommenter'
+   "cmd-/ toggles comments
+   map <D-/> <plug>NERDCommenterToggle<CR>
+   nmap <leader>/ <plug>NERDCommenterToggle<CR>
+
+   "Without the following patch, there is no default align, which
+   "Makes block comments look bad
+   "git pull https://github.com/ervandew/nerdcommenter.git master
+   let NERDDefaultAlign = 'both'
+
+   Bundle 'https://github.com/scrooloose/syntastic/'
+
+   Bundle 'https://github.com/godlygeek/tabular'
+   " Running :Tab /= aligns everything to the = sign
+   nmap <Leader>a= :Tabularize /[><!=]*=<CR>
+   vmap <Leader>a= :Tabularize /[><!=]*=<CR>
+   vmap <Leader>a/ :Tabularize /\/[\*\/]<CR>
+   vmap <Leader>a/ :Tabularize /\/[\*\/]<CR>
+   nmap <Leader>a: :Tabularize /:\zs<CR>
+   vmap <Leader>a: :Tabularize /:\zs<CR>
+   nmap <Leader>a, :Tabularize /,\zs<CR>
+   vmap <Leader>a, :Tabularize /,\zs<CR>
+
+   Bundle 'git://git.wincent.com/command-t.git'
+   let g:CommandTMaxHeight=20
+   map <D-t> :CommandT<CR>
+
+   Bundle 'https://github.com/majutsushi/tagbar'
+   nmap <leader>l :TagbarToggle<cr>
+   " Open on supported file opens
+   autocmd VimEnter * nested :call tagbar#autoopen(1)
+
+   Bundle 'https://github.com/vim-scripts/AutoTag'
+
+   Bundle 'https://github.com/ervandew/supertab'
+
+   Bundle 'https://github.com/Rip-Rip/clang_complete'
+   let g:clang_use_library = 1
+
+
+   " Syntax Files:
+   Bundle 'https://github.com/tpope/vim-git'
+   Bundle 'https://github.com/tpope/vim-haml'
+   Bundle 'https://github.com/gmarik/vim-markdown'
+   Bundle 'svg.vim'
+   Bundle 'xml.vim'
+
+
+   " Color Schemes:
+   Bundle 'https://github.com/tpope/vim-vividchalk'
+   Bundle 'https://github.com/vim-scripts/Lucius'
+
+   colorscheme torte
+
+   " Less obnoxious PMenu colors
+   hi Pmenu          ctermfg=255 ctermbg=238 guifg=#ffffff guibg=#444444
+   hi PmenuSel       ctermfg=0 ctermbg=148 guifg=#000000 guibg=#b1d631
+   hi PmenuSbar      ctermbg=7 guibg=Grey
+   hi PmenuThumb     ctermbg=15 guibg=White
+
+   if iCanHazVundle == 0
+      echo "Installing Bundles, please ignore key map error messages"
+      echo ""
+      :BundleInstall
+   endif
+" Setting up Vundle - the vim plugin bundler end
+
