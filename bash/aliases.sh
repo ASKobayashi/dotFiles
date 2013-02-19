@@ -19,6 +19,9 @@ alias gs='git status'
 alias gl='git pull'
 alias gp='git push'
 
+alias mkctags='ctags --fields=+lS --c-kinds=+p'
+alias mkcscope="find -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' > cscope.files && cscope -b -q"
+
 # Custom ls functionality
 alias ls='~/.bash/ls.sh'
 alias ll='ls -lA'
