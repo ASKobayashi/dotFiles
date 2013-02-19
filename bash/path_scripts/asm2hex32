@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+#USAGE Examples:
+#     echo "push %ebp" | ./asm2hex32.sh
+#     cat <filename> | ./asm2hex32.sh
+#     ./asm2hex32.sh < <filename>
+
+base=`basename $0`
+TMPFILE=`mktemp -t ${base}` || exit 1
+trap 'rm -f $TMPFILE' INT TERM EXIT
+
+echo "`cat`" | gcc -m32 -fverbose-asm  -x assembler - -c  -o $TMPFILE
+otool -tX  $TMPFILE
+
