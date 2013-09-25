@@ -8,6 +8,7 @@ export PATH=\
 /usr/local/bin:\
 /usr/local/sbin:\
 /opt/local/bin:\
+/usr/texbin:\
 /usr/bin:\
 /usr/pkg/bin:\
 /usr/sbin:\
@@ -38,6 +39,11 @@ export MANPATH=\
 ~/opt/man:\
 /usr/share/man:\
 $MANPATH
+
+export PYTHONSTARTUP=~/.pystartup
+
+export GREP_OPTIONS="--directories=skip -n -i --color=auto"
+export GREP_COLOR='31'
 
 # Local exports if they exist Overides
 [ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh

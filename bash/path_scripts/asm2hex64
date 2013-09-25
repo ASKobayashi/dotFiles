@@ -10,5 +10,5 @@ TMPFILE=`mktemp -t ${base}` || exit 1
 trap 'rm -f $TMPFILE' INT TERM EXIT
 
 echo "`cat`" | gcc -m64 -fverbose-asm  -x assembler - -c  -o $TMPFILE
-otool -tX  $TMPFILE
+otool -tX  $TMPFILE | cut -d\  -f2-
 

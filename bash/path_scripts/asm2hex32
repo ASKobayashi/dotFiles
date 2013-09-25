@@ -1,14 +1,18 @@
 #!/bin/sh -e
 
 #USAGE Examples:
-#     echo "push %ebp" | ./asm2hex32.sh
-#     cat <filename> | ./asm2hex32.sh
-#     ./asm2hex32.sh < <filename>
+#     echo "jmp $ + 3" | asm2hex32
+#     echo "jmp SHORT 5" | asm2hex32
+#     echo "push ebp" | asm2hex32
+#     cat <filename> | asm2hex32
+#     asm2hex32 < <filename>
 
 base=`basename $0`
-TMPFILE=`mktemp -t ${base}` || exit 1
-trap 'rm -f $TMPFILE' INT TERM EXIT
+TMPSRCFILE=`mktemp -t ${base}` || exit 1
+TMPDSTFILE=`mktemp -t ${base}` || exit 1
+trap 'rm -f $TMPSRCFILE $TMPDSTFILE' INT TERM EXIT
 
-echo "`cat`" | gcc -m32 -fverbose-asm  -x assembler - -c  -o $TMPFILE
-otool -tX  $TMPFILE
+echo "`cat`" > $TMPSRCFILE && nasm -f macho $TMPSRCFILE -o $TMPDSTFILE
+otool -tXV  $TMPDSTFILE | cut -d\  -f1-
+otool -tX  $TMPDSTFILE | cut -d\  -f2-
 
