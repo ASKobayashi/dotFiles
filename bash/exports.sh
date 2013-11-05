@@ -40,11 +40,11 @@ export MANPATH=\
 /usr/share/man:\
 $MANPATH
 
-export PYTHONSTARTUP=~/.pystartup
-
-export GREP_OPTIONS="--directories=skip -n -i --color=auto"
 export GREP_COLOR='31'
 
 # Local exports if they exist Overides
 [ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh
+
+export PYTHONSTARTUP=~/.pystartup
+export PYTHONPATH="/System/Library/PrivateFrameworks/LLDB.framework/Resources/Python:$(brew --prefix)/lib/python2.7/site-packages"
 

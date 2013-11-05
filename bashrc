@@ -4,6 +4,9 @@
 # Then run the linkdotfiles script
 ###################################################################
 
+# VI mode
+set -o vi
+
 [ -f /etc/bashrc ] && . /etc/bashrc
 [ -f ~/.bash/aliases.sh ] && . ~/.bash/aliases.sh
 [ -f ~/.bash/completions.sh ] && . ~/.bash/completions.sh
@@ -19,3 +22,7 @@ if [ -f ~/.rvm/scripts/rvm ]; then
   gemdoc=`gem environment gemdir`/doc
 fi
 
+# Virtualenv
+if [ -f ~/opt/python/python/bin/activate ]; then
+  . ~/opt/python/python/bin/activate
+fi

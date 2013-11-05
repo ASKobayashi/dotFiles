@@ -12,6 +12,7 @@ alias mroe="less -E"
 alias more="less -E"
 alias h='history'
 alias vi='vim'
+alias grep='grep --directories=skip -n -i --color=auto'
 
 # Development Aliases
 alias gitx='gitx -c'
@@ -19,8 +20,8 @@ alias gs='git status'
 alias gl='git pull'
 alias gp='git push'
 
-alias mkctags='ctags --fields=+lS --c-kinds=+p'
-alias mkcscope="find -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' > cscope.files && cscope -b -q"
+alias ctags_gen='ctags --fields=+lS --c-kinds=+p'
+alias cscope_gen="find -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' > cscope.files && cscope -b -q"
 
 # Custom ls functionality
 alias ls='~/.bash/ls.sh'

@@ -110,9 +110,6 @@ nmap <silent> <C-p> :lprevious<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" open the vimrc file in a new tab.
-nmap <leader>v :tabedit $MYVIMRC<CR>
-
 " Plugins
 " =============================================================
 " Setting up Vundle - script credit: http://www.erikzaadi.com/
@@ -158,6 +155,12 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
       " Syntax Checking
       Bundle 'https://github.com/scrooloose/syntastic/'
 
+      " Grep
+      Bundle 'https://github.com/vim-scripts/EasyGrep'
+      let g:EasyGrepWindow=1      " use the location list
+      " let g:EasyGrepCommand=1     " use external grep
+      let g:EasyGrepMode=2
+
       " Snippets
       Bundle 'https://github.com/guns/ultisnips'
           let g:UltiSnipsExpandTrigger="<c-j>"
@@ -187,10 +190,16 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
       " Code Completion / Searching
       Bundle 'https://github.com/Valloric/YouCompleteMe.git'
+          let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+          let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+          let g:ycm_confirm_extra_conf = 0 " turn off confirmation
+          let g:ycm_add_preview_to_completeopt = 1 " add preview string
+          let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 
+          let g:syntastic_always_populate_loc_list = 1
       " Beautifying
-      Bundle 'https://github.com/vim-scripts/Align'
-      set cino+=(0        " Indent functions better
+      Bundle 'https://github.com/godlygeek/tabular.git'
+          vmap <leader>a= :Tabularize /=/l1r1<CR>
 
       " Syntax Files
       Bundle 'https://github.com/jcf/vim-latex'
@@ -268,7 +277,8 @@ if has("cscope")
     function! CscopeGetDbPath()
         let db = findfile("cscope.out", ".;")
         if (!empty(db))
-            let path = strpart(db, 0, match(db, "/cscope.out$"))
+            let fullPath = fnamemodify(db, ":p")
+            let path = strpart(fullPath, 0, match(fullPath, "cscope.out$"))
             return path
         endif
     endfunction
