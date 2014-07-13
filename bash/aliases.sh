@@ -32,6 +32,16 @@ alias la='ls -Ax'
 command -v gdircolors >/dev/null && alias dircolors='gdircolors'
 command -v grm >/dev/null && alias rm='grm'
 
+alias sl="pbpaste | sed -e 's/\(..\)/\\\\x\1/g' | pbcopy"
+
+getProcPid() {
+    ps aux | \grep $1 | \grep -v grep | awk '{print $2}'
+}
+
+alias getpid=getProcPid
+
+alias startWebServer="python -m SimpleHTTPServer 8080"
+
 # Local aliases if they exist (Private aliases here)
 [ -f ~/.bash/aliases.local.sh ] && . ~/.bash/aliases.local.sh
 

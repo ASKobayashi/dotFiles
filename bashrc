@@ -5,7 +5,7 @@
 ###################################################################
 
 # VI mode
-set -o vi
+#set -o vi
 
 [ -f /etc/bashrc ] && . /etc/bashrc
 [ -f ~/.bash/aliases.sh ] && . ~/.bash/aliases.sh

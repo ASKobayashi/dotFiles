@@ -154,6 +154,12 @@ vnoremap > >gv
 
       " Syntax Checking
       Bundle 'https://github.com/scrooloose/syntastic/'
+          let g:syntastic_always_populate_loc_list = 1
+          let g:syntastic_tex_checkers = ['chktex']
+
+      " GPG
+      Bundle 'https://github.com/jamessan/vim-gnupg'
+          "let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
 
       " Grep
       Bundle 'https://github.com/vim-scripts/EasyGrep'
@@ -171,9 +177,10 @@ vnoremap > >gv
       Bundle 'https://github.com/majutsushi/tagbar'
          nmap <leader>n :TagbarToggle<cr>
          " Open on supported file opens
-         autocmd VimEnter * nested :call tagbar#autoopen(1)
+         "autocmd VimEnter * nested :call tagbar#autoopen(1)
          let g:tagbar_sort = 0
          let g:tagbar_width = 20
+         let g:tagbar_compact = 1
 
       " Quickfix / Location list
       Bundle 'https://github.com/milkypostman/vim-togglelist.git'
@@ -196,13 +203,16 @@ vnoremap > >gv
           let g:ycm_add_preview_to_completeopt = 1 " add preview string
           let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 
-          let g:syntastic_always_populate_loc_list = 1
+      " Vim LLDB
+      Bundle "gilligan/vim-lldb"
+
       " Beautifying
       Bundle 'https://github.com/godlygeek/tabular.git'
           vmap <leader>a= :Tabularize /=/l1r1<CR>
 
       " Syntax Files
       Bundle 'https://github.com/jcf/vim-latex'
+      let g:Tex_FoldedSections = ''
 
       " Color Schemes
       Bundle 'https://github.com/tpope/vim-vividchalk'
@@ -221,7 +231,7 @@ vnoremap > >gv
       hi TabLine        ctermfg=255 ctermbg=238
       hi TabLineSel     ctermfg=0 ctermbg=148
 
-      let &colorcolumn=join(range(81,999),",")    " Page guides
+      let &colorcolumn=join(range(81,81),",")    " Page guides
       highlight ColorColumn ctermbg=235
 
    if iCanHazVundle == 0
@@ -254,7 +264,7 @@ if has("autocmd")
   au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
   " Text/Tex files
-  au BufRead,BufNewFile *.txt,*.tex set wrap linebreak nolist textwidth=0 wrapmargin=0
+  au BufRead,BufNewFile *.txt,*.tex,*.pgp set wrap linebreak nolist textwidth=80 wrapmargin=0
 
   " add json syntax highlighting
   au BufNewFile,BufRead *.json set ft=javascript

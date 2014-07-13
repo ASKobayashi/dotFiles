@@ -23,14 +23,12 @@ export SVN_EDITOR="vim"
 
 # Code Building Paths
 export LD_LIBRARY_PATH=\
-/opt/local/lib:\
 ~/opt/lib:\
-/usr/lib:\
+/usr/local/lib:\
 $LD_LIBRARY_PATH\
 
 export CPATH=\
 /opt/local/include:\
-/usr/include:\
 ~/opt/include:\
 $CPATH
 
@@ -46,5 +44,5 @@ export GREP_COLOR='31'
 [ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh
 
 export PYTHONSTARTUP=~/.pystartup
-export PYTHONPATH="/System/Library/PrivateFrameworks/LLDB.framework/Resources/Python:$(brew --prefix)/lib/python2.7/site-packages"
+export PYTHONPATH="/System/Library/PrivateFrameworks/LLDB.framework/Resources/Python:$(brew --prefix)/lib/python2.7/site-packages:/Library/Python/2.7/site-packages/"
 
