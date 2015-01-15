@@ -21,23 +21,6 @@ export HISTCONTROL=ignoreboth # don't put duplicate lines in the history and
 # Development
 export SVN_EDITOR="vim"
 
-# Code Building Paths
-export LD_LIBRARY_PATH=\
-~/opt/lib:\
-/usr/local/lib:\
-$LD_LIBRARY_PATH\
-
-export CPATH=\
-/opt/local/include:\
-~/opt/include:\
-$CPATH
-
-export MANPATH=\
-/opt/local/man:\
-~/opt/man:\
-/usr/share/man:\
-$MANPATH
-
 export GREP_COLOR='31'
 
 # Local exports if they exist Overides

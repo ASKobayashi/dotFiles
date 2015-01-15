@@ -1,5 +1,4 @@
 " ASKobayashi's .vimrc
-
 set nocompatible      " Make vim behave in a more useful way
 
 " General Config
@@ -22,7 +21,7 @@ set tabstop=4         " number of spaces a tab represents
 set shiftwidth=4      " Number of spaces to use for each step of (auto)indent.
 set softtabstop=4     " Number of spaces that a <Tab> counts for while performing editing
 set autoindent        " try to put the right amount of space at the beginning of a new line
-set expandtab         " In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+set noexpandtab       " Use tabs
 set smarttab          " use shiftwidth when hitting tab instead of sts (?)
 set nostartofline     " don't jump to start of line as a side effect (i.e. <<)
 
@@ -103,8 +102,10 @@ map <Leader>< :bp<cr>
 map <Leader>> :bn<cr>
 
 " quicker to navigate the error window, just control-n, control-p
-nmap <silent> <C-n> :lnext<CR>
-nmap <silent> <C-p> :lprevious<CR>
+nmap <C-n> :lnext<CR>
+nmap <C-p> :lprevious<CR>
+nmap <C-N> :cnext<CR>
+nmap <C-P> :cprevious<CR>
 
 "Don't unselect text when indenting/dedenting when in visual mode
 vnoremap < <gv
@@ -147,6 +148,8 @@ vnoremap > >gv
       " File Search
       Bundle 'kien/ctrlp.vim'
          let g:ctrlp_map = '<leader>o'
+         let g:ctrlp_root_markers = ['cscope.out']
+         nmap <leader>O :CtrlPBuffer<cr>
 
    " Programming:
       " Match Delimiters
@@ -184,7 +187,7 @@ vnoremap > >gv
 
       " Quickfix / Location list
       Bundle 'https://github.com/milkypostman/vim-togglelist.git'
-         let g:toggle_list_copen_command = 'bo copen'
+         " Leader,q and leader l for quickfix and location list
 
       " Header <-> Source
       Bundle 'https://github.com/vim-scripts/a.vim'
@@ -195,6 +198,10 @@ vnoremap > >gv
           let g:tcommentMapLeaderOp1 = '<Leader>c'
           let g:tcommentMapLeaderOp2 = '<Leader>C'
 
+	  " Auditing
+	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
+		  source ~/.vim/bundle/pct-vim/pct.vim
+
       " Code Completion / Searching
       Bundle 'https://github.com/Valloric/YouCompleteMe.git'
           let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -202,9 +209,6 @@ vnoremap > >gv
           let g:ycm_confirm_extra_conf = 0 " turn off confirmation
           let g:ycm_add_preview_to_completeopt = 1 " add preview string
           let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
-
-      " Vim LLDB
-      Bundle "gilligan/vim-lldb"
 
       " Beautifying
       Bundle 'https://github.com/godlygeek/tabular.git'
@@ -270,10 +274,9 @@ if has("autocmd")
   au BufNewFile,BufRead *.json set ft=javascript
 
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
-  au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}	 set ft=ruby
+  au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
 
 endif
-
 
 " Cscope
 if has("cscope")
@@ -346,7 +349,12 @@ if has("cscope")
 
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
     set cscopetag
+
+    " use cscope db first
     set csto=0
+
+    " Only display last 3 path components
+    "set cspc=3
 
     " quickfix setup
     set cscopequickfix=s-,g-,c-,t-,d-,i-,t-,e-

@@ -12,7 +12,7 @@ alias mroe="less -E"
 alias more="less -E"
 alias h='history'
 alias vi='vim'
-alias grep='grep --directories=skip -n -i --color=auto'
+alias grep='grep --directories=skip -i --color=auto'
 
 # Development Aliases
 alias gitx='gitx -c'
@@ -21,7 +21,7 @@ alias gl='git pull'
 alias gp='git push'
 
 alias ctags_gen='ctags --fields=+lS --c-kinds=+p'
-alias cscope_gen="find -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' > cscope.files && cscope -b -q"
+alias cscope_gen="find -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' -exec echo '\"{}\"' \; > cscope.files && cscope -b -q"
 
 # Custom ls functionality
 alias ls='~/.bash/ls.sh'
@@ -40,7 +40,7 @@ getProcPid() {
 
 alias getpid=getProcPid
 
-alias startWebServer="python -m SimpleHTTPServer 8080"
+alias startWebServer="python -m SimpleHTTPServer 8000"
 
 # Local aliases if they exist (Private aliases here)
 [ -f ~/.bash/aliases.local.sh ] && . ~/.bash/aliases.local.sh

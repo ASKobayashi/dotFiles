@@ -15,6 +15,8 @@
 
 # Bash custom auto completion
 [ -f ~/.bash/git-prompt.sh ] && . ~/.bash/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=
+export GIT_PS1_SHOWUNTRACKEDFILES=
 
 # Ruby/RVM
 if [ -f ~/.rvm/scripts/rvm ]; then
