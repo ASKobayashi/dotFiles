@@ -1,5 +1,28 @@
---ignore-dir=rails
+--break
+--color
+--smart-case
+--sort-files
+--pager=vimpager
 
-# Add the .rake extension to ruby types
---type-add
-ruby=.rake
+#--type-add=text
+
+--ignore-file=match:/^tags$/
+
+--ignore-dir=rails
+--ignore-dir=tmp
+--ignore-dir=log
+
+--type-set=markdown=.md
+--type-add=markdown=.mdown
+--type-add=markdown=.mkd
+
+--type-set=processing=.pde
+
+--type-set=arduino=.pde
+
+--type-set=max=.maxpat
+
+--type-add=css=.sass,.less,.scss
+--type-add=html=.haml
+--type-add=js=.coffee
+--type-set=web=.css,.sass,.html,.haml,.js

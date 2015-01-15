@@ -1,4 +1,6 @@
 *.swp
-.DSStore
+.DS_Store
 vim/.netrwhist
-*.local.sh
+vim/backup/
+vim/bundle/
+*.local.*
