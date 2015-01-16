@@ -26,6 +26,6 @@ export GREP_COLOR='31'
 # Local exports if they exist Overides
 [ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh
 
-export PYTHONSTARTUP=~/.pystartup
-export PYTHONPATH="/System/Library/PrivateFrameworks/LLDB.framework/Resources/Python:$(brew --prefix)/lib/python2.7/site-packages:/Library/Python/2.7/site-packages/"
+# export PYTHONSTARTUP=~/.pystartup
+# export PYTHONPATH="/System/Library/PrivateFrameworks/LLDB.framework/Resources/Python:$(brew --prefix)/lib/python2.7/site-packages:/Library/Python/2.7/site-packages/"
 

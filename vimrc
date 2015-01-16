@@ -202,13 +202,13 @@ vnoremap > >gv
 	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
 		  source ~/.vim/bundle/pct-vim/pct.vim
 
-      " Code Completion / Searching
-      Bundle 'https://github.com/Valloric/YouCompleteMe.git'
-          let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-          let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
-          let g:ycm_confirm_extra_conf = 0 " turn off confirmation
-          let g:ycm_add_preview_to_completeopt = 1 " add preview string
-          let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+      " " Code Completion / Searching
+      " Bundle 'https://github.com/Valloric/YouCompleteMe.git'
+      "     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+      "     let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+      "     let g:ycm_confirm_extra_conf = 0 " turn off confirmation
+      "     let g:ycm_add_preview_to_completeopt = 1 " add preview string
+      "     let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 
       " Beautifying
       Bundle 'https://github.com/godlygeek/tabular.git'

@@ -1,5 +1,5 @@
 # ASKobayashi's Dot Files
-This dotfile installation process was stolen from my good friend @xedmada (http://github.com/xedmada/dotFiles
+This dotfile installation process was stolen from my good friend @xedmada (http://github.com/xedmada/dotFiles)
 
 ## How it works
 dotFiles/dotstrap.sh is a script inspired by [@holman](https://github.com/holman)'s [holman/dotfiles](https://github.com/holman/dotfiles).
