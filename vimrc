@@ -37,7 +37,8 @@ endif
 
 " Status Line & Numbers
 set laststatus=2      " always display status line even if only one window is visible.
-set relativenumber    " turn on line numbers
+set number			  " always turn on line numbers
+set relativenumber    " make them relative
 set ruler             " always show current position
 set noshowmode
 set showcmd           " show incomplete cmds down the bottom
@@ -74,38 +75,31 @@ set spelllang=en_us    " Set spell check diectionary to English US.
 
 let mapleader = ","
 
-" Cmd j and k for next and previous screen scroll
-nmap <C-j> <kPageDown>
-nmap <C-k> <kPageUp>
+" Tabs
+map <C-h> :tabnext<CR>
+map <C-L> :tabprevious<CR>
+map <C-C> :tabclose<CR>
 
-nmap <silent> gk :wincmd k<CR>
-nmap <silent> gj :wincmd j<CR>
-nmap <silent> gh :wincmd h<CR>
-nmap <silent> gl :wincmd l<CR>
+" Windows
+map <C-W>H :wincmd h<CR>
+map <C-W>J :wincmd j<CR>
+map <C-W>K :wincmd k<CR>
+map <C-W>L :wincmd l<CR>
 
-" Tag Bindings
-map <C-D-.> <C-]>
-map <C-D-,> <C-t>
-
-" Opens an edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>e
-map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" Opens a tab edit command with the path of the currently edited file filled in
-" Normal mode: <Leader>t
-map <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-" move forward and backward buffers
+" Jump list
 map <Leader>, <C-O>
 map <Leader>. <C-I>
-map <Leader>< :bp<cr>
-map <Leader>> :bn<cr>
 
-" quicker to navigate the error window, just control-n, control-p
-nmap <C-n> :lnext<CR>
-nmap <C-p> :lprevious<CR>
-nmap <C-N> :cnext<CR>
-nmap <C-P> :cprevious<CR>
+" Buffers
+map <Leader>< :bp<CR>
+map <Leader>> :bn<CR>
+
+" Location/Quickfix Lists
+map <C-J> :lnext <CR>
+map <C-K> :lprevious<CR>
+
+" Use grep -Rn <search term> * | vim -
+map <C-o> <C-w>gF:setlocal ro<CR>:setlocal nomodifiable<CR>
 
 "Don't unselect text when indenting/dedenting when in visual mode
 vnoremap < <gv
@@ -136,7 +130,7 @@ vnoremap > >gv
        let g:airline_theme='wombat'
        set ttimeoutlen=50            " Fix the pause when leaving insert mode
 
-       let g:airline#extensions#tabline#enabled = 1
+	   let g:airline#extensions#tabline#show_buffers = 0  " Buffers aren't tabs
 
    " File Browsing:
       " Graphical File Browsing
@@ -158,36 +152,14 @@ vnoremap > >gv
       " Syntax Checking
       Bundle 'https://github.com/scrooloose/syntastic/'
           let g:syntastic_always_populate_loc_list = 1
-          let g:syntastic_tex_checkers = ['chktex']
-
-      " GPG
-      Bundle 'https://github.com/jamessan/vim-gnupg'
-          "let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
-
-      " Grep
-      Bundle 'https://github.com/vim-scripts/EasyGrep'
-      let g:EasyGrepWindow=1      " use the location list
-      " let g:EasyGrepCommand=1     " use external grep
-      let g:EasyGrepMode=2
-
-      " Snippets
-      Bundle 'https://github.com/guns/ultisnips'
-          let g:UltiSnipsExpandTrigger="<c-j>"
-          let g:UltiSnipsJumpForwardTrigger="<c-j>"
-          let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
       " Code Browsing
       Bundle 'https://github.com/majutsushi/tagbar'
          nmap <leader>n :TagbarToggle<cr>
          " Open on supported file opens
-         "autocmd VimEnter * nested :call tagbar#autoopen(1)
          let g:tagbar_sort = 0
          let g:tagbar_width = 20
          let g:tagbar_compact = 1
-
-      " Quickfix / Location list
-      Bundle 'https://github.com/milkypostman/vim-togglelist.git'
-         " Leader,q and leader l for quickfix and location list
 
       " Header <-> Source
       Bundle 'https://github.com/vim-scripts/a.vim'
@@ -202,21 +174,32 @@ vnoremap > >gv
 	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
 		  source ~/.vim/bundle/pct-vim/pct.vim
 
-      " " Code Completion / Searching
-      " Bundle 'https://github.com/Valloric/YouCompleteMe.git'
-      "     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-      "     let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
-      "     let g:ycm_confirm_extra_conf = 0 " turn off confirmation
-      "     let g:ycm_add_preview_to_completeopt = 1 " add preview string
-      "     let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+      " Code Completion / Searching
+      Bundle 'https://github.com/Valloric/YouCompleteMe.git'
+          let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+          let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+          let g:ycm_confirm_extra_conf = 0 " turn off confirmation
+          let g:ycm_add_preview_to_completeopt = 1 " add preview string
+          let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 
       " Beautifying
       Bundle 'https://github.com/godlygeek/tabular.git'
           vmap <leader>a= :Tabularize /=/l1r1<CR>
 
-      " Syntax Files
-      Bundle 'https://github.com/jcf/vim-latex'
-      let g:Tex_FoldedSections = ''
+   " Other:
+      " GPG
+      Bundle 'https://github.com/jamessan/vim-gnupg'
+          let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
+
+      " Quickfix / Location list
+      Bundle 'https://github.com/milkypostman/vim-togglelist.git'
+         " Leader,q and leader l for quickfix and location list
+
+      " Ultisnips conflicts with ycm.  Need to investigate.
+      Bundle 'https://github.com/guns/ultisnips'
+		"   let g:UltiSnipsExpandTrigger="<C-u>"
+		"   let g:UltiSnipsJumpForwardTrigger="<C-u>"
+		"   let g:UltiSnipsJumpBackwardTrigger="<C-,>"
 
       " Color Schemes
       Bundle 'https://github.com/tpope/vim-vividchalk'
@@ -244,7 +227,7 @@ vnoremap > >gv
       :BundleInstall
    endif
 
-   filetype plugin indent on
+filetype plugin indent on
 " Setting up Vundle - the vim plugin bundler end
 
 
@@ -253,6 +236,10 @@ vnoremap > >gv
 
 if has("autocmd")
 
+  " Use relative number when focused
+  au WinLeave * :set norelativenumber number
+  au WinEnter * :set relativenumber number
+
   " Automatically strip trailing white spaces.
   au BufWritePre * :%s/\s\+$//e
 
@@ -260,14 +247,11 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal g'\"" | endif
 
-  " load the plugin and indent settings for the detected filetype
-  filetype plugin indent on
-
-  " Syntax of these languages is fussy over tabs Vs spaces
+  " Syntax of these languages are fussy over tabs Vs spaces
   au FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
-  " Text/Tex files
+  " Text files
   au BufRead,BufNewFile *.txt,*.tex,*.pgp set wrap linebreak nolist textwidth=80 wrapmargin=0
 
   " add json syntax highlighting
@@ -307,8 +291,8 @@ if has("cscope")
 
     function! CscopeFind(action, word)
         try
-            exe ':lcs f '.a:action.' '.a:word
-            lw
+			exe ':tabnew | :tab lcs f '.a:action ' ' .a:word
+			exe ':lop'
         catch
             echohl WarningMsg | echo 'Can not find '.a:word.' with querytype as '.a:action.'.' | echohl None
         endtry
@@ -344,8 +328,9 @@ if has("cscope")
     " u: Update cscope
     map <leader>fu :call CscopeUpdate()<CR>
 
+
     " show msg when any other cscope db added
-    set nocscopeverbose
+    set cscopeverbose
 
     " use both cscope and ctag for 'ctrl-]', ':ta', and 'vim -t'
     set cscopetag
@@ -354,7 +339,7 @@ if has("cscope")
     set csto=0
 
     " Only display last 3 path components
-    "set cspc=3
+    set cspc=3
 
     " quickfix setup
     set cscopequickfix=s-,g-,c-,t-,d-,i-,t-,e-
