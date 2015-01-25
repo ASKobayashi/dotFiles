@@ -195,11 +195,29 @@ vnoremap > >gv
       Bundle 'https://github.com/milkypostman/vim-togglelist.git'
          " Leader,q and leader l for quickfix and location list
 
-      " Ultisnips conflicts with ycm.  Need to investigate.
-      Bundle 'https://github.com/guns/ultisnips'
-		"   let g:UltiSnipsExpandTrigger="<C-u>"
-		"   let g:UltiSnipsJumpForwardTrigger="<C-u>"
-		"   let g:UltiSnipsJumpBackwardTrigger="<C-,>"
+      " Ultisnips + Snippets
+      Bundle 'https://github.com/SirVer/ultisnips'
+	  Bundle 'https://github.com/honza/vim-snippets'
+
+		  " This hack from https://github.com/SirVer/ultisnips/issues/376#issuecomment-69033351
+		  " Enables tab to move up and down the ycm list, and return to accept
+		  " a snippet.  It also allows tab to move between ultisnips fields
+	      let g:ycm_key_list_select_completion=["<tab>"]
+		  let g:ycm_key_list_previous_completion=["<S-tab>"]
+
+		  let g:UltiSnipsJumpForwardTrigger="<tab>"
+		  let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+		  let g:UltiSnipsExpandTrigger="<nop>"
+		  let g:ulti_expand_or_jump_res = 0
+		  function! <SID>ExpandSnippetOrReturn()
+			  let snippet = UltiSnips#ExpandSnippetOrJump()
+			  if g:ulti_expand_or_jump_res > 0
+				  return snippet
+			  else
+				  return "\<CR>"
+			  endif
+		  endfunction
+		  inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 
       " Color Schemes
       Bundle 'https://github.com/tpope/vim-vividchalk'
