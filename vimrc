@@ -121,7 +121,7 @@ vnoremap > >gv
    filetype off
    set rtp+=~/.vim/bundle/vundle/
    call vundle#rc()
-   Bundle 'gmarik/vundle'
+   Bundle 'https://github.com/gmarik/vundle.git'
 
    " Status Line:
    Bundle 'https://github.com/bling/vim-airline'
@@ -140,7 +140,7 @@ vnoremap > >gv
          let NERDTreeDirArrows = 1
 
       " File Search
-      Bundle 'kien/ctrlp.vim'
+      Bundle 'https://github.com/kien/ctrlp.vim'
          let g:ctrlp_map = '<leader>o'
          let g:ctrlp_root_markers = ['cscope.out']
          nmap <leader>O :CtrlPBuffer<cr>
@@ -148,10 +148,6 @@ vnoremap > >gv
    " Programming:
       " Match Delimiters
       runtime macros/matchit.vim  " enable vim's built-in matchit script (make % bounce between tags, begin/end, etc)
-
-      " Syntax Checking
-      Bundle 'https://github.com/scrooloose/syntastic/'
-          let g:syntastic_always_populate_loc_list = 1
 
       " Code Browsing
       Bundle 'https://github.com/majutsushi/tagbar'
@@ -194,6 +190,14 @@ vnoremap > >gv
       " Quickfix / Location list
       Bundle 'https://github.com/milkypostman/vim-togglelist.git'
          " Leader,q and leader l for quickfix and location list
+
+	  " Easy Motion
+	  Bundle 'https://github.com/Lokaltog/vim-easymotion'
+		  let g:EasyMotion_do_mapping = 0 " Disable default mappings
+		  let g:EasyMotion_smartcase = 1
+		  nmap s <Plug>(easymotion-s2)
+		  map <Leader>j <Plug>(easymotion-j)
+		  map <Leader>k <Plug>(easymotion-k)
 
       " Ultisnips + Snippets
       Bundle 'https://github.com/SirVer/ultisnips'
@@ -310,8 +314,9 @@ if has("cscope")
     function! CscopeFind(action, word)
         try
 			exe ':tabnew | :tab lcs f '.a:action ' ' .a:word
-			exe ':lop'
+			exe ':lop | :wincmd k'
         catch
+			exe ':tabclose'
             echohl WarningMsg | echo 'Can not find '.a:word.' with querytype as '.a:action.'.' | echohl None
         endtry
     endfunction
