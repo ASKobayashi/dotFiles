@@ -130,7 +130,7 @@ vnoremap > >gv
        let g:airline_theme='wombat'
        set ttimeoutlen=50            " Fix the pause when leaving insert mode
 
-	   let g:airline#extensions#tabline#show_buffers = 0  " Buffers aren't tabs
+       let g:airline#extensions#tabline#show_buffers = 0  " Buffers aren't tabs
 
    " File Browsing:
       " Graphical File Browsing
