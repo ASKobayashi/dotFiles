@@ -76,7 +76,7 @@ set spelllang=en_us    " Set spell check diectionary to English US.
 let mapleader = ","
 
 " Tabs
-map <C-h> :tabnext<CR>
+map <C-H> :tabnext<CR>
 map <C-L> :tabprevious<CR>
 map <C-C> :tabclose<CR>
 
