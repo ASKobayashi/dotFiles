@@ -143,7 +143,8 @@ vnoremap > >gv
       Bundle 'https://github.com/kien/ctrlp.vim'
          let g:ctrlp_map = '<leader>o'
          let g:ctrlp_root_markers = ['cscope.out']
-         nmap <leader>O :CtrlPBuffer<cr>
+		 let g:ctrlp_follow_symlinks = 1
+		 let g:ctrlp_working_path_mode = 'ra'
 
    " Programming:
       " Match Delimiters
@@ -151,7 +152,7 @@ vnoremap > >gv
 
       " Code Browsing
       Bundle 'https://github.com/majutsushi/tagbar'
-         nmap <leader>n :TagbarToggle<cr>
+         nmap <leader>t :TagbarToggle<cr>
          " Open on supported file opens
          let g:tagbar_sort = 0
          let g:tagbar_width = 20
@@ -170,6 +171,8 @@ vnoremap > >gv
 	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
 		  source ~/.vim/bundle/pct-vim/pct.vim
 
+	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
+
       " Code Completion / Searching
       Bundle 'https://github.com/Valloric/YouCompleteMe.git'
           let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -179,8 +182,10 @@ vnoremap > >gv
           let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 
       " Beautifying
-      Bundle 'https://github.com/godlygeek/tabular.git'
-          vmap <leader>a= :Tabularize /=/l1r1<CR>
+	  Bundle 'https://github.com/junegunn/vim-easy-align.git'
+		  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+		  vmap <Enter> <Plug>(EasyAlign)
+		  nmap ga <Plug>(EasyAlign)
 
    " Other:
       " GPG
@@ -281,6 +286,51 @@ if has("autocmd")
 
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
   au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+endif
+
+" ag  - The Silver Searcher
+"
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ -f\ --nogroup\ --nocolor
+  " set grepprg=ag\ -f\ --vimgrep
+  " set grepformat=%f:%l:%c:%m
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -f -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+
+  " The following doesnt work :(
+	" function! LGrep(search)
+	" 	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
+	" endfunction
+
+	function! LGrep2(search)
+		tabnew
+		execute "silent grep " a:search " >/tmp/lgrep.txt"
+		lf /tmp/lgrep.txt
+		silent !rm /tmp/lgrep.txt
+		lop | wincmd k
+	endfunction
+
+	command! -nargs=1 Llgrep execute 'call LGrep2("<args>")'
+	map ,s :Llgrep<space>
+	map ,S :execute 'Llgrep '.expand('<cword>')<CR>
+
+	" function! LGrep(search)
+	" 	tabnew
+	" 	"execute "silent lgrep "a:search
+	" 	execute "silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
+	" 	lop
+	" endfunction
+    "
+	" command! -nargs=1 Llgrep execute 'call LGrep("<args>")'
+	" map ,s :Llgrep
+	" map ,S :execute 'Llgrep '.expand('<cword>')<CR>
 
 endif
 

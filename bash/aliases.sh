@@ -21,7 +21,7 @@ alias gl='git pull'
 alias gp='git push'
 
 alias ctags_gen='ctags --fields=+lS --c-kinds=+p'
-alias cscope_gen="find -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' -exec echo '\"{}\"' \; > cscope.files && cscope -b -q"
+alias cscope_gen="find -L -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' -exec echo '\"{}\"' \; > cscope.files && cscope -b -q"
 
 # Custom ls functionality
 alias ls='~/.bash/ls.sh'
