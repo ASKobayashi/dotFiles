@@ -21,7 +21,7 @@ set tabstop=4         " number of spaces a tab represents
 set shiftwidth=4      " Number of spaces to use for each step of (auto)indent.
 set softtabstop=4     " Number of spaces that a <Tab> counts for while performing editing
 set autoindent        " try to put the right amount of space at the beginning of a new line
-set noexpandtab       " Use tabs
+set expandtab         " Use spaces
 set smarttab          " use shiftwidth when hitting tab instead of sts (?)
 set nostartofline     " don't jump to start of line as a side effect (i.e. <<)
 
@@ -155,7 +155,7 @@ vnoremap > >gv
          nmap <leader>t :TagbarToggle<cr>
          " Open on supported file opens
          let g:tagbar_sort = 0
-         let g:tagbar_width = 20
+         let g:tagbar_width = 30
          let g:tagbar_compact = 1
 
       " Header <-> Source
@@ -169,7 +169,6 @@ vnoremap > >gv
 
 	  " Auditing
 	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
-		  source ~/.vim/bundle/pct-vim/pct.vim
 
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
 
@@ -211,7 +210,7 @@ vnoremap > >gv
 		  " This hack from https://github.com/SirVer/ultisnips/issues/376#issuecomment-69033351
 		  " Enables tab to move up and down the ycm list, and return to accept
 		  " a snippet.  It also allows tab to move between ultisnips fields
-	      let g:ycm_key_list_select_completion=["<tab>"]
+		  let g:ycm_key_list_select_completion=["<tab>"]
 		  let g:ycm_key_list_previous_completion=["<S-tab>"]
 
 		  let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -306,7 +305,7 @@ if executable('ag')
 
   " The following doesnt work :(
 	" function! LGrep(search)
-	" 	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
+	"	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
 	" endfunction
 
 	function! LGrep2(search)
@@ -321,17 +320,24 @@ if executable('ag')
 	map ,s :Llgrep<space>
 	map ,S :execute 'Llgrep '.expand('<cword>')<CR>
 
+	function! CSC2(search)
+		tabnew
+		execute "tag " a:search
+		" lop | wincmd k
+	endfunction
+	command! -nargs=1 CSC execute 'call CSC2("<args>")'
+    map ,C :execute 'CSC '.expand("<cword>")<CR>
+
 	" function! LGrep(search)
-	" 	tabnew
-	" 	"execute "silent lgrep "a:search
-	" 	execute "silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
-	" 	lop
+	"	tabnew
+	"	"execute "silent lgrep "a:search
+	"	execute "silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
+	"	lop
 	" endfunction
     "
 	" command! -nargs=1 Llgrep execute 'call LGrep("<args>")'
 	" map ,s :Llgrep
 	" map ,S :execute 'Llgrep '.expand('<cword>')<CR>
-
 endif
 
 " Cscope
@@ -409,7 +415,7 @@ if has("cscope")
     set cscopetag
 
     " use cscope db first
-    set csto=0
+    set csto=1
 
     " Only display last 3 path components
     set cspc=3
