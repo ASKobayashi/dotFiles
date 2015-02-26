@@ -4,3 +4,5 @@ vim/.netrwhist
 vim/backup/
 vim/bundle/
 *.local.*
+irssi/*.pem
+weechat/script/plugins.xml.gz

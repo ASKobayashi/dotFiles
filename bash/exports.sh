@@ -23,6 +23,8 @@ export SVN_EDITOR="vim"
 
 export GREP_COLOR='31'
 
+export TZ='America/Chicago'
+
 # Local exports if they exist Overides
 [ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh
 
