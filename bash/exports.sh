@@ -28,6 +28,28 @@ export TZ='America/Chicago'
 # Local exports if they exist Overides
 [ -f ~/.bash/exports.local.sh ] && . ~/.bash/exports.local.sh
 
-# export PYTHONSTARTUP=~/.pystartup
-# export PYTHONPATH="/System/Library/PrivateFrameworks/LLDB.framework/Resources/Python:$(brew --prefix)/lib/python2.7/site-packages:/Library/Python/2.7/site-packages/"
+
+# PS1
+set_prompt () {
+    Last_Command=$? # Must come first!
+    Red='\[\e[01;31m\]'
+    RedDark='\[\e[0;31m\]'
+    Green='\[\e[01;32m\]'
+    Reset='\[\e[00m\]'
+
+    # Add a bright white exit status for the last command
+    # If it was successful, print a green check mark. Otherwise, print
+    # a red X.
+    PS1="$Reset"
+
+    if [[ $Last_Command != 0 ]]; then
+        PS1+="$RedBold\$? "
+    fi
+
+    PS1+="$Green\\u$Reset@$Red\\h"
+    # Print the working directory and prompt marker in blue, and reset
+    # the text color to the default.
+    PS1+="$Reset\\$ "
+}
+PROMPT_COMMAND='set_prompt'
 
