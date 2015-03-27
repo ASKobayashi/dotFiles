@@ -159,8 +159,8 @@ vnoremap > >gv
          let g:tagbar_compact = 1
 
       " Header <-> Source
-      Bundle 'https://github.com/vim-scripts/a.vim'
-         map <leader>` :A<CR>
+      " Bundle 'https://github.com/vim-scripts/a.vim'
+      "    map <leader>` :A<CR>
 
       " Commenting
       Bundle 'https://github.com/tomtom/tcomment_vim'
@@ -171,6 +171,7 @@ vnoremap > >gv
 	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
 
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
+         map <leader>M :MarkClear<CR>
 
       " Code Completion / Searching
       Bundle 'https://github.com/Valloric/YouCompleteMe.git'
@@ -187,6 +188,10 @@ vnoremap > >gv
 		  nmap ga <Plug>(EasyAlign)
 
    " Other:
+      " nvim
+      Bundle "https://github.com/cwoac/nvim.git"
+      Bundle "https://github.com/tpope/vim-markdown.git"
+
       " GPG
       Bundle 'https://github.com/jamessan/vim-gnupg'
           let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
@@ -280,6 +285,11 @@ if has("autocmd")
   " Text files
   au BufRead,BufNewFile *.txt,*.tex,*.pgp set wrap linebreak nolist textwidth=80 wrapmargin=0
 
+  " MD Files
+  au BufRead,BufNewFile *.md set ft=markdown
+  " Turn off the messed up _ processing
+  au BufRead,BufNewFile *.md syn match markdownError "\w\@<=\w\@="
+
   " add json syntax highlighting
   au BufNewFile,BufRead *.json set ft=javascript
 
@@ -293,8 +303,6 @@ endif
 if executable('ag')
   " Use ag over grep
   set grepprg=ag\ -f\ --nogroup\ --nocolor
-  " set grepprg=ag\ -f\ --vimgrep
-  " set grepformat=%f:%l:%c:%m
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -f -l --nocolor -g ""'
