@@ -13,6 +13,7 @@ alias more="less -E"
 alias h='history'
 alias vi='vim'
 alias grep='grep --directories=skip -i --color=auto'
+alias mutt='pushd ~/Desktop && mutt && popd'
 
 # Development Aliases
 alias gitx='gitx -c'
@@ -20,8 +21,9 @@ alias gs='git status'
 alias gl='git pull'
 alias gp='git push'
 
-alias ctags_gen='ctags --fields=+lS --c-kinds=+p'
-alias cscope_gen="find -L -E . -iregex '.*\.(c|cc|cpp|hpp|h|m|mm)' -exec echo '\"{}\"' \; > cscope.files && cscope -b -q"
+alias ctags_gen='ctags --recurse --fields=+lS --c-kinds=+p .'
+alias cscope_gen="cscope -Rb"
+alias preproc_gen="clang -Imyinclude -P -E -nostdinc -nobuiltininc "
 
 # Custom ls functionality
 alias ls='~/.bash/ls.sh'

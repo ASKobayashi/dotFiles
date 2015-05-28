@@ -19,6 +19,7 @@ export HISTCONTROL=ignoreboth # don't put duplicate lines in the history and
                               # ignore same sucessive entries.
 
 # Development
+export NVIM_HOME=~/Work/notes/
 export SVN_EDITOR="vim"
 
 export GREP_COLOR='31'

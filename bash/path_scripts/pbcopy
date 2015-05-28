@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	/usr/bin/pbcopy
+else
+	cat | nc -q1 localhost 2224
+fi

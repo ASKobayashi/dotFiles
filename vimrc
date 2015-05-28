@@ -21,7 +21,7 @@ set tabstop=4         " number of spaces a tab represents
 set shiftwidth=4      " Number of spaces to use for each step of (auto)indent.
 set softtabstop=4     " Number of spaces that a <Tab> counts for while performing editing
 set autoindent        " try to put the right amount of space at the beginning of a new line
-set expandtab         " Use spaces
+" set expandtab         " Use spaces
 set smarttab          " use shiftwidth when hitting tab instead of sts (?)
 set nostartofline     " don't jump to start of line as a side effect (i.e. <<)
 
@@ -284,6 +284,10 @@ if has("autocmd")
 
   " Text files
   au BufRead,BufNewFile *.txt,*.tex,*.pgp set wrap linebreak nolist textwidth=80 wrapmargin=0
+  au BufRead,BufNewFile *.txt,*.tex,*.pgp setlocal spell complete+=kspell
+
+  " Mail
+  au FileType mail set spell complete+=kspell
 
   " MD Files
   au BufRead,BufNewFile *.md set ft=markdown
