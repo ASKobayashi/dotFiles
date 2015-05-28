@@ -170,8 +170,7 @@ vnoremap > >gv
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
          map <leader>M :MarkClear<CR>
 
-	  " Auditing (i only really audit on osx)
-	  "
+	  " Stuff i only really use on osx
 	  if has("unix")
 		  let s:uname = system("uname")
 		  if s:uname == "Darwin\n"
@@ -185,6 +184,14 @@ vnoremap > >gv
 			  let g:ycm_add_preview_to_completeopt = 1 " add preview string
 			  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 		  endif
+
+		  " nvim
+		  Bundle "https://github.com/cwoac/nvim.git"
+		  Bundle "https://github.com/tpope/vim-markdown.git"
+
+		  " GPG
+		  Bundle 'https://github.com/jamessan/vim-gnupg'
+			  let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
 	  endif
 
       " Beautifying
@@ -194,13 +201,6 @@ vnoremap > >gv
 		  nmap ga <Plug>(EasyAlign)
 
    " Other:
-      " nvim
-      Bundle "https://github.com/cwoac/nvim.git"
-      Bundle "https://github.com/tpope/vim-markdown.git"
-
-      " GPG
-      Bundle 'https://github.com/jamessan/vim-gnupg'
-          let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
 
       " Quickfix / Location list
       Bundle 'https://github.com/milkypostman/vim-togglelist.git'
