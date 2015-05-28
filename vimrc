@@ -167,19 +167,25 @@ vnoremap > >gv
           let g:tcommentMapLeaderOp1 = '<Leader>c'
           let g:tcommentMapLeaderOp2 = '<Leader>C'
 
-	  " Auditing
-	  Bundle 'https://github.com/d0c-s4vage/pct-vim'
-
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
          map <leader>M :MarkClear<CR>
 
-      " Code Completion / Searching
-      Bundle 'https://github.com/Valloric/YouCompleteMe.git'
-          let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-          let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
-          let g:ycm_confirm_extra_conf = 0 " turn off confirmation
-          let g:ycm_add_preview_to_completeopt = 1 " add preview string
-          let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+	  " Auditing (i only really audit on osx)
+	  "
+	  if has("unix")
+		  let s:uname = system("uname")
+		  if s:uname == "Darwin\n"
+			  Bundle 'https://github.com/d0c-s4vage/pct-vim'
+
+			  " Code Completion / Searching
+			  Bundle 'https://github.com/Valloric/YouCompleteMe.git'
+			  let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+			  let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+			  let g:ycm_confirm_extra_conf = 0 " turn off confirmation
+			  let g:ycm_add_preview_to_completeopt = 1 " add preview string
+			  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+		  endif
+	  endif
 
       " Beautifying
 	  Bundle 'https://github.com/junegunn/vim-easy-align.git'
