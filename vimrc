@@ -242,6 +242,8 @@ vnoremap > >gv
       Bundle 'https://github.com/tpope/vim-vividchalk'
       Bundle 'https://github.com/vim-scripts/Lucius'
 
+	  Bundle 'https://github.com/vim-scripts/actionscript.vim--Leider'
+
       colorscheme torte
 
       " Less obnoxious PMenu colors
@@ -302,6 +304,9 @@ if has("autocmd")
 
   " add json syntax highlighting
   au BufNewFile,BufRead *.json set ft=javascript
+
+  "Actionscript
+  au BufNewFile,BufRead *.as	set ft=actionscript
 
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
   au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
