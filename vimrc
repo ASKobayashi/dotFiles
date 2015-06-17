@@ -184,7 +184,7 @@ vnoremap > >gv
 			  let g:ycm_add_preview_to_completeopt = 1 " add preview string
 			  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 		  else
-			  vmap y :w<Home>silent <End> !tmux-copypaste copy &<Cr>
+			  vmap Y :w<Home>silent <End> !tmux-copypaste copy &<Cr>
 		  endif
 
 		  " nvim
