@@ -183,6 +183,8 @@ vnoremap > >gv
 			  let g:ycm_confirm_extra_conf = 0 " turn off confirmation
 			  let g:ycm_add_preview_to_completeopt = 1 " add preview string
 			  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+		  else
+			  vmap y :w<Home>silent <End> !tmux-copypaste copy &<Cr>
 		  endif
 
 		  " nvim
@@ -307,6 +309,7 @@ if has("autocmd")
 
   "Actionscript
   au BufNewFile,BufRead *.as	set ft=actionscript
+  au BufNewFile,BufRead *.mxml  set ft=actionscript
 
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
   au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
