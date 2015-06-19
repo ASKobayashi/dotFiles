@@ -38,7 +38,7 @@ mono  header bold                 "^(From|Subject):"
 # These would be much simpler if colors were additive.
 
 # regular new messages
-color index black         white   "~N !~T !~F !~p !~P"
+color index white		  black   "~N !~T !~F !~p !~P"
 
 # regular tagged messages
 color index black         cyan    "~T !~F !~p !~P"
@@ -47,25 +47,25 @@ color index black         cyan    "~T !~F !~p !~P"
 color index black         red     "~F !~p !~P"
 
 # messages to me
-color index white         default "~p !~N !~T !~F !~P"
+color index brightwhite         default "~p !~N !~T !~F !~P"
 color index brightyellow  default "~p ~N !~T !~F !~P"
 color index white         cyan    "~p ~T !~F !~P"
 color index white         red     "~p ~F !~P"
 
 # messages from me
 color index green         default "~P !~N !~T !~F"
-color index green         white   "~P ~N !~T !~F"
+color index green         default "~P ~N !~T !~F"
 color index green         cyan    "~P ~T !~F"
 color index green         red     "~P ~F"
 
 # big messages
 color index brightred     default "!~N ~z 102400-"
 color index brightred     cyan    "~T !~F !~p !~P ~z 102400-"
-color index brightred     white   "~N ~z 102400-"
+color index brightred     black   "~N ~z 102400-"
 
 # deleted messages
 color index red           default "!~N ~D"
-color index red           white   "~N ~D"
+color index red           black   "~N ~D"
 
 
 # Highlights inside the body of a message.
