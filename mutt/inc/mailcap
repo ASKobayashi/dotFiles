@@ -1,0 +1,18 @@
+# ~/.mutt/mailcap
+#
+# this uses the view_attachment script found in ~/.mutt/view_attachment.sh
+#
+# this is meant for an OS X system
+#
+# Images
+image/jpg; ~/.mutt/view_attachment.sh %s jpg
+image/jpeg; ~/.mutt/view_attachment.sh %s jpg
+image/pjpeg; ~/.mutt/view_attachment.sh %s jpg
+image/png; ~/.mutt/view_attachment.sh %s png
+image/gif; ~/.mutt/view_attachment.sh %s gif
+
+# PDF
+application/pdf; ~/.mutt/view_attachment.sh %s pdf
+
+# HTML
+text/html; w3m -I %{charset} -T text/html; copiousoutput;

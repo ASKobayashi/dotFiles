@@ -3,6 +3,7 @@
 vim/.netrwhist
 vim/backup/
 vim/bundle/
+mutt/.cache
 *.local.*
 irssi/*.pem
 weechat/script/plugins.xml.gz

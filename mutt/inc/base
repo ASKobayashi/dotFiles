@@ -1,0 +1,43 @@
+# vim: ft=muttrc
+# Based on https://github.com/clarete/muttrc
+
+# Basic Setup
+set   mbox_type = Maildir # mailbox type
+set   delete              # don't ask, just do
+unset confirmappend       # don't ask, just do!
+set   quit                # don't ask, just do!!
+
+# Caches
+set header_cache     = '~/.mutt/.cache/headers'
+set message_cachedir = '~/.mutt/.cache/bodies'
+set certificate_file = '~/.mutt/.cache/certificates'
+
+# Get Mail
+set read_inc = 1000
+set mail_check = 5
+set timeout = 15
+
+# Read Mail h
+unset  mark_old               # read/new is good enough for me
+
+# Send Mail
+set sendmail_wait = 0 # Don't silently fail
+
+# Edit Mail
+set editor           = "vim -c 'normal! }' -c 'redraw'"
+set abort_nosubject  = ask-yes
+set abort_unmodified = yes
+set delete           = yes
+set content_type     = 'text/plain'
+set sig_on_top       = yes
+set signature        = ~/.mutt/signature
+set sig_dashes       = no
+
+# Other
+set wait_key = no          # shut up, mutt
+set pipe_decode            # strip headers and eval mimes when piping
+set thorough_search        # strip headers and eval mimes before searching
+
+# Futher config
+set mailcap_path = "~/.mutt/inc/mailcap"
+

@@ -190,26 +190,6 @@ install_osx () {
                 exit;;
         esac
     fi
-    if [[ ! -n $FISH_VERSION ]]; then
-        user "Fish not found. Install? [Y/n]"
-        read shellinput
-        case "$shellinput" in
-            n|N )
-                continue;;
-            y|Y|* )
-                info "Attempting to install fish"
-                brew install fish
-                info "Adding Fish to /etc/shells"
-                sudo /usr/local/bin/fish >>/etc/shell
-                user "Make fish your default shell? [Y/n]"
-                case "$shellinputt" in
-                    n|N )
-                        continue;;
-                    y|Y|* )
-                        sudo chsh -s /usr/local/bin/
-                esac;;
-        esac
-    fi
     system='osx'
     install_dotfiles
     "$DOTFILES_ROOT/setup_/osx.sh"

@@ -1,0 +1,18 @@
+# vim: ft=muttrc
+set realname    = $my_home_realname
+set from        = $my_home_from
+
+set imap_user   = $my_home_imap_user
+set imap_pass   = $my_home_imap_pass
+set folder      = $my_home_folder
+set spoolfile   = $my_home_spoolfile
+set record      = $my_home_record
+set postponed   = $my_home_postponed
+set mbox        = $my_home_mbox
+
+set smtp_url    = $my_home_smtp_url
+set smtp_pass   = $my_home_smtp_pass
+
+set pgp_sign_as = $my_home_pgp_sign_as
+
+account-hook $my_home_folder 'set imap_user=$my_home_imap_user; set imap_pass=$my_home_imap_pass'

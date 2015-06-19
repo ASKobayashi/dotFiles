@@ -1,0 +1,5 @@
+# vim: ft=muttrc
+#
+set smime_keys         = "~/.mutt/crypto/smime/keys"
+set smime_certificates = "~/.mutt/crypto/smime/certs"
+set smime_ca_location  = "~/.mutt/crypto"
