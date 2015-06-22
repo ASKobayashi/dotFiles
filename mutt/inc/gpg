@@ -22,3 +22,5 @@ set pgp_verify_key_command   = "gpg --no-verbose --batch --fingerprint --check-s
 set pgp_list_pubring_command = "gpg --no-verbose --batch --with-colons --list-keys %r"
 set pgp_list_secring_command = "gpg --no-verbose --batch --with-colons --list-secret-keys %r"
 set pgp_timeout              = 3600
+
+message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "exec check-traditional-pgp"
