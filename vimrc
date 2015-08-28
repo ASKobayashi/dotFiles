@@ -170,28 +170,27 @@ vnoremap > >gv
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
          map <leader>M :MarkClear<CR>
 
+	  " Code Completion / Searching
+	  Bundle 'https://github.com/Valloric/YouCompleteMe.git'
+	  let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+	  let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+	  let g:ycm_confirm_extra_conf = 0 " turn off confirmation
+	  let g:ycm_add_preview_to_completeopt = 1 " add preview string
+	  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+
 	  " Stuff i only really use on osx
 	  if has("unix")
 		  let s:uname = system("uname")
 		  if s:uname == "Darwin\n"
 			  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
-
-			  " Code Completion / Searching
-			  Bundle 'https://github.com/Valloric/YouCompleteMe.git'
-			  let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-			  let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
-			  let g:ycm_confirm_extra_conf = 0 " turn off confirmation
-			  let g:ycm_add_preview_to_completeopt = 1 " add preview string
-			  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
 		  else
 			  vmap Y :w<Home>silent <End> !tmux-copypaste copy &<CR>
 			  nmap P :read !tmux-copypaste paste<CR>
 		  endif
 
 		  " nvim
-		  Bundle "https://github.com/cwoac/nvim.git"
+		  " Bundle "https://github.com/cwoac/nvim.git"
 		  "Plugin 'godlygeek/tabular'
-		  "Plugin 'plasticboy/vim-markdown'
 		  Bundle "https://github.com/tpope/vim-markdown.git"
 
 		  " GPG
