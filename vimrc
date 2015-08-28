@@ -174,7 +174,7 @@ vnoremap > >gv
 	  if has("unix")
 		  let s:uname = system("uname")
 		  if s:uname == "Darwin\n"
-			  Bundle 'https://github.com/d0c-s4vage/pct-vim'
+			  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
 
 			  " Code Completion / Searching
 			  Bundle 'https://github.com/Valloric/YouCompleteMe.git'
@@ -190,6 +190,8 @@ vnoremap > >gv
 
 		  " nvim
 		  Bundle "https://github.com/cwoac/nvim.git"
+		  "Plugin 'godlygeek/tabular'
+		  "Plugin 'plasticboy/vim-markdown'
 		  Bundle "https://github.com/tpope/vim-markdown.git"
 
 		  " GPG
@@ -335,15 +337,15 @@ if executable('ag')
 	"	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
 	" endfunction
 
-	function! LGrep2(search)
+	function! LGrep(...)
 		tabnew
-		execute "silent grep " a:search " >/tmp/lgrep.txt"
+		"!ag -R -l --nocolor " a:000 " * >/tmp/lgrep.txt"
+		execute "silent! !ag -R --ignore '*test*' --ignore '*tests*' --ignore '*cscope*' --ignore 'tags' --nogroup --nocolor " join(a:000, " ") " . >/tmp/lgrep.txt"
 		lf /tmp/lgrep.txt
-		silent !rm /tmp/lgrep.txt
-		lop | wincmd k
+		lop
+		redraw!
 	endfunction
-
-	command! -nargs=1 Llgrep execute 'call LGrep2("<args>")'
+	command! -nargs=+ -complete=file Llgrep call LGrep(<f-args>)
 	map ,s :Llgrep<space>
 	map ,S :execute 'Llgrep '.expand('<cword>')<CR>
 
@@ -354,17 +356,6 @@ if executable('ag')
 	endfunction
 	command! -nargs=1 CSC execute 'call CSC2("<args>")'
     map ,C :execute 'CSC '.expand("<cword>")<CR>
-
-	" function! LGrep(search)
-	"	tabnew
-	"	"execute "silent lgrep "a:search
-	"	execute "silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
-	"	lop
-	" endfunction
-    "
-	" command! -nargs=1 Llgrep execute 'call LGrep("<args>")'
-	" map ,s :Llgrep
-	" map ,S :execute 'Llgrep '.expand('<cword>')<CR>
 endif
 
 " Cscope
