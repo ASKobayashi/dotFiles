@@ -184,8 +184,9 @@ vnoremap > >gv
 		  if s:uname == "Darwin\n"
 			  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
 		  else
-			  vmap Y :w<Home>silent <End> !tmux-copypaste copy &<CR>
-			  nmap P :read !tmux-copypaste paste<CR>
+			  vmap <C-Y>  :w<Home>silent <End> !tmux-copypaste copy &<CR>
+			  nmap <C-Y>  :.w<Home>silent <End> !tmux-copypaste copy &<CR>
+			  nmap <C-P> :read !tmux-copypaste paste<CR>
 		  endif
 
 		  " nvim
