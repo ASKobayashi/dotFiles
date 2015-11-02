@@ -81,14 +81,14 @@ map <C-L> :tabnext<CR>
 map <C-C> :tabclose<CR>
 
 " Windows
+map <C-U> :wincmd h<CR>
+map <C-O> :wincmd l<CR>
+
 map <C-W>H :wincmd h<CR>
 map <C-W>J :wincmd j<CR>
 map <C-W>K :wincmd k<CR>
 map <C-W>L :wincmd l<CR>
 
-" Jump list
-map <Leader>, <C-O>
-map <Leader>. <C-I>
 
 " Buffers
 map <Leader>< :bp<CR>
@@ -98,8 +98,12 @@ map <Leader>> :bn<CR>
 map <C-J> :lnext <CR>
 map <C-K> :lprevious<CR>
 
+" Jump list
+" map <Leader>, <C-O>
+" map <Leader>. <C-I>
+"
 " Use grep -Rn <search term> * | vim -
-map <C-o> <C-w>gF:setlocal ro<CR>:setlocal nomodifiable<CR>
+" map <C-o> <C-w>gF:setlocal ro<CR>:setlocal nomodifiable<CR>
 
 "Don't unselect text when indenting/dedenting when in visual mode
 vnoremap < <gv
@@ -170,6 +174,11 @@ vnoremap > >gv
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
          map <leader>M :MarkClear<CR>
 
+
+		 "http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
+	  Bundle 'ervandew/supertab'
+
+
 	  " Code Completion / Searching
 	  Bundle 'https://github.com/Valloric/YouCompleteMe.git'
 	  let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -182,12 +191,14 @@ vnoremap > >gv
 	  if has("unix")
 		  let s:uname = system("uname")
 		  if s:uname == "Darwin\n"
-			  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
 		  else
 			  vmap <C-Y>  :w<Home>silent <End> !tmux-copypaste copy &<CR>
 			  nmap <C-Y>  :.w<Home>silent <End> !tmux-copypaste copy &<CR>
 			  nmap <C-P> :read !tmux-copypaste paste<CR>
 		  endif
+
+		  " pct
+		  Bundle 'https://github.com/d0c-s4vage/pct-vim'
 
 		  " nvim
 		  " Bundle "https://github.com/cwoac/nvim.git"
@@ -223,26 +234,38 @@ vnoremap > >gv
       Bundle 'https://github.com/SirVer/ultisnips'
 	  Bundle 'https://github.com/honza/vim-snippets'
 
-		  " This hack from https://github.com/SirVer/ultisnips/issues/376#issuecomment-69033351
-		  " Enables tab to move up and down the ycm list, and return to accept
-		  " a snippet.  It also allows tab to move between ultisnips fields
-		  let g:ycm_key_list_select_completion=["<tab>"]
-		  let g:ycm_key_list_previous_completion=["<S-tab>"]
+	  " make YCM compatible with UltiSnips (using supertab)
+	  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+	  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+	  let g:SuperTabDefaultCompletionType = '<C-n>'
 
-		  let g:UltiSnipsJumpForwardTrigger="<tab>"
-		  let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-		  let g:UltiSnipsExpandTrigger="<nop>"
-		  let g:ulti_expand_or_jump_res = 0
-		  function! <SID>ExpandSnippetOrReturn()
-			  let snippet = UltiSnips#ExpandSnippetOrJump()
-			  if g:ulti_expand_or_jump_res > 0
-				  return snippet
-			  else
-				  return "\<CR>"
-			  endif
-		  endfunction
-		  inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
+	  " better key bindings for UltiSnipsExpandTrigger
+	  let g:UltiSnipsExpandTrigger = "<tab>"
+	  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+	  let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
+		  " " This hack from https://github.com/SirVer/ultisnips/issues/376#issuecomment-69033351
+		  " " Enables tab to move up and down the ycm list, and return to accept
+		  " " a snippet.  It also allows tab to move between ultisnips fields
+		  " let g:ycm_key_list_select_completion=["<tab>"]
+		  " let g:ycm_key_list_previous_completion=["<S-tab>"]
+          "
+		  " let g:UltiSnipsJumpForwardTrigger="<tab>"
+		  " let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+		  " let g:UltiSnipsExpandTrigger="<nop>"
+		  " let g:ulti_expand_or_jump_res = 0
+		  " function! <SID>ExpandSnippetOrReturn()
+			"   let snippet = UltiSnips#ExpandSnippetOrJump()
+			"   if g:ulti_expand_or_jump_res > 0
+			" 	  return snippet
+			"   else
+			" 	  return "\<CR>"
+			"   endif
+		  " endfunction
+		  " inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
+
+	  Bundle 'https://github.com/Shougo/vimproc.vim'
+	  Bundle 'https://github.com/Shougo/vimshell.vim'
       " Color Schemes
       Bundle 'https://github.com/tpope/vim-vividchalk'
       Bundle 'https://github.com/vim-scripts/Lucius'
@@ -294,10 +317,12 @@ if has("autocmd")
   " Syntax of these languages are fussy over tabs Vs spaces
   au FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+  au FileType python setlocal expandtab
+
 
   " Text files
   au BufRead,BufNewFile *.txt,*.tex,*.pgp set wrap linebreak nolist textwidth=80 wrapmargin=0
-  au BufRead,BufNewFile *.txt,*.tex,*.pgp setlocal spell complete+=kspell
+  au BufRead,BufNewFile ,*.tex,*.pgp setlocal spell complete+=kspell
 
   " Mail
   au FileType mail set spell complete+=kspell

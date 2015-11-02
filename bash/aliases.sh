@@ -13,7 +13,7 @@ alias more="less -E"
 alias h='history'
 alias vi='vim'
 alias grep='grep --directories=skip -i --color=auto'
-alias mutt='pushd ~/Desktop && mutt && popd'
+alias mutt='pushd ~/ && mutt && popd'
 
 # Development Aliases
 alias gitx='gitx -c'
