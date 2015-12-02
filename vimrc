@@ -198,7 +198,7 @@ vnoremap > >gv
 		  endif
 
 		  " pct
-		  Bundle 'https://github.com/d0c-s4vage/pct-vim'
+		  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
 
 		  " nvim
 		  " Bundle "https://github.com/cwoac/nvim.git"
@@ -211,6 +211,7 @@ vnoremap > >gv
 	  endif
 
       " Beautifying
+	  Bundle 'https://github.com/conormcd/matchindent.vim.git'
 	  Bundle 'https://github.com/junegunn/vim-easy-align.git'
 		  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 		  vmap <Enter> <Plug>(EasyAlign)
