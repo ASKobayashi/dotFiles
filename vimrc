@@ -223,6 +223,14 @@ vnoremap > >gv
       Bundle 'https://github.com/milkypostman/vim-togglelist.git'
          " Leader,q and leader l for quickfix and location list
 
+	  " Search
+	  Bundle 'https://github.com/rking/ag.vim'
+	  Bundle 'https://github.com/Chun-Yang/vim-action-ag'
+
+	  " Search from project root
+	  let g:ag_working_path_mode="r"
+
+
 	  " Easy Motion
 	  Bundle 'https://github.com/Lokaltog/vim-easymotion'
 		  let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -358,30 +366,30 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 
 
-  " The following doesnt work :(
-	" function! LGrep(search)
-	"	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
-	" endfunction
-
-	function! LGrep(...)
-		tabnew
-		"!ag -R -l --nocolor " a:000 " * >/tmp/lgrep.txt"
-		execute "silent! !ag -R --ignore '*test*' --ignore '*tests*' --ignore '*cscope*' --ignore 'tags' --nogroup --nocolor " join(a:000, " ") " . >/tmp/lgrep.txt"
-		lf /tmp/lgrep.txt
-		lop
-		redraw!
-	endfunction
-	command! -nargs=+ -complete=file Llgrep call LGrep(<f-args>)
-	map ,s :Llgrep<space>
-	map ,S :execute 'Llgrep '.expand('<cword>')<CR>
-
-	function! CSC2(search)
-		tabnew
-		execute "tag " a:search
-		" lop | wincmd k
-	endfunction
-	command! -nargs=1 CSC execute 'call CSC2("<args>")'
-    map ,C :execute 'CSC '.expand("<cword>")<CR>
+"   " The following doesnt work :(
+" 	" function! LGrep(search)
+" 	"	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
+" 	" endfunction
+"
+" 	function! LGrep(...)
+" 		tabnew
+" 		"!ag -R -l --nocolor " a:000 " * >/tmp/lgrep.txt"
+" 		execute "silent! !ag -R --ignore '*test*' --ignore '*tests*' --ignore '*cscope*' --ignore 'tags' --nogroup --nocolor " join(a:000, " ") " . >/tmp/lgrep.txt"
+" 		lf /tmp/lgrep.txt
+" 		lop
+" 		redraw!
+" 	endfunction
+" 	command! -nargs=+ -complete=file Llgrep call LGrep(<f-args>)
+" 	map ,s :Llgrep<space>
+" 	map ,S :execute 'Llgrep '.expand('<cword>')<CR>
+"
+" 	function! CSC2(search)
+" 		tabnew
+" 		execute "tag " a:search
+" 		" lop | wincmd k
+" 	endfunction
+" 	command! -nargs=1 CSC execute 'call CSC2("<args>")'
+"     map ,C :execute 'CSC '.expand("<cword>")<CR>
 endif
 
 " Cscope
