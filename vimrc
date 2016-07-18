@@ -280,6 +280,8 @@ vnoremap > >gv
       Bundle 'https://github.com/vim-scripts/Lucius'
 
 	  Bundle 'https://github.com/vim-scripts/actionscript.vim--Leider'
+	  Bundle 'https://github.com/MarcWeber/vim-haxe-syntax'
+	  au BufRead,BufNewFile *.hx set ft=haxe
 
       colorscheme torte
 
