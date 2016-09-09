@@ -128,6 +128,7 @@ vnoremap > >gv
    Bundle 'https://github.com/gmarik/vundle.git'
 
    " Status Line:
+   Bundle 'https://github.com/vim-airline/vim-airline-themes'
    Bundle 'https://github.com/bling/vim-airline'
        let g:airline_left_sep=''     " I'm not using custom fonts
        let g:airline_right_sep=''    " That'll just make it less portable
