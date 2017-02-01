@@ -128,6 +128,9 @@ vnoremap > >gv
    Bundle 'https://github.com/gmarik/vundle.git'
 
    " Status Line:
+   "
+   " Bundle 'https://github.com/bling/vim-airline-themes'
+   Plugin 'vim-airline/vim-airline-themes'
    Bundle 'https://github.com/bling/vim-airline'
        let g:airline_left_sep=''     " I'm not using custom fonts
        let g:airline_right_sep=''    " That'll just make it less portable
@@ -163,8 +166,8 @@ vnoremap > >gv
          let g:tagbar_compact = 1
 
       " Header <-> Source
-      " Bundle 'https://github.com/vim-scripts/a.vim'
-      "    map <leader>` :A<CR>
+      Bundle 'https://github.com/vim-scripts/a.vim'
+         map <leader>` :A<CR>
 
       " Commenting
       Bundle 'https://github.com/tomtom/tcomment_vim'
@@ -175,17 +178,32 @@ vnoremap > >gv
          map <leader>M :MarkClear<CR>
 
 
-		 "http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
+	  "http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
 	  Bundle 'ervandew/supertab'
-
 
 	  " Code Completion / Searching
 	  Bundle 'https://github.com/Valloric/YouCompleteMe.git'
-	  let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-	  let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
-	  let g:ycm_confirm_extra_conf = 0 " turn off confirmation
-	  let g:ycm_add_preview_to_completeopt = 1 " add preview string
-	  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+		  let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+		  let g:ycm_extra_conf_globlist = ['~/.ycm_extra_conf.py']
+		  let g:ycm_confirm_extra_conf = 0 " turn off confirmation
+		  let g:ycm_add_preview_to_completeopt = 1 " add preview string
+		  let g:ycm_autoclose_preview_window_after_completion = 1 " close preview automaticly
+
+      " Ultisnips + Snippets
+	  Bundle 'https://github.com/SirVer/ultisnips'
+	  Bundle 'https://github.com/honza/vim-snippets'
+	  Bundle 'https://github.com/ASKobayashi/vim-snippets-ASKobayashi'
+
+		  " make YCM compatible with UltiSnips (using supertab)
+		  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+		  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+		  let g:SuperTabDefaultCompletionType = '<C-n>'
+
+		  " better key bindings for UltiSnipsExpandTrigger
+		  let g:UltiSnipsExpandTrigger = "<tab>"
+		  let g:UltiSnipsJumpForwardTrigger = "<tab>"
+		  let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
 
 	  " Stuff i only really use on osx
 	  if has("unix")
@@ -200,14 +218,8 @@ vnoremap > >gv
 		  " pct
 		  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
 
-		  " nvim
-		  " Bundle "https://github.com/cwoac/nvim.git"
-		  "Plugin 'godlygeek/tabular'
 		  Bundle "https://github.com/tpope/vim-markdown.git"
 
-		  " GPG
-		  Bundle 'https://github.com/jamessan/vim-gnupg'
-			  let g:GPGDefaultRecipients="aaron.kobayashi@gmail.com"
 	  endif
 
       " Beautifying
@@ -238,40 +250,6 @@ vnoremap > >gv
 		  nmap s <Plug>(easymotion-s2)
 		  map <Leader>j <Plug>(easymotion-j)
 		  map <Leader>k <Plug>(easymotion-k)
-
-      " Ultisnips + Snippets
-      Bundle 'https://github.com/SirVer/ultisnips'
-	  Bundle 'https://github.com/honza/vim-snippets'
-
-	  " make YCM compatible with UltiSnips (using supertab)
-	  let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-	  let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-	  let g:SuperTabDefaultCompletionType = '<C-n>'
-
-	  " better key bindings for UltiSnipsExpandTrigger
-	  let g:UltiSnipsExpandTrigger = "<tab>"
-	  let g:UltiSnipsJumpForwardTrigger = "<tab>"
-	  let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-		  " " This hack from https://github.com/SirVer/ultisnips/issues/376#issuecomment-69033351
-		  " " Enables tab to move up and down the ycm list, and return to accept
-		  " " a snippet.  It also allows tab to move between ultisnips fields
-		  " let g:ycm_key_list_select_completion=["<tab>"]
-		  " let g:ycm_key_list_previous_completion=["<S-tab>"]
-          "
-		  " let g:UltiSnipsJumpForwardTrigger="<tab>"
-		  " let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
-		  " let g:UltiSnipsExpandTrigger="<nop>"
-		  " let g:ulti_expand_or_jump_res = 0
-		  " function! <SID>ExpandSnippetOrReturn()
-			"   let snippet = UltiSnips#ExpandSnippetOrJump()
-			"   if g:ulti_expand_or_jump_res > 0
-			" 	  return snippet
-			"   else
-			" 	  return "\<CR>"
-			"   endif
-		  " endfunction
-		  " inoremap <expr> <CR> pumvisible() ? "<C-R>=<SID>ExpandSnippetOrReturn()<CR>" : "\<CR>"
 
 	  Bundle 'https://github.com/Shougo/vimproc.vim'
 	  Bundle 'https://github.com/Shougo/vimshell.vim'
