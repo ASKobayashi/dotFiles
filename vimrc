@@ -59,7 +59,7 @@ set backspace=indent,eol,start "allow backspacing over everything in insert mode
 
 " Other stuff
 set history=1000       " Store lots of :cmdline history
-set clipboard+=unnamed " On mac, copy to pasteboard
+set clipboard+=unnamed
 
 set visualbell         " don't beep constantly, it's annoying.
 set t_vb=              " and don't flash the screen either
@@ -69,6 +69,8 @@ let g:is_posix = 1     " vim's default is archaic bourne shell
 
 set encoding=utf-8
 set spelllang=en_us    " Set spell check diectionary to English US.
+set backupskip=/tmp/*,/private/tmp/*  " Crontab must be edited in place
+
 
 " Keymapping
 " =============================================================
@@ -97,6 +99,8 @@ map <Leader>> :bn<CR>
 " Location/Quickfix Lists
 map <C-J> :lnext <CR>
 map <C-K> :lprevious<CR>
+map <Leader>j :cnext <CR>
+map <Leader>k :cprevious<CR>
 
 " Jump list
 " map <Leader>, <C-O>
@@ -248,8 +252,8 @@ vnoremap > >gv
 		  let g:EasyMotion_do_mapping = 0 " Disable default mappings
 		  let g:EasyMotion_smartcase = 1
 		  nmap s <Plug>(easymotion-s2)
-		  map <Leader>j <Plug>(easymotion-j)
-		  map <Leader>k <Plug>(easymotion-k)
+		  " map <Leader>j <Plug>(easymotion-j)
+		  " map <Leader>k <Plug>(easymotion-k)
 
 	  Bundle 'https://github.com/Shougo/vimproc.vim'
 	  Bundle 'https://github.com/Shougo/vimshell.vim'
