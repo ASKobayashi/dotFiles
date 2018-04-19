@@ -175,8 +175,8 @@ vnoremap > >gv
 
       " Commenting
       Bundle 'https://github.com/tomtom/tcomment_vim'
-          let g:tcommentMapLeaderOp1 = '<Leader>c'
-          let g:tcommentMapLeaderOp2 = '<Leader>C'
+		  let g:tcomment_opleader1 = '<Leader>c'
+		  let g:tcomment_opleader2 = '<Leader>c'
 
 	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
          map <leader>M :MarkClear<CR>
@@ -214,17 +214,24 @@ vnoremap > >gv
 		  let s:uname = system("uname")
 		  if s:uname == "Darwin\n"
 		  else
-			  vmap <C-Y>  :w<Home>silent <End> !tmux-copypaste copy &<CR>
-			  nmap <C-Y>  :.w<Home>silent <End> !tmux-copypaste copy &<CR>
+			  vmap <C-Y> :w<Home>silent <End> !tmux-copypaste copy &<CR>
+			  nmap <C-Y> :.w<Home>silent <End> !tmux-copypaste copy &<CR>
 			  nmap <C-P> :read !tmux-copypaste paste<CR>
 		  endif
 
 		  " pct
 		  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
 
-		  Bundle "https://github.com/tpope/vim-markdown.git"
-
 	  endif
+
+	  " Folding
+	  Plugin 'godlygeek/tabular'
+	  Plugin 'plasticboy/vim-markdown'
+	  let g:vim_markdown_folding_style_pythonic = 1
+	  set foldmethod=syntax
+	  set foldlevel=1
+	  set foldnestmax=2
+	  nnoremap <Space> za
 
       " Beautifying
 	  Bundle 'https://github.com/conormcd/matchindent.vim.git'
@@ -240,12 +247,10 @@ vnoremap > >gv
          " Leader,q and leader l for quickfix and location list
 
 	  " Search
-	  Bundle 'https://github.com/rking/ag.vim'
-	  Bundle 'https://github.com/Chun-Yang/vim-action-ag'
-
-	  " Search from project root
-	  let g:ag_working_path_mode="r"
-
+	  Plugin 'mileszs/ack.vim'
+	  if executable('ag')
+		  let g:ackprg = 'ag --vimgrep'
+	  endif
 
 	  " Easy Motion
 	  Bundle 'https://github.com/Lokaltog/vim-easymotion'
@@ -255,12 +260,7 @@ vnoremap > >gv
 		  " map <Leader>j <Plug>(easymotion-j)
 		  " map <Leader>k <Plug>(easymotion-k)
 
-	  Bundle 'https://github.com/Shougo/vimproc.vim'
-	  Bundle 'https://github.com/Shougo/vimshell.vim'
       " Color Schemes
-      Bundle 'https://github.com/tpope/vim-vividchalk'
-      Bundle 'https://github.com/vim-scripts/Lucius'
-
 	  Bundle 'https://github.com/vim-scripts/actionscript.vim--Leider'
 	  Bundle 'https://github.com/MarcWeber/vim-haxe-syntax'
 	  au BufRead,BufNewFile *.hx set ft=haxe
@@ -323,7 +323,7 @@ if has("autocmd")
   " MD Files
   au BufRead,BufNewFile *.md set ft=markdown
   " Turn off the messed up _ processing
-  au BufRead,BufNewFile *.md syn match markdownError "\w\@<=\w\@="
+  " au BufRead,BufNewFile *.md syn match markdownError "\w\@<=\w\@="
 
   " add json syntax highlighting
   au BufNewFile,BufRead *.json set ft=javascript
@@ -348,32 +348,6 @@ if executable('ag')
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
-
-
-"   " The following doesnt work :(
-" 	" function! LGrep(search)
-" 	"	execute "unsilent silent lgrep --binary-files=without-match --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.hg -R " a:search " *"
-" 	" endfunction
-"
-" 	function! LGrep(...)
-" 		tabnew
-" 		"!ag -R -l --nocolor " a:000 " * >/tmp/lgrep.txt"
-" 		execute "silent! !ag -R --ignore '*test*' --ignore '*tests*' --ignore '*cscope*' --ignore 'tags' --nogroup --nocolor " join(a:000, " ") " . >/tmp/lgrep.txt"
-" 		lf /tmp/lgrep.txt
-" 		lop
-" 		redraw!
-" 	endfunction
-" 	command! -nargs=+ -complete=file Llgrep call LGrep(<f-args>)
-" 	map ,s :Llgrep<space>
-" 	map ,S :execute 'Llgrep '.expand('<cword>')<CR>
-"
-" 	function! CSC2(search)
-" 		tabnew
-" 		execute "tag " a:search
-" 		" lop | wincmd k
-" 	endfunction
-" 	command! -nargs=1 CSC execute 'call CSC2("<args>")'
-"     map ,C :execute 'CSC '.expand("<cword>")<CR>
 endif
 
 " Cscope
