@@ -204,7 +204,7 @@ vnoremap > >gv
 		  " let g:SuperTabDefaultCompletionType = '<C-n>'
 
 		  " better key bindings for UltiSnipsExpandTrigger
-		  let g:UltiSnipsExpandTrigger = "<Enter>"
+		  let g:UltiSnipsExpandTrigger = "<s-Enter>"
 		  let g:UltiSnipsJumpForwardTrigger = "<tab>"
 		  let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
