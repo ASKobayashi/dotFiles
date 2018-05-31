@@ -9,4 +9,5 @@
 [ -f ~/.bash/completions.sh ] && . ~/.bash/completions.sh
 [ -f ~/.bash/exports.sh ] && . ~/.bash/exports.sh
 [ -f ~/.bash/config.sh ] && . ~/.bash/config.sh
+[ -f ~/.bash/vim.sh ] && . ~/.bash/vim.sh
 

@@ -11,7 +11,6 @@ alias pa='ps aux'
 alias mroe="less -E"
 alias more="less -E"
 alias h='history'
-alias vi='vim'
 alias grep='grep --directories=skip -i --color=auto'
 alias mutt='pushd ~/ && mutt && popd'
 
