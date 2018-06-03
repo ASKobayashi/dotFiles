@@ -158,9 +158,9 @@ vnoremap > >gv
       " File Search
       Bundle 'https://github.com/kien/ctrlp.vim'
          let g:ctrlp_map = '<leader>o'
-         let g:ctrlp_root_markers = ['cscope.out']
+         " let g:ctrlp_root_markers = ['cscope.out']
 		 let g:ctrlp_follow_symlinks = 1
-		 let g:ctrlp_working_path_mode = 'ra'
+		 let g:ctrlp_working_path_mode = ''
 
 	  " File Modification
 	  Bundle "https://github.com/tpope/vim-eunuch.git"
