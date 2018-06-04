@@ -158,9 +158,9 @@ vnoremap > >gv
       " File Search
       Bundle 'https://github.com/kien/ctrlp.vim'
          let g:ctrlp_map = '<leader>o'
-         let g:ctrlp_root_markers = ['cscope.out']
+         " let g:ctrlp_root_markers = ['cscope.out']
 		 let g:ctrlp_follow_symlinks = 1
-		 let g:ctrlp_working_path_mode = 'ra'
+		 let g:ctrlp_working_path_mode = ''
 
 	  " File Modification
 	  Bundle "https://github.com/tpope/vim-eunuch.git"
@@ -193,6 +193,7 @@ vnoremap > >gv
 		  " Code Completion / Searching
 
 		  Bundle 'ervandew/supertab'
+		  let g:SuperTabDefaultCompletionType = "<c-n>"
 		  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 		  Bundle 'https://github.com/Shougo/deoplete.nvim',
@@ -205,6 +206,13 @@ vnoremap > >gv
 		  Bundle 'https://github.com/honza/vim-snippets'
 		  Bundle 'https://github.com/ASKobayashi/vim-snippets-ASKobayashi'
 		  let g:deoplete#enable_at_startup = 1
+		  set completeopt=longest,menuone,preview
+
+		  " Ultisnips on top
+		  call deoplete#custom#source('ultisnips', 'rank', 9999)
+
+		  " Use partial fuzzy matches like YouCompleteMe
+		  call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 	  endif
 
 	  " Stuff i only really use on osx
