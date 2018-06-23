@@ -80,7 +80,11 @@ let mapleader = ","
 " Hack from https://stackoverflow.com/questions/5388562/cant-map-s-cr-in-vim
 " Map ✠ (U+2720) to <S-CR>, so we have <S-CR> mapped to ✠ in iTerm2 and
 " ✠ mapped back to <S-CR> in Vim.
-imap ✠ <S-CR>
+if has("mac")
+	imap ✠ <S-CR>
+	map ∆ <M-J>
+	map ˚ <M-K>
+endif
 
 " Tabs
 map <C-H> :tabprevious<CR>
@@ -104,8 +108,8 @@ map <Leader>> :bn<CR>
 " Location/Quickfix Lists
 map <C-J> :lnext <CR>
 map <C-K> :lprevious<CR>
-map <Leader>j :cnext <CR>
-map <Leader>k :cprevious<CR>
+map <M-J> :cnext <CR>
+map <M-K> :cprevious<CR>
 
 " Jump list
 " map <Leader>, <C-O>
@@ -119,28 +123,23 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Plugins
-" =============================================================
-" Setting up Vundle - script credit: http://www.erikzaadi.com/
-   let iCanHazVundle=1
-   let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-   if !filereadable(vundle_readme)
-      echo "Installing Vundle.."
-      echo ""
-      silent !mkdir -p ~/.vim/bundle
-      silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-      let iCanHazVundle=0
-   endif
 
-   filetype off
-   set rtp+=~/.vim/bundle/vundle/
-   call vundle#rc()
-   Bundle 'https://github.com/gmarik/vundle.git'
+if has("nvim")
+	let plugPath = '~/.local/share/nvim/site/autoload/plug.vim'
+else
+	let plugPath = '~/.vim/autoload/plug.vim'
+endif
 
+if empty(glob(plugPath))
+	let downloadCmd = 'silent !curl -fLo '.plugPath.' --create-dirs '.
+		\ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	execute downloadCmd
+endif
+
+call plug#begin('~/.vim/bundle')
    " Status Line:
-   "
-   " Bundle 'https://github.com/bling/vim-airline-themes'
-   Bundle 'https://github.com/vim-airline/vim-airline-themes'
-   Bundle 'https://github.com/bling/vim-airline'
+   Plug 'https://github.com/vim-airline/vim-airline-themes'
+   Plug 'https://github.com/bling/vim-airline'
        let g:airline_left_sep=''     " I'm not using custom fonts
        let g:airline_right_sep=''    " That'll just make it less portable
        let g:airline_theme='wombat'
@@ -150,27 +149,27 @@ vnoremap > >gv
 
    " File Browsing:
       " Graphical File Browsing
-      Bundle 'https://github.com/scrooloose/nerdtree'
+      Plug 'https://github.com/scrooloose/nerdtree'
          nmap <leader>b :NERDTreeToggle<cr>
          let NERDTreeMinimalUI = 1
          let NERDTreeDirArrows = 1
 
       " File Search
-      Bundle 'https://github.com/kien/ctrlp.vim'
+      Plug 'https://github.com/kien/ctrlp.vim'
          let g:ctrlp_map = '<leader>o'
          " let g:ctrlp_root_markers = ['cscope.out']
 		 let g:ctrlp_follow_symlinks = 1
 		 let g:ctrlp_working_path_mode = ''
 
 	  " File Modification
-	  Bundle "https://github.com/tpope/vim-eunuch.git"
+	  Plug 'https://github.com/tpope/vim-eunuch.git'
 
    " Programming:
       " Match Delimiters
       runtime macros/matchit.vim  " enable vim's built-in matchit script (make % bounce between tags, begin/end, etc)
 
       " Code Browsing
-      Bundle 'https://github.com/majutsushi/tagbar'
+      Plug 'https://github.com/majutsushi/tagbar'
          nmap <leader>t :TagbarToggle<cr>
          " Open on supported file opens
          let g:tagbar_sort = 0
@@ -178,41 +177,66 @@ vnoremap > >gv
          let g:tagbar_compact = 1
 
       " Header <-> Source
-      Bundle 'https://github.com/vim-scripts/a.vim'
+      Plug 'https://github.com/vim-scripts/a.vim'
          map <leader>` :A<CR>
 
       " Commenting
-      Bundle 'https://github.com/tomtom/tcomment_vim'
+      Plug 'https://github.com/tomtom/tcomment_vim'
 		  let g:tcomment_opleader1 = '<Leader>c'
 		  let g:tcomment_opleader2 = '<Leader>c'
 
-	  Bundle 'https://github.com/vim-scripts/Mark--Karkat'
+	  Plug 'https://github.com/vim-scripts/Mark--Karkat'
          map <leader>M :MarkClear<CR>
 
 	  if has("nvim")
 		  " Code Completion / Searching
 
-		  Bundle 'ervandew/supertab'
+		  Plug 'ervandew/supertab'
 		  let g:SuperTabDefaultCompletionType = "<c-n>"
 		  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-		  Bundle 'https://github.com/Shougo/deoplete.nvim',
+		  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 		  let g:UltiSnipsExpandTrigger="<S-CR>"
 		  let g:UltiSnipsJumpForwardTrigger = "<tab>"
 		  let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 		  " Ultisnips + Snippets
-		  Bundle 'https://github.com/SirVer/ultisnips'
-		  Bundle 'https://github.com/honza/vim-snippets'
-		  Bundle 'https://github.com/ASKobayashi/vim-snippets-ASKobayashi'
+		  Plug 'https://github.com/SirVer/ultisnips'
+		  Plug 'https://github.com/honza/vim-snippets'
+		  Plug 'https://github.com/ASKobayashi/vim-snippets-ASKobayashi'
 		  let g:deoplete#enable_at_startup = 1
 		  set completeopt=longest,menuone,preview
 
 		  " Ultisnips on top
-		  call deoplete#custom#source('ultisnips', 'rank', 9999)
+		  " call deoplete#custom#source('ultisnips', 'rank', 9999)
 
-		  " Use partial fuzzy matches like YouCompleteMe
-		  call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+		  " PHP - Much borrowed from http://web-techno.net/vim-php-ide/ and http://kushellig.de/neovim-php-ide/
+		  Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
+			  nmap <Leader>pu :call phpactor#UseAdd()<CR>
+			  nmap <Leader>pe :call phpactor#ClassExpand()<CR>
+			  nmap <Leader>pn :call phpactor#Navigate()<CR>
+			  nmap <Leader>pp :call phpactor#ContextMenu()<CR>
+			  nmap <Leader>po :call phpactor#GotoDefinition()<CR>
+			  nmap <Leader>pt :call phpactor#Transform()<CR>
+			  nmap <Leader>pr :call phpactor#FindReferences()<CR>
+			  nmap <Leader>pfn :call phpactor#ClassNew()<CR>
+			  nmap <Leader>pfc :call phpactor#CopyFile()<CR>
+			  nmap <Leader>pfm :call phpactor#MoveFile()<CR>
+
+			  nmap <silent><Leader>pee :call phpactor#ExtractExpression(v:false)<CR>
+			  vmap <silent><Leader>pee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
+			  vmap <silent><Leader>pem :<C-U>call phpactor#ExtractMethod()<CR>
+
+		  Plug 'roxma/nvim-completion-manager'
+		  Plug 'phpactor/ncm-phpactor'
+		  Plug 'neomake/neomake'
+
+		  Plug 'StanAngeloff/php.vim'
+		  Plug 'stephpy/vim-php-cs-fixer'
+			 " brew install php-cs-fixer
+
+		  Plug 'tobyS/pdv'
 	  endif
 
 	  " Stuff i only really use on osx
@@ -226,52 +250,50 @@ vnoremap > >gv
 		  endif
 
 		  " pct
-		  " Bundle 'https://github.com/d0c-s4vage/pct-vim'
+		  " Plug 'https://github.com/d0c-s4vage/pct-vim'
 
 	  endif
 
 	  " Folding
-	  Plugin 'godlygeek/tabular'
-	  Plugin 'plasticboy/vim-markdown'
+	  Plug 'godlygeek/tabular'
+	  Plug 'plasticboy/vim-markdown'
 	  let g:vim_markdown_folding_style_pythonic = 1
 	  set foldmethod=syntax
-	  set foldlevel=1
+	  set foldlevel=999
 	  set foldnestmax=2
 	  nnoremap <Space> za
 
       " Beautifying
-	  Bundle 'https://github.com/conormcd/matchindent.vim.git'
-	  Bundle 'https://github.com/junegunn/vim-easy-align.git'
+	  Plug 'https://github.com/conormcd/matchindent.vim.git'
+	  Plug 'https://github.com/junegunn/vim-easy-align.git'
 		  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 		  vmap <Enter> <Plug>(EasyAlign)
 		  nmap ga <Plug>(EasyAlign)
 
    " Languages:
-      Bundle 'https://github.com/sheerun/vim-polyglot'
+      Plug 'https://github.com/sheerun/vim-polyglot'
 
    " Other:
 
       " Quickfix / Location list
-      Bundle 'https://github.com/milkypostman/vim-togglelist.git'
+      Plug 'https://github.com/milkypostman/vim-togglelist.git'
          " Leader,q and leader l for quickfix and location list
 
 	  " Search
-	  Plugin 'mileszs/ack.vim'
+	  Plug 'mileszs/ack.vim'
 	  if executable('ag')
 		  let g:ackprg = 'ag --vimgrep'
 	  endif
 
 	  " Easy Motion
-	  Bundle 'https://github.com/Lokaltog/vim-easymotion'
+	  Plug 'https://github.com/Lokaltog/vim-easymotion'
 		  let g:EasyMotion_do_mapping = 0 " Disable default mappings
 		  let g:EasyMotion_smartcase = 1
 		  nmap s <Plug>(easymotion-s2)
-		  " map <Leader>j <Plug>(easymotion-j)
-		  " map <Leader>k <Plug>(easymotion-k)
 
       " Color Schemes
-	  Bundle 'https://github.com/vim-scripts/actionscript.vim--Leider'
-	  Bundle 'https://github.com/MarcWeber/vim-haxe-syntax'
+	  Plug 'https://github.com/vim-scripts/actionscript.vim--Leider'
+	  Plug 'https://github.com/MarcWeber/vim-haxe-syntax'
 	  au BufRead,BufNewFile *.hx set ft=haxe
 
       colorscheme torte
@@ -290,14 +312,11 @@ vnoremap > >gv
       let &colorcolumn=join(range(81,81),",")    " Page guides
       highlight ColorColumn ctermbg=235
 
-   if iCanHazVundle == 0
-      echo "Installing Bundles, please ignore key map error messages"
-      echo ""
-      :BundleInstall
-   endif
+call plug#end()
 
-filetype plugin indent on
-" Setting up Vundle - the vim plugin bundler end
+" Call's have to be after plug end, which is annoying
+	" When writing a buffer (no delay), and on normal mode changes (after 750ms).
+	call neomake#configure#automake('nw', 750)
 
 
 " AUTO COMMANDS
@@ -344,6 +363,7 @@ if has("autocmd")
   " Thorfile, Rakefile, Vagrantfile and Gemfile are Ruby
   au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
 
+  au BufWritePost *.php silent! call PhpCsFixerFixFile()
 endif
 
 " ag  - The Silver Searcher
@@ -358,6 +378,10 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+
+" Possible replacements for cscope, but haven't made them work yet
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'skywind3000/gutentags_plus'
 
 " Cscope
 if has("cscope")
