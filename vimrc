@@ -237,6 +237,35 @@ call plug#begin('~/.vim/bundle')
 			 " brew install php-cs-fixer
 
 		  Plug 'tobyS/pdv'
+
+		  Plug 'mattn/emmet-vim'
+		    let g:user_emmet_leader_key='<C-X>'
+
+		  Plug 'jvanja/vim-bootstrap4-snippets'
+
+		  Plug 'vim-syntastic/syntastic'
+		    let g:syntastic_aggregate_errors = 1
+			let g:syntastic_always_populate_loc_list = 1
+			let g:syntastic_loc_list_height = 5
+			let g:syntastic_auto_loc_list = 0
+			let g:syntastic_check_on_open = 1
+			let g:syntastic_check_on_wq = 1
+
+			" composer global require "squizlabs/php_codesniffer=*"
+			" composer global require phpmd/phpmd
+			let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+			let g:syntastic_javascript_checkers = ['eslint']
+
+			let g:syntastic_error_symbol = '❌'
+			let g:syntastic_style_error_symbol = '⁉️'
+			let g:syntastic_warning_symbol = '⚠️'
+			let g:syntastic_style_warning_symbol = '💩'
+			let g:syntastic_php_phpcs_args='PEAR.Commenting.FunctionComment,PEAR.Commenting.ClassComment,PEAR.Commenting.FileComment'
+
+			highlight link SyntasticErrorSign SignColumn
+			highlight link SyntasticWarningSign SignColumn
+			highlight link SyntasticStyleErrorSign SignColumn
+			highlight link SyntasticStyleWarningSign SignColumn
 	  endif
 
 	  " Stuff i only really use on osx
@@ -313,11 +342,6 @@ call plug#begin('~/.vim/bundle')
       highlight ColorColumn ctermbg=235
 
 call plug#end()
-
-" Call's have to be after plug end, which is annoying
-	" When writing a buffer (no delay), and on normal mode changes (after 750ms).
-	call neomake#configure#automake('nw', 750)
-
 
 " AUTO COMMANDS
 " ==========================================================================================
