@@ -252,15 +252,14 @@ call plug#begin('~/.vim/bundle')
 			let g:syntastic_check_on_open = 1
 			let g:syntastic_check_on_wq = 1
 
-			" composer global require "squizlabs/php_codesniffer=*"
-			" composer global require phpmd/phpmd
+			" composer global require "squizlabs/php_codesniffer=*" phpmd/phpmd
 			let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 			let g:syntastic_javascript_checkers = ['eslint']
 
-			let g:syntastic_error_symbol = '❌'
-			let g:syntastic_style_error_symbol = '⁉️'
-			let g:syntastic_warning_symbol = '⚠️'
-			let g:syntastic_style_warning_symbol = '💩'
+			" let g:syntastic_error_symbol = '❌'
+			" let g:syntastic_style_error_symbol = '⁉️'
+			" let g:syntastic_warning_symbol = '⚠️'
+			" let g:syntastic_style_warning_symbol = '💩'
 			let g:syntastic_php_phpcs_args='PEAR.Commenting.FunctionComment,PEAR.Commenting.ClassComment,PEAR.Commenting.FileComment'
 
 			highlight link SyntasticErrorSign SignColumn
@@ -287,6 +286,7 @@ call plug#begin('~/.vim/bundle')
 	  " Folding
 	  Plug 'godlygeek/tabular'
 	  Plug 'plasticboy/vim-markdown'
+	  Plug 'lvht/tagbar-markdown'
 	  let g:vim_markdown_folding_style_pythonic = 1
 	  set foldmethod=syntax
 	  set foldlevel=999
