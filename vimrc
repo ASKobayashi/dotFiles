@@ -237,6 +237,9 @@ call plug#begin('~/.vim/bundle')
 		  Plug 'stephpy/vim-php-cs-fixer'
 			 " brew install php-cs-fixer
 
+		  Plug 'posva/vim-vue'
+		    autocmd FileType vue syntax sync fromstart
+
 		  Plug 'tobyS/pdv'
 
 		  Plug 'mattn/emmet-vim'
