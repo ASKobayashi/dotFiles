@@ -229,7 +229,9 @@ call plug#begin('~/.vim/bundle')
 			  vmap <silent><Leader>pee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
 			  vmap <silent><Leader>pem :<C-U>call phpactor#ExtractMethod()<CR>
 
-		  Plug 'roxma/nvim-completion-manager'
+		  " Plug 'roxma/nvim-completion-manager'
+		  Plug 'ncm2/ncm2'
+		  Plug 'roxma/nvim-yarp'
 		  Plug 'phpactor/ncm-phpactor'
 		  Plug 'neomake/neomake'
 
@@ -269,6 +271,11 @@ call plug#begin('~/.vim/bundle')
 			highlight link SyntasticWarningSign SignColumn
 			highlight link SyntasticStyleErrorSign SignColumn
 			highlight link SyntasticStyleWarningSign SignColumn
+
+
+		  " Api blueprint
+		  Plug 'kylef/apiblueprint.vim'
+
 	  endif
 
 	  " Stuff i only really use on osx

@@ -12,13 +12,16 @@ source ~/.mutt/inc/imap
 # Source Account Info
 source "gpg -d ~/.mutt/accounts/accounts.gpg |"
 
+set mbox_type=Maildir
+set spoolfile=/var/mail/askobayashi
+set folder=/var/mail
 # Default to home account
-source ~/.mutt/accounts/home
+# source ~/.mutt/accounts/home
 
 # Quick Account Switching
-macro index <esc>1 '<sync-mailbox><enter-command>source ~/.mutt/accounts/home<enter><change-folder>!<enter>'
-macro index <esc>2 '<sync-mailbox><enter-command>source ~/.mutt/accounts/work<enter><change-folder>!<enter>'
-macro index <esc>3 '<sync-mailbox><enter-command>source ~/.mutt/accounts/list<enter><change-folder>!<enter>'
+# macro index <esc>1 '<sync-mailbox><enter-command>source ~/.mutt/accounts/home<enter><change-folder>!<enter>'
+# macro index <esc>2 '<sync-mailbox><enter-command>source ~/.mutt/accounts/work<enter><change-folder>!<enter>'
+# macro index <esc>3 '<sync-mailbox><enter-command>source ~/.mutt/accounts/list<enter><change-folder>!<enter>'
 
 # Local Settings
 source `FILE=$HOME/.mutt-local; if [ ! -s "$FILE" ]; then FILE=/dev/null;fi;echo "$FILE"`
