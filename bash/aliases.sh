@@ -31,10 +31,13 @@ alias la='ls -Ax'
 
 # Shannon Modem Extraction
 function shannon_extract() {
-    unzip -p $1 CP* | tar -xf - modem.bin && \
-        chmod 644 modem.bin && \
-        mkdir -p `basename $1 .zip` && \
-        mv modem.bin `basename $1 .zip`/
+    unzip -p $1 CP* | tar -xf - modem.bin* && \
+        chmod 644 modem.bin*
+        if [ -f modem.bin.lz4 ]; then
+            lz4_decompress modem.bin.lz4 modem.bin
+            rm modem.bin.lz4
+        fi
+        mv modem.bin `basename $1 .zip`.bin
 }
 
 # Use the gnu versions of utilities where available
