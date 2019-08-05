@@ -29,6 +29,14 @@ alias ls='~/.bash/ls.sh'
 alias ll='ls -lA'
 alias la='ls -Ax'
 
+# Shannon Modem Extraction
+function shannon_extract() {
+    unzip -p $1 CP* | tar -xf - modem.bin && \
+        chmod 644 modem.bin && \
+        mkdir -p `basename $1 .zip` && \
+        mv modem.bin `basename $1 .zip`/
+}
+
 # Use the gnu versions of utilities where available
 command -v gdircolors >/dev/null && alias dircolors='gdircolors'
 command -v grm >/dev/null && alias rm='grm'
