@@ -4,4 +4,4 @@ else
 	export EDITOR="vim"
 fi
 
-alias vi="$EDITOR"
+alias vi > /dev/null 2>&1 || alias vi="$EDITOR"

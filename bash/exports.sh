@@ -32,6 +32,7 @@ set_prompt () {
     Last_Command=$? # Must come first!
     Red='\[\e[01;31m\]'
     RedDark='\[\e[0;31m\]'
+    LightBlue='\[\e[0;94m\]'
     Green='\[\e[01;32m\]'
     Reset='\[\e[00m\]'
 
@@ -45,9 +46,14 @@ set_prompt () {
     fi
 
     PS1+="$Green\\u$Reset@$Red\\h"
+
+    if [[ $VIRTUAL_ENV ]]; then
+        PS1="$LightBlue($(echo $VIRTUAL_ENV | sed 's/.*\///' | sed 's/-.*//' ))"
+    fi
     # Print the working directory and prompt marker in blue, and reset
     # the text color to the default.
     PS1+="$Reset\\$ "
+
 }
 PROMPT_COMMAND='set_prompt'
 
