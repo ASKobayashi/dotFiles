@@ -171,6 +171,7 @@ call plug#begin('~/.vim/bundle')
 
       " Code Browsing
       Plug 'https://github.com/majutsushi/tagbar'
+	  Plug 'https://github.com/lvht/tagbar-markdown'
          nmap <leader>t :TagbarToggle<cr>
          " Open on supported file opens
          let g:tagbar_sort = 0
@@ -211,6 +212,7 @@ call plug#begin('~/.vim/bundle')
 
 		  " Ultisnips on top
 		  " call deoplete#custom#source('ultisnips', 'rank', 9999)
+		  Plug 'zchee/deoplete-jedi'
 
 		  " PHP - Much borrowed from http://web-techno.net/vim-php-ide/ and http://kushellig.de/neovim-php-ide/
 		  Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
@@ -229,7 +231,9 @@ call plug#begin('~/.vim/bundle')
 			  vmap <silent><Leader>pee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
 			  vmap <silent><Leader>pem :<C-U>call phpactor#ExtractMethod()<CR>
 
-		  Plug 'roxma/nvim-completion-manager'
+		  " Plug 'roxma/nvim-completion-manager'
+		  Plug 'ncm2/ncm2'
+		  Plug 'roxma/nvim-yarp'
 		  Plug 'phpactor/ncm-phpactor'
 		  Plug 'neomake/neomake'
 
@@ -249,7 +253,7 @@ call plug#begin('~/.vim/bundle')
 
 		  Plug 'vim-syntastic/syntastic'
 		    let g:syntastic_aggregate_errors = 1
-			let g:syntastic_always_populate_loc_list = 1
+			let g:syntastic_always_populate_loc_list = 0
 			let g:syntastic_loc_list_height = 5
 			let g:syntastic_auto_loc_list = 0
 			let g:syntastic_check_on_open = 1
@@ -269,6 +273,11 @@ call plug#begin('~/.vim/bundle')
 			highlight link SyntasticWarningSign SignColumn
 			highlight link SyntasticStyleErrorSign SignColumn
 			highlight link SyntasticStyleWarningSign SignColumn
+
+
+		  " Api blueprint
+		  Plug 'kylef/apiblueprint.vim'
+
 	  endif
 
 	  " Stuff i only really use on osx
@@ -289,8 +298,8 @@ call plug#begin('~/.vim/bundle')
 	  " Folding
 	  Plug 'godlygeek/tabular'
 	  Plug 'plasticboy/vim-markdown'
-	  Plug 'lvht/tagbar-markdown'
 	  let g:vim_markdown_folding_style_pythonic = 1
+	  let g:vim_markdown_folding_level = 6
 	  set foldmethod=syntax
 	  set foldlevel=999
 	  set foldnestmax=2
