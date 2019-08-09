@@ -19,6 +19,8 @@ alias gitx='gitx -c'
 alias gs='git status'
 alias gl='git pull'
 alias gp='git push'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
 
 alias ctags_gen='ctags --recurse --fields=+lS --c-kinds=+p .'
 alias cscope_gen="cscope -Rb"
