@@ -80,11 +80,11 @@ let mapleader = ","
 " Hack from https://stackoverflow.com/questions/5388562/cant-map-s-cr-in-vim
 " Map ✠ (U+2720) to <S-CR>, so we have <S-CR> mapped to ✠ in iTerm2 and
 " ✠ mapped back to <S-CR> in Vim.
-if has("mac")
+"if has("mac")
 	imap ✠ <S-CR>
 	map ∆ <M-J>
 	map ˚ <M-K>
-endif
+"endif
 
 " Tabs
 map <C-H> :tabprevious<CR>

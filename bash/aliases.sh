@@ -54,6 +54,9 @@ getProcPid() {
 
 alias getpid=getProcPid
 
+alias python=python3
+alias pip=pip3
+
 alias startWebServer="python -m SimpleHTTPServer 8000"
 
 # Local aliases if they exist (Private aliases here)
