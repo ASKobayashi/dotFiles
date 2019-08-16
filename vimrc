@@ -207,7 +207,10 @@ call plug#begin('~/.vim/bundle')
 		  Plug 'https://github.com/SirVer/ultisnips'
 		  Plug 'https://github.com/honza/vim-snippets'
 		  Plug 'https://github.com/ASKobayashi/vim-snippets-ASKobayashi'
-		  let g:deoplete#enable_at_startup = 1
+
+		  let g:deoplete#enable_at_startup = 0
+		  autocmd InsertEnter * call deoplete#enable()
+
 		  set completeopt=longest,menuone,preview
 
 		  " Ultisnips on top
