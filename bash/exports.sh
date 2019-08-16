@@ -19,6 +19,8 @@ $PATH
 export HISTCONTROL=ignoreboth # don't put duplicate lines in the history and
                               # ignore same sucessive entries.
 
+export DISPLAY=:0             # remote clipboard sync is the best
+
 # Development
 export GREP_COLOR='31'
 
