@@ -59,7 +59,9 @@ set backspace=indent,eol,start "allow backspacing over everything in insert mode
 
 " Other stuff
 set history=1000       " Store lots of :cmdline history
-set clipboard+=unnamedplus
+set clipboard^=unnamed,unnamedplus
+
+
 
 set visualbell         " don't beep constantly, it's annoying.
 set t_vb=              " and don't flash the screen either
