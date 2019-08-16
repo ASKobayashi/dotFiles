@@ -120,24 +120,15 @@ map <M-K> :cprevious<CR>
 vnoremap < <gv
 vnoremap > >gv
 
-" set clipboard^=unnamed,unnamedplus
-" https://github.com/pazams/d-is-for-delete
-nnoremap x "_x
-nnoremap X "_X
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
+" Use x and delete but don't add to clipboard
+nnoremap xx "_dd
+nnoremap x "_d
 
+" set clipboard^=unnamed,unnamedplus
 if has('unnamedplus')
   set clipboard=unnamed,unnamedplus
-  nnoremap <leader>d "+d
-  nnoremap <leader>D "+D
-  vnoremap <leader>d "+d
 else
   set clipboard=unnamed
-  nnoremap <leader>d "*d
-  nnoremap <leader>D "*D
-  vnoremap <leader>d "*d
 endif
 
 
@@ -258,32 +249,8 @@ call plug#begin('~/.vim/bundle')
 
 		  Plug 'jvanja/vim-bootstrap4-snippets'
 
-		  Plug 'vim-syntastic/syntastic'
-		    let g:syntastic_aggregate_errors = 1
-			let g:syntastic_always_populate_loc_list = 0
-			let g:syntastic_loc_list_height = 5
-			let g:syntastic_auto_loc_list = 0
-			let g:syntastic_check_on_open = 1
-			let g:syntastic_check_on_wq = 1
-
-			" composer global require "squizlabs/php_codesniffer=*" phpmd/phpmd
-			let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-			let g:syntastic_javascript_checkers = ['eslint']
-
-			" let g:syntastic_error_symbol = '❌'
-			" let g:syntastic_style_error_symbol = '⁉️'
-			" let g:syntastic_warning_symbol = '⚠️'
-			" let g:syntastic_style_warning_symbol = '💩'
-			let g:syntastic_php_phpcs_args='PEAR.Commenting.FunctionComment,PEAR.Commenting.ClassComment,PEAR.Commenting.FileComment'
-
-			highlight link SyntasticErrorSign SignColumn
-			highlight link SyntasticWarningSign SignColumn
-			highlight link SyntasticStyleErrorSign SignColumn
-			highlight link SyntasticStyleWarningSign SignColumn
-
-
-		  " Api blueprint
-		  Plug 'kylef/apiblueprint.vim'
+		  Plug 'neomake/neomake'
+		  let g:neomake_python_enabled_makers = ['pylint']
 
 	  endif
 
@@ -363,6 +330,10 @@ call plug#begin('~/.vim/bundle')
 
 call plug#end()
 
+let g:neomake_python_enabled_makers = ['pylint']
+call neomake#configure#automake('nrwi', 500)
+
+
 " AUTO COMMANDS
 " ==========================================================================================
 
@@ -414,10 +385,10 @@ endif
 "
 if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ -f\ --nogroup\ --nocolor
+  set grepprg=ag\ -f\ --nogroup\ --nocolor\ --noaffinity
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -f -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -f -l --nocolor --noaffinity -g ""'
 
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
