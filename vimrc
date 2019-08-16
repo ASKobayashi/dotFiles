@@ -59,7 +59,7 @@ set backspace=indent,eol,start "allow backspacing over everything in insert mode
 
 " Other stuff
 set history=1000       " Store lots of :cmdline history
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 set visualbell         " don't beep constantly, it's annoying.
 set t_vb=              " and don't flash the screen either
@@ -213,23 +213,6 @@ call plug#begin('~/.vim/bundle')
 		  " Ultisnips on top
 		  " call deoplete#custom#source('ultisnips', 'rank', 9999)
 		  Plug 'zchee/deoplete-jedi'
-
-		  " PHP - Much borrowed from http://web-techno.net/vim-php-ide/ and http://kushellig.de/neovim-php-ide/
-		  Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
-			  nmap <Leader>pu :call phpactor#UseAdd()<CR>
-			  nmap <Leader>pe :call phpactor#ClassExpand()<CR>
-			  nmap <Leader>pn :call phpactor#Navigate()<CR>
-			  nmap <Leader>pp :call phpactor#ContextMenu()<CR>
-			  nmap <Leader>po :call phpactor#GotoDefinition()<CR>
-			  nmap <Leader>pt :call phpactor#Transform()<CR>
-			  nmap <Leader>pr :call phpactor#FindReferences()<CR>
-			  nmap <Leader>pfn :call phpactor#ClassNew()<CR>
-			  nmap <Leader>pfc :call phpactor#CopyFile()<CR>
-			  nmap <Leader>pfm :call phpactor#MoveFile()<CR>
-
-			  nmap <silent><Leader>pee :call phpactor#ExtractExpression(v:false)<CR>
-			  vmap <silent><Leader>pee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-			  vmap <silent><Leader>pem :<C-U>call phpactor#ExtractMethod()<CR>
 
 		  " Plug 'roxma/nvim-completion-manager'
 		  Plug 'ncm2/ncm2'

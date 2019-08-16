@@ -12,7 +12,7 @@ alias mroe="less -E"
 alias more="less -E"
 alias h='history'
 alias grep='grep --directories=skip -i --color=auto'
-alias mutt='pushd ~/ && mutt && popd'
+alias xsel='xsel -i'  # For echo "foo" | xsel
 
 # Development Aliases
 alias gitx='gitx -c'
