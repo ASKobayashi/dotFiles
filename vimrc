@@ -250,7 +250,7 @@ call plug#begin('~/.vim/bundle')
 		  Plug 'jvanja/vim-bootstrap4-snippets'
 
 		  Plug 'neomake/neomake'
-		  let g:neomake_python_enabled_makers = ['pylint']
+		  let g:neomake_python_enabled_makers = ['prospector']
 
 	  endif
 
