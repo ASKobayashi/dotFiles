@@ -59,10 +59,6 @@ set backspace=indent,eol,start "allow backspacing over everything in insert mode
 
 " Other stuff
 set history=1000       " Store lots of :cmdline history
-set clipboard^=unnamed,unnamedplus
-
-
-
 set visualbell         " don't beep constantly, it's annoying.
 set t_vb=              " and don't flash the screen either
 set guioptions-=T      " hide gvim's toolbar by default
@@ -123,6 +119,29 @@ map <M-K> :cprevious<CR>
 "Don't unselect text when indenting/dedenting when in visual mode
 vnoremap < <gv
 vnoremap > >gv
+
+" set clipboard^=unnamed,unnamedplus
+" https://github.com/pazams/d-is-for-delete
+nnoremap x "_x
+nnoremap X "_X
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+  nnoremap <leader>d "+d
+  nnoremap <leader>D "+D
+  vnoremap <leader>d "+d
+else
+  set clipboard=unnamed
+  nnoremap <leader>d "*d
+  nnoremap <leader>D "*D
+  vnoremap <leader>d "*d
+endif
+
+
+
 
 " Plugins
 
