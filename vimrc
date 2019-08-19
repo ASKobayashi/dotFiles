@@ -124,14 +124,7 @@ vnoremap > >gv
 nnoremap xx "_dd
 nnoremap x "_d
 
-" set clipboard^=unnamed,unnamedplus
-if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
-else
-  set clipboard=unnamed
-endif
-
-
+set clipboard^=unnamed,unnamedplus
 
 
 " Plugins
