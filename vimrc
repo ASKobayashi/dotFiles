@@ -323,7 +323,7 @@ call plug#begin('~/.vim/bundle')
 
 call plug#end()
 
-let g:neomake_python_enabled_makers = ['pylint']
+let g:neomake_python_enabled_makers = ['prospector', 'pylint']
 call neomake#configure#automake('nrwi', 500)
 
 
