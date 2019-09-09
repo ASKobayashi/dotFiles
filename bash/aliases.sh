@@ -31,22 +31,9 @@ alias ls='~/.bash/ls.sh'
 alias ll='ls -lA'
 alias la='ls -Ax'
 
-# Shannon Modem Extraction
-function shannon_extract() {
-    unzip -p $1 CP* | tar -xf - modem.bin* && \
-        chmod 644 modem.bin*
-        if [ -f modem.bin.lz4 ]; then
-            lz4_decompress modem.bin.lz4 modem.bin
-            rm modem.bin.lz4
-        fi
-        mv modem.bin `basename $1 .zip`.bin
-}
-
 # Use the gnu versions of utilities where available
 command -v gdircolors >/dev/null && alias dircolors='gdircolors'
 command -v grm >/dev/null && alias rm='grm'
-
-alias sl="pbpaste | sed -e 's/\(..\)/\\\\x\1/g' | pbcopy"
 
 getProcPid() {
     ps aux | \grep $1 | \grep -v grep | awk '{print $2}'
@@ -58,6 +45,12 @@ alias python=python3
 alias pip=pip3
 
 alias startWebServer="python -m SimpleHTTPServer 8000"
+
+if [ ! $(uname -s) = "Darwin" ]; then
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
+
 
 # Local aliases if they exist (Private aliases here)
 [ -f ~/.bash/aliases.local.sh ] && . ~/.bash/aliases.local.sh
