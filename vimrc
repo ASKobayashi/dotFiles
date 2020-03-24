@@ -225,20 +225,9 @@ call plug#begin('~/.vim/bundle')
 		  " Plug 'roxma/nvim-completion-manager'
 		  Plug 'ncm2/ncm2'
 		  Plug 'roxma/nvim-yarp'
-		  Plug 'phpactor/ncm-phpactor'
 		  Plug 'neomake/neomake'
 
-		  Plug 'StanAngeloff/php.vim'
-		  Plug 'stephpy/vim-php-cs-fixer'
-			 " brew install php-cs-fixer
-
-		  Plug 'posva/vim-vue'
-		    autocmd FileType vue syntax sync fromstart
-
 		  Plug 'tobyS/pdv'
-
-		  Plug 'mattn/emmet-vim'
-		    let g:user_emmet_leader_key='<C-X>'
 
 		  Plug 'jvanja/vim-bootstrap4-snippets'
 

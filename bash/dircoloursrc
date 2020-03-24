@@ -26,27 +26,28 @@ TERM vt100
 TERM vt220
 TERM screen
 TERM xterm-color
+TERM xterm-256color
 
 # EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
 EIGHTBIT 1
 
 
-# Attribute codes: 
-# 	00	none 
-#	01	bold 
-#	04	underscore 
-#	05	blink 
-#	07	reverse 
+# Attribute codes:
+# 	00	none
+#	01	bold
+#	04	underscore
+#	05	blink
+#	07	reverse
 #	08	concealed
 
 # Background color codes:
-# 	40	black 
-#	41	red 
-#	42	green 
-#	43	yellow 
-#	44	blue 
-#	45	magenta 
-#	46	cyan 
+# 	40	black
+#	41	red
+#	42	green
+#	43	yellow
+#	44	blue
+#	45	magenta
+#	46	cyan
 #	47	white
 
 
@@ -60,9 +61,9 @@ CHR 	40;33;01 	# character device driver
 
 ORPHAN 	01;05;37;41  		# orphaned syminks
 MISSING 01;05;37;41 		# ... and the files they point to
- 
-#		RED 
-.tar 		01;31#archives or compressed 
+
+#		RED
+.tar 		01;31#archives or compressed
 .bz2 		01;31
 .tgz 		01;31
 .arj 		01;31
@@ -78,15 +79,15 @@ MISSING 01;05;37;41 		# ... and the files they point to
 .gpg 		01;31
 .pgp 		01;31
 
-#		GREEN			 	
+#		GREEN
 EXEC		01;32#executables
-.cmd 		01;32 
+.cmd 		01;32
 .exe 		01;32
 .com 		01;32
 .btm 		01;32
 .bat 		01;32
 .class		01;32
-.asm       	00;32#code 
+.asm       	00;32#code
 .htm		00;32
 .html		00;32
 .lsp       	00;32
@@ -99,7 +100,7 @@ EXEC		01;32#executables
 .h			00;32
 .H			00;32
 .java      	00;32
-.pl        	00;32   
+.pl        	00;32
 
 #		YELLOW
 .txt		00;33#text
@@ -107,11 +108,11 @@ EXEC		01;32#executables
 .sdw		00;33
 .sdc		00;33
 .ppt		00;33
-			
+
 #		BLUE
 
 #		MAGENTA
-.jpg 		01;35#image formats 
+.jpg 		01;35#image formats
 .gif 		01;35
 .bmp 		01;35
 .xbm 		01;35
@@ -123,7 +124,7 @@ EXEC		01;32#executables
 .xcf 		01;35
 .png 		01;35
 .icons		01;35
-.rm  		04;35# movie formats 
+.rm  		04;35# movie formats
 .ra  		04;35
 .ram 		04;35
 .mov 		04;35
@@ -133,10 +134,10 @@ EXEC		01;32#executables
 .wav		00;35
 
 #		CYAN
-DIR			01;36# links and such	
+DIR			01;36# links and such
 LINK		00;36
 .url		00;36
-.kdelnk 	00;36	
+.kdelnk 	00;36
 
 #		WHITE
 .log		01;37#log or save files

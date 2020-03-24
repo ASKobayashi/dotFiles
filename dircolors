@@ -1,355 +1,16 @@
-# Woo
+# Configuration file for the color ls utility
+# This file goes in the /etc directory, and must be world readable.
+# You can copy this file to .dir_colors in your $HOME directory to override
+# the system defaults.
 
-NORMAL                00;38;5;244           # no color code at all
-#FILE                00                    # regular file: use no color at all
-RESET                 0                     # reset to "normal" color
-DIR                   00;38;5;33            # directory 01;34
-LINK                  target
-MULTIHARDLINK         48;5;32                    # regular file with more than one link
-FIFO                  48;5;30;38;5;136;01   # pipe
-SOCK                  48;5;30;38;5;136;01   # socket
-DOOR                  48;5;30;38;5;136;01   # door
-BLK                   48;5;30;38;5;244;01   # block device driver
-CHR                   48;5;30;38;5;244;01   # character device driver
-ORPHAN                48;5;235;38;5;160     # symlink to nonexistent file, or non-stat'able file
-SETUID                48;5;160;38;5;230     # file that is setuid (u+s)
-SETGID                48;5;136;38;5;230     # file that is setgid (g+s)
-CAPABILITY            30;41                 # file with capability
-STICKY_OTHER_WRITABLE 48;5;64;38;5;230      # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE        48;5;235;38;5;33      # dir that is other-writable (o+w) and not sticky
-STICKY                48;5;33;38;5;230      # dir with the sticky bit set (+t) and not other-writable
-EXEC                  01;38;5;64
+# COLOR needs one of these arguments: 'tty' colorizes output to ttys, but not
+# pipes. 'all' adds color characters to all output. 'none' shuts colorization
+# off.
+COLOR tty
 
-
-
-# executables
-.apk                38;5;88
-.app                38;5;124
-.bat                38;5;88
-.cgi                38;5;88
-.com                38;5;88
-.exe                38;5;88
-.gadget             38;5;88
-.jar                38;5;125
-.pif                38;5;88
-.vb                 38;5;88
-.wsf                38;5;88
-
-# Text
-.txt                38;5;202
-.md                 38;5;208
-.mmd                38;5;208
-.mkd                38;5;208
-.markdown           38;5;208
-.mmarkdown          38;5;208
-
-# Data
-.xml                38;5;227
-.yml                38;5;220
-.csv                38;5;220
-.plist              38;5;220
-.json               38;5;220
-
-# Shell & Script
-.bash               38;5;156
-.conf               38;5;158
-.lua                38;5;148
-.scpt               38;5;153
-.sh                 38;5;150
-.vim                38;5;159
-.fish               38;5;154
-.zsh                38;5;142
-*rc                 38;5;190
-
-# Sourcecode
-## C-ish
-.m                  38;5;217
-.mm                 38;5;219
-.c                  38;5;214
-.cc                 38;5;214
-.cpp                38;5;214
-.cxx                38;5;214
-.nib                38;5;214
-
-## Other C
-.cs                 38;5;130
-.asmx               38;5;130
-
-## Python
-.py                 38;5;118
-.pyc                38;5;29
-.pyd                38;5;29
-.pyo                38;5;29
-
-## Creative
-.qtz                38;5;123
-.msp                38;5;123
-.maxpat             38;5;123
-.pde                38;5;123
-
-## Web
-.asp                38;5;106
-.aspx               38;5;106
-.cer                38;5;106
-.coffee             38;5;108
-.css                38;5;87
-.haml               38;5;75
-.htm                38;5;81
-.html               38;5;81
-.js                 38;5;40
-.jsp                38;5;42
-.php                38;5;29
-.rss                38;5;31
-.sass               38;5;76
-.xhtml              38;5;26
-
-## XML
-.rnc                38;5;210
-.rng                38;5;138
-.sch                38;5;218
-.xsd                38;5;131
-.xsl                38;5;144
-.xslt               38;5;144
-.xquery             38;5;142
-
-## Others
-.rb                 38;5;95
-.pl                 38;5;95
-.pm                 38;5;95
-.java               38;5;95
-.jav                38;5;95
-.j                  38;5;95
-
-# backups, undo files, tempfiles
-.bak                38;5;236
-.bin                38;5;236
-.pid                38;5;236
-.state              38;5;236
-.swo                38;5;236
-.swp                38;5;236
-.tmp                38;5;236
-.un~                38;5;236
-.zcompdump          38;5;236
-.zwc                38;5;236
-
-
-# tcpdump
-.pcap               38;5;100
-.cap                38;5;100
-.dmp                38;5;100
-
-
-# Compressed
-.7z                 38;5;95
-.apk                38;5;95
-.arj                38;5;95
-.bz                 38;5;95
-.bz2                38;5;129
-.cab                38;5;95
-.deb                38;5;95
-.gem                38;5;95
-.gz                 38;5;127
-.jar                38;5;89
-.msi                38;5;95
-.rar                38;5;125
-.rpm                38;5;124
-.tar                38;5;128
-.tbz                38;5;129
-.tbz2               38;5;129
-.tgz                38;5;129
-.tx                 38;5;95
-.war                38;5;95
-.xpi                38;5;95
-.xz                 38;5;95
-.z                  38;5;95
-.Z                  38;5;95
-.zip                38;5;177
-.ZIP                38;5;177
-
-
-# Disk Images
-.bin                38;5;97
-.cue                38;5;97
-.dmg                38;5;99
-.iso                38;5;97
-.mdf                38;5;97
-.toast              38;5;97
-.vcd                38;5;97
-
-# Document
-.doc                38;5;22
-.docx               38;5;22
-.rtf                38;5;22
-.tex                38;5;22
-.pages              38;5;22
-
-# Spreadsheet
-.xlr                38;5;28
-.xls                38;5;28
-.xlsx               38;5;28
-.numbers            38;5;28
-
-# 3D
-.3dm                38;5;125
-.3ds                38;5;125
-.max                38;5;125
-.obj                38;5;125
-.c4d                38;5;125
-.dwg                38;5;125
-.dxf                38;5;125
-
-# Image Raster
-.bmp                38;5;27
-.dds                38;5;27
-.gif                38;5;33
-.GIF                38;5;33
-.icns               38;5;27
-.ico                38;5;27
-.jpg                38;5;39
-.JPG                38;5;39
-.jpeg               38;5;39
-.png                38;5;45
-.PNG                38;5;45
-.psd                38;5;43
-.PSD                38;5;43
-.pspimage           38;5;27
-.tga                38;5;27
-.thm                38;5;27
-.tif                38;5;27
-.TIF                38;5;27
-.tiff               38;5;27
-.Tiff               38;5;27
-.TIFF               38;5;27
-.yuv                38;5;27
-
-# Image Vector
-.ai                 38;5;31
-.eps                38;5;31
-.ps                 38;5;31
-.svg                38;5;81
-
-# Page Layout
-.indd               38;5;24
-.pct                38;5;24
-.pdf                38;5;40
-.ai                 38;5;75
-.sketch             38;5;76
-.graffle            38;5;70
-
-# Audio
-.S3M                38;5;61
-.aac                38;5;61
-.cue                38;5;61
-.dat                38;5;61
-.dts                38;5;61
-.fcm                38;5;61
-.flac               38;5;61
-.m3u                38;5;61
-.m3u8               38;5;61
-.m4                 38;5;61
-.m4a                38;5;56
-.mid                38;5;61
-.midi               38;5;57
-.mod                38;5;61
-.mp3                38;5;63
-.MP3                38;5;63
-.oga                38;5;61
-.ogg                38;5;61
-.s3m                38;5;61
-.sid                38;5;61
-.spl                38;5;61
-.wv                 38;5;61
-.wvc                38;5;61
-
-# Video
-.VOB                38;5;75
-.IFO                38;5;75
-.BUP                38;5;75
-.MOV                38;5;75
-.3gp                38;5;75
-.3g2                38;5;75
-.asf                38;5;75
-.avi                38;5;75
-.AVI                38;5;75
-.divx               38;5;75
-.f4v                38;5;75
-.flv                38;5;75
-.m2v                38;5;75
-.mkv                38;5;85
-.mov                38;5;87
-.MOV                38;5;87
-.mp4                38;5;75
-.mpg                38;5;75
-.mpeg               38;5;75
-.ogm                38;5;75
-.ogv                38;5;75
-.rmvb               38;5;75
-.sample             38;5;75
-.ts                 38;5;75
-.vob                38;5;75
-.webm               38;5;75
-.wmv                38;5;73
-.WMV                38;5;73
-
-# Fonts
-.afm                38;5;97
-.eot                38;5;97
-.otf                38;5;97
-.pfb                38;5;97
-.pfm                38;5;97
-.ttf                38;5;97
-.pcf                38;5;97
-.psf                38;5;97
-.woff               38;5;97
-
-# OSX
-.plugin             38;5;179
-.DS_Store           38;5;235
-.keychain           38;5;180
-
-# Windows
-.cab                38;5;23
-.cpl                38;5;23
-.cur                38;5;23
-.deskthemepack      38;5;23
-.dll                38;5;23
-.dmp                38;5;23
-.drv                38;5;23
-.lnk                38;5;23
-.sys                38;5;23
-.ini                38;5;23
-.msi                38;5;23
-
-# Databases
-.db                 38;5;100
-.dump               38;5;100
-.sql                38;5;100
-.sqlite             38;5;100
-.typelib            38;5;100
-.dbf                38;5;100
-.mdb                38;5;100
-.pdb                38;5;100
-
-# Lighting
-.VCtrl              38;5;129
-.VCfig              38;5;105
-.VQpat              38;5;105
-.VProf              38;5;99
-.VPbin              38;5;105
-.alq                38;5;172
-.show               38;5;174
-.lxxplot            38;5;177
-
-# Other
-.crdownload         38;5;240
-.part               38;5;240
-.torrent            38;5;186
-
-
-
-TERM Eterm
-TERM ansi
-TERM color-xterm
+# Below, there should be one TERM entry for each termtype that is colorizable
+TERM linux
+TERM console
 TERM con132x25
 TERM con132x30
 TERM con132x43
@@ -360,42 +21,132 @@ TERM con80x30
 TERM con80x43
 TERM con80x50
 TERM con80x60
-TERM cons25
-TERM console
-TERM cygwin
-TERM dtterm
-TERM eterm-color
-TERM gnome
-TERM gnome-256color
-TERM jfbterm
-TERM konsole
-TERM kterm
-TERM linux
-TERM linux-c
-TERM mach-color
-TERM mlterm
-TERM putty
-TERM rxvt
-TERM rxvt-256color
-TERM rxvt-cygwin
-TERM rxvt-cygwin-native
-TERM rxvt-unicode
-TERM rxvt-unicode-256color
-TERM rxvt-unicode256
-TERM screen
-TERM screen-256color
-TERM screen-256color-bce
-TERM screen-bce
-TERM screen-w
-TERM screen.rxvt
-TERM screen.linux
-TERM terminator
-TERM vt100
 TERM xterm
-TERM xterm-16color
-TERM xterm-256color
-TERM xterm-88color
+TERM vt100
+TERM vt220
+TERM screen
 TERM xterm-color
-TERM xterm-debian
+TERM xterm-256color
 
-# vim: ft=dircolors:fdm=marker:et:sw=2:
+# EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
+EIGHTBIT 1
+
+
+# Attribute codes:
+# 	00	none
+#	01	bold
+#	04	underscore
+#	05	blink
+#	07	reverse
+#	08	concealed
+
+# Background color codes:
+# 	40	black
+#	41	red
+#	42	green
+#	43	yellow
+#	44	blue
+#	45	magenta
+#	46	cyan
+#	47	white
+
+
+
+NORMAL 	00			# global default, although everything should be something.
+FILE 	00			# normal file
+FIFO 	40;33		# pipe
+SOCK 	01;35		# socket
+BLK 	40;33;01	# block device driver
+CHR 	40;33;01 	# character device driver
+
+ORPHAN 	01;05;37;41  		# orphaned syminks
+MISSING 01;05;37;41 		# ... and the files they point to
+
+#		RED
+.tar 		01;31#archives or compressed
+.bz2 		01;31
+.tgz 		01;31
+.arj 		01;31
+.rpm 		01;31
+.pkg		01;31
+.taz 		01;31
+.lzh 		01;31
+.zip 		01;31
+.z   		01;31
+.Z   		01;31
+.gz  		01;31
+.asc 		01;31
+.gpg 		01;31
+.pgp 		01;31
+
+#		GREEN
+EXEC		01;32 #executables
+.cmd 		01;32
+.exe 		01;32
+.com 		01;32
+.btm 		01;32
+.bat 		01;32
+.class		01;32
+.asm       	00;32#code
+.htm		00;32
+.html		00;32
+.lsp       	00;32
+.lisp      	00;32
+.c			00;32
+.C			00;32
+.cpp       	00;32
+.c++       	00;32
+.cc        	00;32
+.h			00;32
+.H			00;32
+.java      	00;32
+.pl        	00;32
+
+#		YELLOW
+.txt		00;33#text
+.doc		00;33#office
+.sdw		00;33
+.sdc		00;33
+.ppt		00;33
+
+#		BLUE
+
+#		MAGENTA
+.jpg 		01;35#image formats
+.gif 		01;35
+.bmp 		01;35
+.xbm 		01;35
+.xpm 		01;35
+.xcf 		01;35
+.tif 		01;35
+.tiff 		01;35
+.xwd 		01;35
+.xcf 		01;35
+.png 		01;35
+.icons		01;35
+.rm  		04;35# movie formats
+.ra  		04;35
+.ram 		04;35
+.mov 		04;35
+.avi 		04;35
+.mpg 		04;35
+.mp3 		04;35# sound formats
+.wav		00;35
+
+#		CYAN
+DIR			01;36# links and such
+LINK		00;36
+.url		00;36
+.kdelnk 	00;36
+
+#		WHITE
+.log		01;37#log or save files
+.sav		01;37
+.bak		01;37
+.FAQ		01;37#help files
+.faq		01;37
+.man		01;37
+.hlp		01;37
+.help		01;37
+
+
