@@ -56,6 +56,17 @@ if [ $use_gpg ]
     set -x GPG_TTY (tty)
     set -gx SSH_AUTH_SOCK "$HOME/.gnupg/S.gpg-agent.ssh"
     gpgconf --launch gpg-agent
+else
+    set -ga fish_function_path "opt/dotFiles/config/fish/opt/fish-ssh-agent/functions"
+
+    # ssh agent
+    if test -z "$SSH_ENV"
+        set -xg SSH_ENV $HOME/.ssh/environment
+    end
+
+    if not __ssh_agent_is_started
+        __ssh_agent_start
+    end
 end
 
 # Use dircolors
