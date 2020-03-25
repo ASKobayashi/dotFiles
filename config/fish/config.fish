@@ -1,5 +1,5 @@
 # Per-Host settings
-set -l host (hostname)
+set -l host (hostname -s)
 set -l host_specific_file ~/.config/fish/hosts/$host.fish
 if test -f $host_specific_file
     source $host_specific_file
@@ -49,8 +49,10 @@ else
     set -gx EDITOR vi
 end
 
-# GPG
-if type -q gpgconf
+# GPG - Use yubikey for ssh auth
+# To enable, put "set use_gpg 1" in your hosts config
+
+if [ $use_gpg ]
     set -x GPG_TTY (tty)
     set -gx SSH_AUTH_SOCK "$HOME/.gnupg/S.gpg-agent.ssh"
     gpgconf --launch gpg-agent

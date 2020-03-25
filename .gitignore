@@ -7,3 +7,9 @@ mutt/.cache
 *.local.*
 irssi/*.pem
 weechat/script/plugins.xml.gz
+
+config/fish/fish_history
+config/fish/fishd.*
+config/fish/functions
+config/fish/completions
+config/fisher/
