@@ -53,24 +53,28 @@ end
 # To enable, put "set use_gpg 1" in your hosts config
 
 if [ $use_gpg ]
-    set -x GPG_TTY (tty)
-    set -gx SSH_AUTH_SOCK "$HOME/.gnupg/S.gpg-agent.ssh"
-    gpgconf --launch gpg-agent
+    if type -q gpgconf 2>/dev/null
+        set -x GPG_TTY (tty)
+        set -gx SSH_AUTH_SOCK "$HOME/.gnupg/S.gpg-agent.ssh"
+        gpgconf --launch gpg-agent
+    end
 else
     set -ga fish_function_path "opt/dotFiles/config/fish/opt/fish-ssh-agent/functions"
 
-    # ssh agent
-    if test -z "$SSH_ENV"
-        set -xg SSH_ENV $HOME/.ssh/environment
-    end
+    if type -q __ssh_agent_is_started
+        # ssh agent
+        if test -z "$SSH_ENV"
+            set -xg SSH_ENV $HOME/.ssh/environment
+        end
 
-    if not __ssh_agent_is_started
-        __ssh_agent_start
+        if not __ssh_agent_is_started
+            __ssh_agent_start
+        end
     end
 end
 
 # Use dircolors
-if type -f gdircolors >/dev/null
+if type -q -f gdircolors 2>/dev/null
     eval (gdircolors -b $HOME/.dircolors -c )
 end
 

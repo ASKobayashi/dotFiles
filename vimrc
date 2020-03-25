@@ -48,7 +48,7 @@ set updatetime=1000   " reduce updatetime so current tag in taglist is highlight
 set autoread          " suppress warnings when git,etc. changes files on disk.
 set autowrite         " write buffers before invoking :make, :grep etc.
 set hidden            " allow buffers to go into the background without needing to save
-set directory=~/.vim/swap,~/tmp,/var/tmp/,tmp  " Store swapfiles in a single directory.
+set directory=~/.vim/swap,/var/tmp/,tmp  " Store swapfiles in a single directory.
 
 set wildmode=list:longest,list:full   "make cmdline tab completion similar to bash
 set wildmenu                          "enable ctrl-n and ctrl-p to scroll thru matches
