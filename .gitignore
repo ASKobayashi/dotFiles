@@ -8,6 +8,7 @@ mutt/.cache
 irssi/*.pem
 weechat/script/plugins.xml.gz
 
+config/binwalk
 config/fish/fish_history
 config/fish/fishd.*
 config/fish/functions

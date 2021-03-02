@@ -2,6 +2,7 @@
 # VERSION: 3.0
 SETUVAR __fish_initialized:3100
 SETUVAR _fish_abbr_pa:ps\x20aux
+SETUVAR _fish_abbr_pip2:/Users/askobayashi/Library/Python/2\x2e7/bin/pip
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7
