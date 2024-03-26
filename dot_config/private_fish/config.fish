@@ -7,6 +7,7 @@ fish_add_path /opt/homebrew/bin
 # other tools
 alias find=fd
 alias cat=bat
+alias cm=chezmoi
 
 # lsd
 alias ls=lsd
