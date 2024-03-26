@@ -17,4 +17,4 @@ alias lla='ls -la'
 alias lt='ls --tree'
 
 # Update gazorby/fish-abbreviation-tips definitions
-__abbr_tips_init
+#__abbr_tips_init
