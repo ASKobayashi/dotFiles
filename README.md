@@ -29,12 +29,13 @@ chezmoi add <path to file>
 To update an already commited file:
 
 ```sh
-chezmoi re-add <path to file>`
+chezmoi re-add <path to file>
 ```
 
 To push config changes
 ```sh
-chezmoi cd # change to the chezmoi git dir
+# change to the chezmoi git dir, then use normal git flow
+chezmoi cd 
 git add .
 git commit -m "message"
 git push
