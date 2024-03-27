@@ -19,5 +19,8 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 
+# Env vars
+set -gx EDITOR nvim
+
 # Update gazorby/fish-abbreviation-tips definitions
 #__abbr_tips_init
