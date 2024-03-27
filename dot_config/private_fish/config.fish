@@ -5,6 +5,8 @@ end
 fish_add_path /opt/homebrew/bin
 
 # other tools
+alias vi=nvim
+alias vim=nvim
 alias find=fd
 alias cat=bat
 alias cm=chezmoi
