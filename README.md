@@ -1,44 +1,44 @@
 # ASKobayashi's Dot Files
-This dotfile installation process was stolen from my good friend @xedmada (http://github.com/xedmada/dotFiles)
 
-## How it works
-dotFiles/dotstrap.sh is a script inspired by [@holman](https://github.com/holman)'s [holman/dotfiles](https://github.com/holman/dotfiles).
-
-### Behavior:
-- Files and directories ending in an underscore '_' are ignored.
-- Files and directories beginning in a capital letter are symlinked to your home directory.
-- Files and directories beginning in a lowercase letter are symlinked to your home directory as hidden '.' files.
+This dotfile repo is based on [chezmoi](https://www.chezmoi.io/)
 
 
-### dotstrap.sh:
-If run on its own it will assess if you are on a linux or osx system and install dotfiles accordingly. It probably does a lot of stuff you wouldn't like such as install fish and making it your default shell.
+## Usage
+
+To install on a new machine:
+
+```sh
+chezmoi init --apply https://github.com/ASKobayashi/dotFiles.git
+```
 
 
-    usage: dotstrap.sh --auto|osx|linux|fish|bash|help [--trial]
+To update a machine from the repo:
 
-      --auto            Automagically install a new system
+```sh
+chezmoi update -v
+```
 
-      --osx             Install a new OSX system
+## Updating config files
 
-      --linux           Install a new linux system
+To add a new config file:
 
-      --link            Link all dotfiles
+```sh
+chezmoi add <path to file>
+```
 
-      --fish            Link dotfiles for Fish and Bash only
+To update an already commited file:
 
-      --bash            Link dotfiles for Bash only
+```sh
+chezmoi re-add <path to file>
+```
 
-      --help | -h       Woh, meta...
+To push config changes
+```sh
+# change to the chezmoi git dir, then use normal git flow
+chezmoi cd 
+git add .
+git commit -m "message"
+git push
+```
 
-      --trial           Optional. Dry-run links
-
-
-
-## Installation
-
-You probably shouldn't be using this unless you already know what you are doing.
-
-	git clone https://github.com/XedMada/dotFiles.git ~/dotFiles
-	cd ~/dotfiles/setup_/
-    dotstrap.sh
 

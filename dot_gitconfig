@@ -1,0 +1,9 @@
+# This is Git's per-user configuration file.
+#
+[user]
+# Please adapt and uncomment the following lines:
+name = Aaron Kobayashi
+email = aaron.kobayashi@gmail.com
+
+[core]
+	excludesfile = /Users/askobayashi/.config/git/gitignore_global
