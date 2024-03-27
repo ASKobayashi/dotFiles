@@ -1,3 +1,5 @@
+README.md
+
 {{ if ne .chezmoi.os "darwin" }}
 Library/Preferences/com.googlecode.iterm2.plist
 {{ end }}
