@@ -1,6 +1,12 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/sh
-sudo apt install ripgrep
+sudo apt-add-repository ppa:fish-shell/release-3
+sudo snap install nvim --classic
+
+sudo apt install ripgrep fish fd-find fzf gh hexyl cargo ripgrep tmux unzip cargo
+
+cargo install lsd procs bottom bat
+cargo install lsd procs bottom bat
 {{ else if eq .chezmoi.os "darwin" -}}
 #!/bin/sh
 brew install bat fish fd fzf gh hexyl lsd nvim procs ripgrep tmux fisher font-meslo-lg-nerd-font bottom

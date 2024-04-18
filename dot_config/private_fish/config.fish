@@ -2,7 +2,14 @@ if status is-interactive
 
 end
 
-fish_add_path /opt/homebrew/bin
+if test (uname) = "Darwin"
+  fish_add_path /opt/homebrew/bin
+end
+
+if test (uname) = "Linux"
+  fish_add_path ~/.cargo/bin
+  alias fd=fdfind
+end
 
 # other tools
 alias vi=nvim
