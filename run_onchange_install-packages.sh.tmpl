@@ -1,3 +1,4 @@
+{{- if eq (get . "work" | toString) "false" -}}
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 sudo apt-add-repository ppa:fish-shell/release-3
@@ -12,3 +13,4 @@ cargo install lsd procs bottom bat
 brew install bat fish fd fzf gh hexyl lsd nvim procs ripgrep tmux fisher font-meslo-lg-nerd-font bottom
 
 {{ end -}}
+{{- end }}

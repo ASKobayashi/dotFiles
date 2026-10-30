@@ -1,0 +1,3 @@
+{{- $work := promptBoolOnce . "work" "Work machine (keeps its own git config and Oh My Zsh and packages)" -}}
+[data]
+    work = {{ $work }}

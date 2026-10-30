@@ -1,0 +1,8 @@
+# Read by git alongside ~/.gitconfig, so this applies even on machines where
+# ~/.gitconfig isn't managed here.
+
+# Oh My Zsh's git_prompt_info runs a full `git status` on every prompt just to
+# pick a dirty/clean marker. The tide theme shows status symbols instead, so
+# skip that scan (it takes seconds in very large repos).
+[oh-my-zsh]
+	hide-dirty = 1

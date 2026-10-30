@@ -8,3 +8,8 @@ Library/Preferences/com.googlecode.iterm2.plist
 .zshenv.local
 .zshrc.local
 .config/fish/local.fish
+
+{{ if ne (get . "work" | toString) "false" }}
+# work (or not-yet-configured) machines manage their own git identity, credentials, and hooks
+.gitconfig
+{{ end }}
