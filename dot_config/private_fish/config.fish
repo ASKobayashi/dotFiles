@@ -31,3 +31,7 @@ set -gx EDITOR nvim
 
 # Update gazorby/fish-abbreviation-tips definitions
 #__abbr_tips_init
+export PATH="$HOME/.local/bin:$PATH"
+
+# Machine/work-specific config (untracked; see .chezmoiignore)
+test -r ~/.config/fish/local.fish; and source ~/.config/fish/local.fish
