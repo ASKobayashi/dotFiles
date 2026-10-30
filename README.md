@@ -50,8 +50,10 @@ interactive). Fish config is still managed here as a fallback. Switch with
 `chsh -s /bin/zsh` (macOS) or `chsh -s $(which zsh)` (Linux).
 
 When moving a machine off fish, merge its history once: `fish2zshhist`
-(deploys to `~/.local/bin`). zsh plugins (autosuggestions, syntax-highlighting)
-self-install into `~/.zsh/plugins` on first launch.
+(deploys to `~/.local/bin`). zsh runs on Oh My Zsh with config, theme, and
+plugins in `~/.config/zsh/omz`; chezmoi fetches Oh My Zsh itself (except on
+Linux work machines, which ship their own) and the autosuggestions and
+syntax-highlighting plugins (see `.chezmoiexternal.toml.tmpl`).
 
 ## Machine-specific settings
 

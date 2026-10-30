@@ -1,6 +1,6 @@
-{{- if eq (get . "work" | toString) "false" }}
-# Only on machines explicitly set up as personal: work machines ship their own
-# Oh My Zsh at ~/.oh-my-zsh (an unknown machine is treated as work).
+{{- if or (eq (get . "work" | toString) "false") (eq .chezmoi.os "darwin") }}
+# Personal machines and Macs get Oh My Zsh from here. Linux work machines
+# (arca) ship their own at ~/.oh-my-zsh (an unknown machine is treated as work).
 [".oh-my-zsh"]
     type = "archive"
     url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
