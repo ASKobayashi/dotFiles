@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+"""Convert fish history to zsh extended-history format, merging into ~/.zsh_history.
+
+Run on each machine that has fish history worth keeping (after switching the
+login shell to zsh). Fish entries carry `when:` timestamps; they are preserved.
+Duplicate commands already present in the zsh history are skipped.
+
+  fish2zshhist            # convert + merge
+  fish2zshhist --dry-run  # show what would be added
+"""
+import os
+import re
+import sys
+
+FISH = os.path.expanduser("~/.local/share/fish/fish_history")
+ZSH = os.path.expanduser("~/.zsh_history")
+EXTENDED = re.compile(r"^: (\d+):\d+;")
+
+
+def unescape(s: str) -> str:
+    # fish_history escapes a few chars per its own format
+    return s.replace("\\\\", "\\").replace("\\n", "\n").replace("\\t", "\t")
+
+
+def zsh_cmd_of(line: str) -> str:
+    """Command text of an existing zsh history line (extended or plain)."""
+    m = EXTENDED.match(line)
+    return line[m.end():] if m else line
+
+
+def main():
+    dry = "--dry-run" in sys.argv[1:]
+    existing = set()
+    out_lines = []
+    if os.path.exists(ZSH):
+        with open(ZSH, errors="replace") as f:
+            for line in f:
+                line = line.rstrip("\n")
+                existing.add(zsh_cmd_of(line))
+                out_lines.append(line)
+
+    added = 0
+    cmd = when = None
+    with open(FISH, errors="replace") as f:
+        for line in f:
+            line = line.rstrip("\n")
+            if line.startswith("- cmd: "):
+                if cmd is not None:
+                    added += emit(cmd, when, existing, out_lines, dry)
+                cmd = unescape(line[len("- cmd: "):])
+                when = None
+            elif line.startswith("  when: "):
+                when = line[len("  when: "):].strip()
+    if cmd is not None:
+        added += emit(cmd, when, existing, out_lines, dry)
+
+    print(f"fish entries: +{added} added, {len(existing)} already present")
+    if not dry and added:
+        with open(ZSH, "w") as f:
+            f.write("\n".join(out_lines) + "\n")
+        print(f"wrote {ZSH}")
+
+
+def emit(cmd, when, existing, out_lines, dry):
+    if not cmd or cmd in existing:
+        return 0
+    ts = when if (when and when.isdigit()) else "946684800"  # fall back to 2000-01-01
+    if not dry:
+        out_lines.append(f": {ts}:0;{cmd}")
+    existing.add(cmd)
+    return 1
+
+
+if __name__ == "__main__":
+    main()

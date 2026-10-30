@@ -42,3 +42,20 @@ git push
 ```
 
 
+
+## Shells
+
+Primary shell is zsh (`~/.zshenv` for env/PATH in all shells, `~/.zshrc` for
+interactive). Fish config is still managed here as a fallback. Switch with
+`chsh -s /bin/zsh` (macOS) or `chsh -s $(which zsh)` (Linux).
+
+When moving a machine off fish, merge its history once: `fish2zshhist`
+(deploys to `~/.local/bin`). zsh plugins (autosuggestions, syntax-highlighting)
+self-install into `~/.zsh/plugins` on first launch.
+
+## Machine-specific settings
+
+Anything work- or machine-specific goes in untracked local files, which the
+tracked configs source when present: `~/.zshenv.local`, `~/.zshrc.local`, and
+`~/.config/fish/local.fish`. They are listed in `.chezmoiignore`, so they are
+never committed. Copy them to a new machine by hand.

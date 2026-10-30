@@ -3,3 +3,8 @@ README.md
 {{ if ne .chezmoi.os "darwin" }}
 Library/Preferences/com.googlecode.iterm2.plist
 {{ end }}
+
+# machine/work-specific local overrides — never tracked
+.zshenv.local
+.zshrc.local
+.config/fish/local.fish

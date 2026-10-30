@@ -1,0 +1,358 @@
+# ~/.zshrc — interactive shell config. Ported from fish (tide/fzf/autopair stack),
+# 2026-10-30. Env + PATH live in ~/.zshenv so non-interactive shells get them too.
+
+# ---- history ----
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY EXTENDED_HISTORY HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_VERIFY
+setopt AUTO_CD INTERACTIVE_COMMENTS
+
+# ---- completion ----
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # case-insensitive
+
+# ---- prompt: port of the tide v6 config this setup used under fish ----
+# 2-line frame. Left segment: pwd │ git. Right segment: status │ duration │
+# context │ jobs │ python │ time. Same ANSI palette indexes tide used, so the
+# terminal theme renders identical colors; glyphs need a Nerd Font (as tide did).
+zmodload zsh/datetime
+zmodload -F zsh/stat b:zstat
+autoload -Uz add-zsh-hook
+
+typeset -g _tp_cmd_start=0
+typeset -ga _tp_markers=(.bzr .citc .git .hg .node-version .python-version .ruby-version
+  .shorten_folder_marker .svn .terraform bun.lockb Cargo.toml composer.json CVS go.mod
+  package.json build.zig)
+# Repos whose git index exceeds this many MB skip working-tree status (a monorepo
+# with a ~200MB index can take a minute per `git status`). Branch + stash still show, plus a
+# dim … so a missing !N is not mistaken for a clean tree.
+typeset -gi TP_GIT_MAX_INDEX_MB=${TP_GIT_MAX_INDEX_MB:-25}
+
+_tp_preexec() { _tp_cmd_start=$EPOCHREALTIME }
+
+# Display width of a prompt string (escape sequences stripped) -> REPLY
+_tp_width() {
+  setopt localoptions extendedglob
+  local s=${(%)1}
+  s=${s//$'\e'(\[|\()[0-9;?]#[A-Za-z]/}
+  REPLY=${(m)#s}
+}
+
+# pwd: dirs cyan; anchors (last dir, dirs holding a project marker) bold brcyan.
+# $1=1 shortens non-anchor dirs to 1 char (magenta), used when the line overflows.
+_tp_pwd() {
+  local short=${1:-0} disp real comp s m
+  if [[ $PWD == "$HOME" ]]; then disp='~'
+  elif [[ $PWD == "$HOME"/* ]]; then disp="~${PWD#"$HOME"}"
+  else disp=$PWD; fi
+  local -a parts; parts=("${(@s:/:)disp}")
+  local -i i n=${#parts} anchor
+  local out=""
+  [[ ${parts[1]} == '~' ]] && real=$HOME || real=""
+  for (( i = 1; i <= n; i++ )); do
+    comp=${parts[i]}
+    if (( i > 1 )); then real+="/$comp"; out+="%F{6}/"; fi
+    [[ -z $comp ]] && continue
+    anchor=0
+    if (( i == n )); then anchor=1
+    else for m in $_tp_markers; do [[ -e $real/$m ]] && { anchor=1; break }; done; fi
+    if (( anchor )); then out+="%B%F{14}${comp//\%/%%}%b"
+    elif (( short )) && [[ $comp != '~' ]]; then
+      s=${comp[1]}; [[ $s == . ]] && s=${comp[1,2]}
+      out+="%F{5}${s//\%/%%}"
+    else out+="%F{6}${comp//\%/%%}"; fi
+  done
+  [[ -w $PWD ]] || out="%F{6}"$'\uf023'" $out"
+  REPLY=$out
+}
+
+# git: brgreen branch, then operation/⇣⇡/stash/conflicts/staged/dirty/untracked -> REPLY
+_tp_git() {
+  local -a rp; rp=("${(@f)$(git rev-parse --git-dir --git-path index 2>/dev/null)}")
+  [[ -n ${rp[1]} ]] || return 1
+  local gd=${rp[1]} idx=${rp[2]} head="" oid="" line big=0
+  local -a ab sz
+  local -i stash=0 staged=0 dirty=0 untr=0 conf=0 ahead=0 behind=0
+  if [[ -f $idx ]] && zstat -A sz +size -- "$idx" 2>/dev/null \
+     && (( sz[1] > TP_GIT_MAX_INDEX_MB * 1048576 )); then
+    big=1
+  else
+    for line in "${(@f)$(git --no-optional-locks status --porcelain=v2 --branch --show-stash 2>/dev/null)}"; do
+      case $line in
+        ('# branch.oid '*)  oid=${line#\# branch.oid } ;;
+        ('# branch.head '*) head=${line#\# branch.head } ;;
+        ('# branch.ab '*)   ab=(${=${line#\# branch.ab }}); ahead=${ab[1]#+}; behind=${ab[2]#-} ;;
+        ('# stash '*)       stash=${line#\# stash } ;;
+        ([12]' '*)          [[ ${line[3]} != . ]] && staged+=1; [[ ${line[4]} != . ]] && dirty+=1 ;;
+        ('u '*)             conf+=1 ;;
+        ('? '*)             untr+=1 ;;
+      esac
+    done
+  fi
+  if [[ -z $head ]]; then    # big repo, or status unavailable: cheap lookups only
+    head=$(git symbolic-ref --short -q HEAD 2>/dev/null) || oid=$(git rev-parse -q HEAD 2>/dev/null)
+    stash=$(git rev-list --walk-reflogs --count refs/stash 2>/dev/null) || stash=0
+  fi
+  local loc=$head op=""
+  [[ -z $loc || $loc == '(detached)' ]] && loc="@${oid[1,7]}"
+  (( ${#loc} > 24 )) && loc="${loc[1,23]}…"
+  if [[ -d $gd/rebase-merge || -d $gd/rebase-apply ]]; then op=rebase
+  elif [[ -f $gd/MERGE_HEAD ]]; then op=merge
+  elif [[ -f $gd/CHERRY_PICK_HEAD ]]; then op=cherry-pick
+  elif [[ -f $gd/REVERT_HEAD ]]; then op=revert
+  elif [[ -f $gd/BISECT_LOG ]]; then op=bisect; fi
+  local out="%F{10}${loc//\%/%%}"
+  [[ -n $op ]] && out+="%F{9} $op"
+  (( behind )) && out+="%F{10} ⇣$behind"
+  (( ahead ))  && out+="%F{10} ⇡$ahead"
+  (( stash ))  && out+="%F{10} *$stash"
+  (( conf ))   && out+="%F{9} ~$conf"
+  (( staged )) && out+="%F{11} +$staged"
+  (( dirty ))  && out+="%F{11} !$dirty"
+  (( untr ))   && out+="%F{12} ?$untr"
+  (( big ))    && out+="%F{8} …"
+  REPLY=$out
+}
+
+# One black-background segment: $1 head glyph, $2 tail glyph, $3.. items -> REPLY
+_tp_segment() {
+  local pre=$1 suf=$2 item out; shift 2
+  local -i first=1
+  out="%k%F{0}${pre}%K{0}"
+  for item in "$@"; do
+    (( first )) || out+="%F{8}│"
+    out+=" ${item} "
+    first=0
+  done
+  REPLY="${out}%k%F{0}${suf}%f"
+}
+
+_tp_precmd() {
+  local -i ec=$?              # must stay first: exit status of the last command
+  (( COLUMNS )) || COLUMNS=80
+  local -a left right
+  _tp_pwd 0; left=("$REPLY")
+  _tp_git && left+=("$REPLY")
+
+  if (( ec )); then           # status: ✘ code, or signal name (INT, PIPE, ...)
+    local code=$ec
+    (( ec > 128 && ec - 127 <= ${#signals} )) && code=${signals[ec-127]}
+    right+=("%F{1}✘ $code")
+  fi
+  if (( _tp_cmd_start > 0 )); then   # duration, shown past 3s
+    local -i ms=$(( (EPOCHREALTIME - _tp_cmd_start) * 1000 )) t h m sec
+    _tp_cmd_start=0
+    if (( ms > 3000 )); then
+      t=$(( ms / 1000 )); h=$(( t / 3600 )); m=$(( t % 3600 / 60 )); sec=$(( t % 60 ))
+      if (( h )); then right+=("%F{8}${h}h ${m}m ${sec}s")
+      elif (( m )); then right+=("%F{8}${m}m ${sec}s")
+      else right+=("%F{8}${sec}s"); fi
+    fi
+  fi
+  if (( EUID == 0 )); then right+=("%F{11}%n@%m")          # context: root
+  elif [[ -n $SSH_CONNECTION || -n $SSH_TTY ]]; then right+=("%F{3}%n@%m"); fi
+  (( ${#jobstates} )) && right+=("%F{2}"$'\uf013')        # background jobs
+  if [[ -n $VIRTUAL_ENV ]]; then                           # python venv
+    local v="" vn=${VIRTUAL_ENV:t} cfgline
+    [[ $vn == (.venv|venv|virtualenv) ]] && vn=${VIRTUAL_ENV:h:t}
+    if [[ -r $VIRTUAL_ENV/pyvenv.cfg ]]; then
+      for cfgline in "${(@f)$(<$VIRTUAL_ENV/pyvenv.cfg)}"; do
+        case $cfgline in (version_info*|version[\ =]*) v=${${cfgline#*=}// /}; v=${v%%.final*}; break ;; esac
+      done
+    fi
+    right+=("%F{6}"$'\U000f0320'"${v:+ $v} (${vn//\%/%%})")
+  fi
+  right+=("%F{8}%D{%H:%M:%S}")
+
+  local frame="%F{8}╭─" L R
+  local -i fill
+  _tp_segment $'\ue0b2' $'\ue0bc' "${left[@]}";  L=$REPLY
+  _tp_segment $'\ue0ba' $'\ue0b0' "${right[@]}"; R=$REPLY
+  _tp_width "$frame$L$R"; fill=$(( COLUMNS - REPLY ))
+  if (( fill < 1 )); then    # too long: shorten non-anchor dirs, like tide
+    _tp_pwd 1; left[1]=$REPLY
+    _tp_segment $'\ue0b2' $'\ue0bc' "${left[@]}"; L=$REPLY
+    _tp_width "$frame$L$R"; fill=$(( COLUMNS - REPLY ))
+    (( fill < 1 )) && fill=1
+  fi
+  local rule=${(pl:fill::─:)}
+  local char="%F{10}❮"; (( ec )) && char="%F{9}❮"
+  PROMPT="${frame}${L}%F{8}${rule}${R}
+%F{8}╰─${char}%f "
+}
+add-zsh-hook preexec _tp_preexec
+add-zsh-hook precmd _tp_precmd
+
+# ---- keybindings: prefix history on arrows; home/end/delete ----
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+bindkey '^[OA' history-search-backward
+bindkey '^[OB' history-search-forward
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[3~' delete-char
+
+# ---- plugins (self-bootstrapping: fish-feel ghost-text + syntax colors) ----
+_zp="$HOME/.zsh/plugins"
+[[ -f "$_zp/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] || \
+  git clone -q --depth 1 https://github.com/zsh-users/zsh-autosuggestions "$_zp/zsh-autosuggestions" 2>/dev/null
+[[ -f "$_zp/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && \
+  source "$_zp/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[[ -f "$_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] || \
+  git clone -q --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting "$_zp/zsh-syntax-highlighting" 2>/dev/null
+# syntax-highlighting must be sourced LAST
+[[ -f "$_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+  source "$_zp/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+unset _zp
+
+# ---- fzf key bindings + tab completion (native fzf integration) ----
+for _d in /opt/homebrew/opt/fzf/shell /usr/local/opt/fzf/shell /usr/share/doc/fzf/examples "$HOME/.fzf/shell"; do
+  [[ -f "$_d/key-bindings.zsh" ]] && source "$_d/key-bindings.zsh"
+  [[ -f "$_d/completion.zsh" ]] && source "$_d/completion.zsh"
+done
+unset _d
+
+# ---- colored man pages (ported from colored_man_pages.fish) ----
+export LESS_TERMCAP_md=$'\e[1m\e[38;2;2;128;165m'   # start bold
+export LESS_TERMCAP_me=$'\e[0m'                     # end bold
+export LESS_TERMCAP_us=$'\e[4m\e[38;2;91;165;2m'    # start underline
+export LESS_TERMCAP_ue=$'\e[0m'                     # end underline
+export LESS_TERMCAP_so=$'\e[48;2;240;203;2m\e[30m'   # start standout
+export LESS_TERMCAP_se=$'\e[0m'                     # end standout
+
+# ---- clipboard abstraction (macOS pbcopy/pbpaste; Linux wl-*/xclip) ----
+clipcopy() {
+  if command -v pbcopy >/dev/null 2>&1; then pbcopy
+  elif command -v wl-copy >/dev/null 2>&1; then wl-copy
+  elif command -v xclip >/dev/null 2>&1; then xclip -selection clipboard
+  else cat >/dev/null; echo "clipcopy: no clipboard tool found" >&2; return 1; fi
+}
+clippaste() {
+  if command -v pbpaste >/dev/null 2>&1; then pbpaste
+  elif command -v wl-paste >/dev/null 2>&1; then wl-paste
+  elif command -v xclip >/dev/null 2>&1; then xclip -selection clipboard -o
+  else echo "clippaste: no clipboard tool found" >&2; return 1; fi
+}
+
+# ---- PGP clipboard helpers (ported from fish functions) ----
+pgpenc() {
+  # Usage: compose in Gmail, copy the text, then `pgpenc them@example.com`,
+  # then paste back over your draft. Add more recipients as extra args.
+  # (Encrypt-only. To also sign: `pgpsign` first, or use gpg --sign --encrypt.)
+  if (( $# == 0 )); then
+    echo "usage: pgpenc RECIPIENT [RECIPIENT...]" >&2
+    return 2
+  fi
+  local tmp; tmp=$(mktemp)
+  local -a rcpt; local r
+  for r in "$@"; do rcpt+=(--recipient "$r"); done
+  clippaste | gpg --armor --encrypt "${rcpt[@]}" > "$tmp"
+  local st=$?
+  if (( st == 0 )); then
+    clipcopy < "$tmp"
+    echo "pgpenc: encrypted to clipboard — $# recipient(s)" >&2
+  else
+    echo "pgpenc: encryption failed (clipboard unchanged)" >&2
+  fi
+  rm -f "$tmp"
+  return $st
+}
+
+pgpdec() {
+  # Usage: select the PGP block in the email, copy it, then `pgpdec`.
+  # Handles encrypted, encrypted+signed, and clear-signed messages; prints
+  # the plaintext to the terminal (never to disk or the clipboard) and shows
+  # the signature status on stderr.
+  clippaste | gpg --decrypt
+}
+
+pgpsign() {
+  # Usage: compose in Gmail, copy it, `pgpsign`, paste back. Recipient can read
+  # it as-is and verify it came from you. Prompts for your key passphrase.
+  local tmp; tmp=$(mktemp)
+  clippaste | gpg --clearsign > "$tmp"
+  local st=$?
+  if (( st == 0 )); then
+    clipcopy < "$tmp"
+    echo "pgpsign: signed to clipboard" >&2
+  else
+    echo "pgpsign: signing failed (clipboard unchanged)" >&2
+  fi
+  rm -f "$tmp"
+  return $st
+}
+
+pgpverify() {
+  # Usage: copy the signed block, then `pgpverify` to check the signature
+  # without printing the body. (Use `pgpdec` to also see the signed text.)
+  clippaste | gpg --verify
+}
+
+pgpkey() {
+  # Usage: `pgpkey you@example.com` copies your public key block to the
+  # clipboard (and prints it) so you can share/publish it. With no argument,
+  # exports every public key in your keyring.
+  local tmp; tmp=$(mktemp)
+  gpg --armor --export "$@" > "$tmp"
+  local st=$?
+  if (( st == 0 && -s "$tmp" )); then
+    clipcopy < "$tmp"
+    cat "$tmp"
+    echo "pgpkey: public key copied to clipboard" >&2
+  else
+    echo "pgpkey: no matching key / export failed" >&2
+    st=1
+  fi
+  rm -f "$tmp"
+  return $st
+}
+
+pgpimport() {
+  # Usage: copy someone's public key block (e.g. a researcher's), then
+  # `pgpimport` to add it to your keyring so you can encrypt to them.
+  clippaste | gpg --import
+}
+
+# ---- misc personal functions (ported from fish) ----
+cless() {
+  # Colorize styled text via less env vars, then run a command that uses less
+  LESS_TERMCAP_md=$'\e[1m\e[38;2;2;128;165m' \
+  LESS_TERMCAP_me=$'\e[0m' \
+  LESS_TERMCAP_us=$'\e[4m\e[38;2;91;165;2m' \
+  LESS_TERMCAP_ue=$'\e[0m' \
+  LESS_TERMCAP_so=$'\e[48;2;240;203;2m\e[30m' \
+  LESS_TERMCAP_se=$'\e[0m' "$@"
+}
+
+# ---- aliases (ported from config.fish) ----
+# other tools
+alias vi=nvim
+alias vim=nvim
+alias find=fd          # shadows find(1) interactively; use `command find` if you need the real one
+alias cat=bat
+alias cm=chezmoi
+alias top=btm
+
+# chezmoi abbreviations (ported from fish-chezmoi)
+alias cma='chezmoi add'
+alias cmap='chezmoi apply'
+alias cmea='chezmoi edit --apply'
+alias cmu='chezmoi update'
+alias cmd='chezmoi diff'
+
+# lsd
+alias ls=lsd
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+
+# Linux package names
+if [[ "$(uname)" == Linux ]]; then
+  alias fd=fdfind
+fi
+
+# Machine/work-specific config (untracked; see .chezmoiignore)
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

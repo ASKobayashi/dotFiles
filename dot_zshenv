@@ -1,0 +1,16 @@
+# ~/.zshenv — read by EVERY zsh (interactive, non-interactive, login).
+# Keep it fast and side-effect-free; anything heavier belongs in ~/.zshrc.
+
+export EDITOR=nvim
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# PATH — idempotent prepends so every shell (incl. agents/scripts) sees the same PATH
+typeset -U path
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" $path)
+case "$(uname)" in
+  Darwin) [[ -d /opt/homebrew/bin ]] && path=(/opt/homebrew/bin $path) ;;
+  Linux)  [[ -d "$HOME/.cargo/bin" ]] && path=("$HOME/.cargo/bin" $path) ;;
+esac
+
+# Machine/work-specific env (untracked; see .chezmoiignore)
+[[ -r "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
